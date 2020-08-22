@@ -20,7 +20,7 @@ namespace ComplexNumberGrapher
 		public static bool Fancy = true;
 		public static bool ThreeDimensional = false;
 
-		public static string DefaultShader = "mandelbrot";
+		public static string DefaultShader = "default";
 		public static string DefaultPalette = "palette";
 
 		public static float CameraSpeed = 0.01f;
