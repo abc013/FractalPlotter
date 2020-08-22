@@ -13,21 +13,22 @@ namespace ComplexNumberGrapher.Graphics
 
 		public void Render()
 		{
+			var posID = UniformManager.PositionID;
+			var colorID = UniformManager.ColorID;
+			var color = (Vector4)Color;
+
 			GL.PointSize(Size);
+			GL.VertexAttrib4(colorID, color);
+
 			GL.Begin(PrimitiveType.Points);
-			GL.Color4(Color);
-			GL.Vertex3(Position);
+			GL.VertexAttrib4(posID, new Vector4d(Position, 1.0d));
 			GL.End();
 
 			GL.Begin(PrimitiveType.Lines);
-			GL.Color4(Color);
-			GL.Vertex3(Position + new Vector3d(0.05d / Camera.Scale.X, 0, 0));
-			GL.Color4(Color);
-			GL.Vertex3(Position - new Vector3d(0.05d / Camera.Scale.X, 0, 0));
-			GL.Color4(Color);
-			GL.Vertex3(Position + new Vector3d(0, 0.05d / Camera.Scale.X, 0));
-			GL.Color4(Color);
-			GL.Vertex3(Position - new Vector3d(0, 0.05d / Camera.Scale.X, 0));
+			GL.VertexAttrib4(posID, new Vector4d(Position + new Vector3d(0.05d / Camera.Scale.X, 0, 0), 1.0f));
+			GL.VertexAttrib4(posID, new Vector4d(Position - new Vector3d(0.05d / Camera.Scale.X, 0, 0), 1.0f));
+			GL.VertexAttrib4(posID, new Vector4d(Position + new Vector3d(0, 0.05d / Camera.Scale.X, 0), 1.0f));
+			GL.VertexAttrib4(posID, new Vector4d(Position - new Vector3d(0, 0.05d / Camera.Scale.X, 0), 1.0f));
 			GL.End();
 
 			Utils.CheckError("Render");

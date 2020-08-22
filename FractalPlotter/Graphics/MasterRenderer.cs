@@ -1,4 +1,5 @@
-﻿using OpenToolkit.Graphics.OpenGL;
+﻿using FractalPlotter.FractalPlotter;
+using OpenToolkit.Graphics.OpenGL;
 using OpenToolkit.Mathematics;
 
 namespace ComplexNumberGrapher.Graphics
@@ -8,9 +9,12 @@ namespace ComplexNumberGrapher.Graphics
 		public static Vector2 Factor1;
 		public static float Factor2;
 
+		static UniformManager defaultManager;
+		static int defaultShader;
 		static UniformManager currentManager;
-		static int currentPalette;
 		static int currentShader;
+
+		static int currentPalette;
 
 		public static void Load()
 		{
@@ -25,7 +29,7 @@ namespace ComplexNumberGrapher.Graphics
 			foreach (var name in FileManager.GetPaletteImageNames())
 				PaletteManager.Add(name);
 
-			ChangeShader(Settings.DefaultShader);
+			ChangeShader(Settings.DefaultShader, true);
 			ChangePalette(Settings.DefaultPalette);
 
 			PointManager.Add(Vector3d.Zero, Color4.Violet);
@@ -43,13 +47,25 @@ namespace ComplexNumberGrapher.Graphics
 			Utils.CheckError("Load");
 		}
 
-		public static void ChangeShader(string name)
+		public static void ChangeShader(string name, bool @default = false)
 		{
 			var newShader = ShaderManager.Fetch(name);
 			if (newShader > 0)
 			{
 				currentShader = newShader;
 				currentManager = ShaderManager.FetchManager(currentShader);
+				if (@default)
+				{
+					defaultShader = currentShader;
+					defaultManager = currentManager;
+				}
+			}
+			else
+			{
+				Log.WriteInfo($"Failed to fetch shader {name}.");
+
+				if (@default)
+					throw new DefaultShaderException();
 			}
 		}
 
@@ -64,8 +80,8 @@ namespace ComplexNumberGrapher.Graphics
 
 			GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-			GL.UseProgram(0);
-			GL.LoadMatrix(ref Camera.CameraMatrix);
+			GL.UseProgram(defaultShader);
+			defaultManager.Uniform();
 
 			PointManager.Render();
 
@@ -78,9 +94,11 @@ namespace ComplexNumberGrapher.Graphics
 
 				var posID = UniformManager.PositionID;
 				var texcoordID = UniformManager.TexCoordID;
+				var colorID = UniformManager.ColorID;
 
 				GL.LoadIdentity();
 				GL.Begin(PrimitiveType.Quads);
+				GL.VertexAttrib4(colorID, (Vector4)Color4.White);
 				GL.VertexAttrib2(texcoordID, new Vector2(-Camera.Ratio * 2f, -1 * 2f));
 				GL.VertexAttrib4(posID, new Vector4(-1, -1, 0, 1));
 				GL.VertexAttrib2(texcoordID, new Vector2(Camera.Ratio * 2f, -1 * 2f));

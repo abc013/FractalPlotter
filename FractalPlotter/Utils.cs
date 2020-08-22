@@ -1,8 +1,8 @@
-﻿using OpenToolkit.Graphics.OpenGL;
+﻿using FractalPlotter.FractalPlotter;
+using OpenToolkit.Graphics.OpenGL;
 using OpenToolkit.Mathematics;
 using System;
 using System.Diagnostics;
-using System.Runtime.Intrinsics.X86;
 
 namespace ComplexNumberGrapher
 {
@@ -17,7 +17,7 @@ namespace ComplexNumberGrapher
 			var error = GL.GetError();
 
 			if (error != ErrorCode.NoError)
-				throw new System.Exception($"Uncaught OpenGL error at {position}: {error}");
+				throw new GraphicsException(position, error);
 		}
 
 		public static float ToFloat(string text, float @default = 1f)
