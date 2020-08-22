@@ -2,7 +2,9 @@
 /runtimes
 /.vs
 /FractalPlotter/obj
+/obj
 /FractalPlotter/FractalPlotter.csproj.user
+/FractalPlotter.csproj.user
 
 # Output
 /FractalPlotter.dll
