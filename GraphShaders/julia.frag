@@ -13,6 +13,8 @@ uniform int imax;
 
 uniform vec2 fac1;
 
+out vec4 color;
+
 void main()
 {
     dvec2 z, c;
@@ -33,5 +35,5 @@ void main()
         z.y = y;
     }
 
-    gl_FragColor = texture1D(pal, float(i)/imax);
+    color = texture(pal, float(i)/imax);
 }
