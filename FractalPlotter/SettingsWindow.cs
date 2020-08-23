@@ -58,7 +58,7 @@ namespace ComplexNumberGrapher
 
 		public void UpdateScale()
 		{
-			updated += 3;
+			updated += 1;
 			scaleX.Text = Camera.Scale.X.ToString();
 		}
 
