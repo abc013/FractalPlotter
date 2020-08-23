@@ -22,18 +22,24 @@ namespace ComplexNumberGrapher
 
 		public static float ToFloat(string text, float @default = 1f)
 		{
-			if (string.IsNullOrWhiteSpace(text) || text.Equals("."))
+			if (string.IsNullOrWhiteSpace(text) || text.Equals(".") || text.Equals("-"))
 				return @default;
 
-			return float.Parse(text);
+			if (float.TryParse(text, out var result))
+				return result;
+			
+			return @default;
 		}
 
 		public static double ToDouble(string text)
 		{
-			if (string.IsNullOrWhiteSpace(text) || text.Equals("."))
+			if (string.IsNullOrWhiteSpace(text) || text.Equals(".") || text.Equals("-"))
 				return 0;
 
-			return double.Parse(text);
+			if (double.TryParse(text, out var result))
+				return result;
+
+			return 0;
 		}
 
 		public static Color4 RandomColor(float a = 1f)
