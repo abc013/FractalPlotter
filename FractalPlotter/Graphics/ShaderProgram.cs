@@ -7,7 +7,7 @@ namespace ComplexNumberGrapher.Graphics
 {
 	public class ShaderProgram
 	{
-		public int ID;
+		public readonly int ID;
 
 		readonly List<int> shaders = new List<int>();
 		readonly string name;

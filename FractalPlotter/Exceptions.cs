@@ -4,6 +4,9 @@ using System.Runtime.Serialization;
 
 namespace FractalPlotter.FractalPlotter
 {
+	/// <summary>
+	/// Exception type to use when a graphic error happens.
+	/// </summary>
 	[Serializable]
 	public class GraphicsException : Exception
 	{
@@ -12,6 +15,9 @@ namespace FractalPlotter.FractalPlotter
 		protected GraphicsException(SerializationInfo info, StreamingContext context) : base(info, context) { }
 	}
 
+	/// <summary>
+	/// Exception type to use when the default shader could not be loaded.
+	/// </summary>
 	[Serializable]
 	public class DefaultShaderException : Exception
 	{

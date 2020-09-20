@@ -2,17 +2,41 @@
 
 namespace ComplexNumberGrapher.Graphics
 {
+	/// <summary>
+	/// Class to keep track of movement in virtual space.
+	/// </summary>
 	public static class Camera
 	{
+		/// <summary>
+		/// Camera matrix used for points and other geometry.
+		/// </summary>
 		public static Matrix4 CameraMatrix;
 
+		/// <summary>
+		/// Window ratio.
+		/// </summary>
 		public static float Ratio { get; private set; }
 
+		/// <summary>
+		/// Location. This location parameter has 32-bit depth. It is accessible in shaders.
+		/// </summary>
 		public static Vector3 Location { get; private set; }
+		/// <summary>
+		/// Location. This location parameter has 64-bit depth. It is accessible in shaders.
+		/// </summary>
 		public static Vector3d ExactLocation { get; private set; }
+		/// <summary>
+		/// Scale. This parameter is accessible in shaders.
+		/// </summary>
 		public static Vector3 Scale { get; private set; }
+		/// <summary>
+		/// Rotation. Unused.
+		/// </summary>
 		public static Vector3 Rotation { get; private set; }
 
+		/// <summary>
+		/// Keeps track of whether the matrix needs to be updated.
+		/// </summary>
 		public static bool Changed { get; private set; }
 
 		public static void Load()
@@ -24,6 +48,9 @@ namespace ComplexNumberGrapher.Graphics
 			Changed = true;
 		}
 
+		/// <summary>
+		/// Set new translation.
+		/// </summary>
 		public static void SetTranslation(double x, double y, double z)
 		{
 			ExactLocation = new Vector3d(x, y, z);
@@ -31,18 +58,28 @@ namespace ComplexNumberGrapher.Graphics
 			Changed = true;
 		}
 
+		/// <summary>
+		/// Set new scale.
+		/// </summary>
 		public static void SetScale(float sx, float sy, float sz)
 		{
 			Scale = new Vector3(sx, sy, sz);
 			Changed = true;
 		}
 
+		/// <summary>
+		/// Set new rotation.
+		/// </summary>
 		public static void SetRotation(float rx, float ry, float rz)
 		{
 			Rotation = new Vector3(rx, ry, rz);
 			Changed = true;
 		}
 
+		/// <summary>
+		/// Move in the specified directions. The values will be multiplied by the camera speed as well.
+		/// In order to allow movement in deeper regions, moving is also being divided by the current scale.
+		/// </summary>
 		public static void Translate(float x, float y, float z)
 		{
 			var speed = Settings.CameraSpeed;
@@ -51,24 +88,37 @@ namespace ComplexNumberGrapher.Graphics
 			Changed = true;
 		}
 
+		/// <summary>
+		/// Add scale with the specified factor.
+		/// In order to allow movement in deeper regions, scaling is being multiplied with the current scale.
+		/// </summary>
 		public static void Scaling(float s)
 		{
 			Scale += s * Scale;
 			Changed = true;
 		}
 
+		/// <summary>
+		/// Add rotation to the current one.
+		/// </summary>
 		public static void Rotate(float x, float y, float z)
 		{
 			Rotation += new Vector3(x, y, z);
 			Changed = true;
 		}
 
+		/// <summary>
+		/// Update the window ratio if the window was resized.
+		/// </summary>
 		public static void ResizeViewport(int width, int height)
 		{
 			Ratio = width / (float)height;
 			Changed = true;
 		}
 
+		/// <summary>
+		/// Calculates the camera matrix.
+		/// </summary>
 		public static void CalculateMatrix()
 		{
 			if (!Changed)

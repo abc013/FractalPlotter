@@ -8,6 +8,9 @@ using System.Diagnostics;
 
 namespace ComplexNumberGrapher
 {
+	/// <summary>
+	/// Graph window supported by OpenTK.
+	/// </summary>
 	public class GraphWindow : GameWindow
 	{
 		public bool IsClosing { get; private set; }
@@ -40,6 +43,9 @@ namespace ComplexNumberGrapher
 			IsLoaded = true;
 		}
 
+		/// <summary>
+		/// Render frame, which renders the whole window.
+		/// </summary>
 		protected override void OnRenderFrame(FrameEventArgs args)
 		{
 			watch.Start();
@@ -61,6 +67,9 @@ namespace ComplexNumberGrapher
 			watch.Reset();
 		}
 
+		/// <summary>
+		/// Update frame, checking for any key movements.
+		/// </summary>
 		protected override void OnUpdateFrame(FrameEventArgs args)
 		{
 			base.OnUpdateFrame(args);
@@ -100,18 +109,27 @@ namespace ComplexNumberGrapher
 			}
 		}
 
+		/// <summary>
+		/// Adds a point when the mouse is getting clicked.
+		/// </summary>
 		protected override void OnMouseDown(MouseButtonEventArgs e)
 		{
 			if (e.Button == MouseButton.Right)
 				pipe.AddPoint(getCursorLocation());
 		}
 
+		/// <summary>
+		/// Updates the cursor location.
+		/// </summary>
 		protected override void OnMouseMove(MouseMoveEventArgs e)
 		{
 			var location = getCursorLocation();
 			pipe.UpdateCursorLocation(location.X, location.Y);
 		}
 
+		/// <summary>
+		/// Calculates the cursor location from screen to virtual space.
+		/// </summary>
 		Vector3d getCursorLocation()
 		{
 			// Don't calculate in threedimensional space
@@ -129,18 +147,28 @@ namespace ComplexNumberGrapher
 			return new Vector3d(screenX, screenY, 0);
 		}
 
+		/// <summary>
+		/// Scales when the mouse wheel is used.
+		/// </summary>
 		protected override void OnMouseWheel(MouseWheelEventArgs e)
 		{
 			Camera.Scaling(e.OffsetY * 0.1f);
 			pipe.UpdateScale();
 		}
 
+		/// <summary>
+		/// Updates the MasterRenderer when the viewport is being resized.
+		/// </summary>
 		protected override void OnResize(ResizeEventArgs e)
 		{
 			base.OnResize(e);
 			MasterRenderer.ResizeViewport(ClientSize.X, ClientSize.Y);
 		}
 
+		/// <summary>
+		/// Closes the pipe and the MasterRenderer.
+		/// </summary>
+		/// <param name="e"></param>
 		protected override void OnClosing(CancelEventArgs e)
 		{
 			IsClosing = true;

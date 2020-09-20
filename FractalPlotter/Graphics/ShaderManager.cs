@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace ComplexNumberGrapher.Graphics
 {
+	/// <summary>
+	/// Class that keeps track of all shaders and their names.
+	/// </summary>
 	public static class ShaderManager
 	{
 		static readonly Dictionary<string, ShaderProgram> shaders = new Dictionary<string, ShaderProgram>();

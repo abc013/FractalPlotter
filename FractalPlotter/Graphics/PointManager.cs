@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace ComplexNumberGrapher.Graphics
 {
+	/// <summary>
+	/// Class that keeps track of all points.
+	/// </summary>
 	public static class PointManager
 	{
 		static readonly List<Point> points = new List<Point>();

@@ -9,8 +9,11 @@ namespace ComplexNumberGrapher
 {
 	static class Program
 	{
-		static GraphSettingsPipe pipe;
+		static readonly GraphSettingsPipe pipe = new GraphSettingsPipe();
 
+		/// <summary>
+		/// Entry point.
+		/// </summary>
 		[STAThread]
 		public static void Main()
 		{
@@ -20,17 +23,21 @@ namespace ComplexNumberGrapher
 			AppDomain.CurrentDomain.UnhandledException += handleError;
 			Settings.Initialize();
 
-			pipe = new GraphSettingsPipe();
-
 			initSettingsWindow();
 			initGraphWindow();
 		}
 
+		/// <summary>
+		/// Helper function that gets added to the domain. It executes when the program fails and writes the exception to the logs.
+		/// </summary>
 		static void handleError(object handler, UnhandledExceptionEventArgs args)
 		{
 			Log.WriteException(args.ExceptionObject);
 		}
 
+		/// <summary>
+		/// Initializes the settings window in an independent thread and runs it.
+		/// </summary>
 		static void initSettingsWindow()
 		{
 			// Run in secondary thread, as the first one will be reserved for the GraphWindow instance.
@@ -46,6 +53,9 @@ namespace ComplexNumberGrapher
 			}).Start();
 		}
 
+		/// <summary>
+		/// Initializes the graph window and runs it.
+		/// </summary>
 		static void initGraphWindow()
 		{
 			var gameSettings = GameWindowSettings.Default;
@@ -63,6 +73,9 @@ namespace ComplexNumberGrapher
 			graphWindow.Run();
 		}
 
+		/// <summary>
+		/// Exit the program.
+		/// </summary>
 		public static void Exit()
 		{
 			Log.Exit();

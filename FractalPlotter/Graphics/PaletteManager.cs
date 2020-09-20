@@ -2,6 +2,9 @@
 
 namespace ComplexNumberGrapher.Graphics
 {
+	/// <summary>
+	/// Class that keeps track of all Palettes and their names.
+	/// </summary>
 	public static class PaletteManager
 	{
 		static readonly Dictionary<string, Palette> palettes = new Dictionary<string, Palette>();

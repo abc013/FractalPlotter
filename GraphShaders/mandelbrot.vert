@@ -1,4 +1,5 @@
 #version 330 core
+// http://blog.hvidtfeldts.net/index.php/2012/07/double-precision-in-opengl-and-webgl/
 #extension GL_ARB_gpu_shader_fp64 : enable
 precision highp float;
 

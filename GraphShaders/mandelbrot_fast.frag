@@ -12,6 +12,7 @@ uniform int imax;
 
 out vec4 color;
 
+// Original: http://nuclear.mutantstargoat.com/articles/sdr_fract/
 void main(void)
 {
     vec2 z, c;

@@ -1,4 +1,5 @@
 #version 330 core
+// http://blog.hvidtfeldts.net/index.php/2012/07/double-precision-in-opengl-and-webgl/
 #extension GL_ARB_gpu_shader_fp64 : enable
 precision highp float;
 
@@ -15,6 +16,7 @@ uniform vec2 fac1;
 
 out vec4 color;
 
+// Original: http://nuclear.mutantstargoat.com/articles/sdr_fract/
 void main()
 {
     dvec2 z, c;

@@ -14,6 +14,7 @@ uniform vec2 fac1;
 
 out vec4 color;
 
+// Original: http://nuclear.mutantstargoat.com/articles/sdr_fract/
 void main()
 {
     vec2 z, c;

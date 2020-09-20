@@ -6,35 +6,96 @@ namespace ComplexNumberGrapher
 {
 	public class Settings
 	{
+		/// <summary>
+		/// Height of the default window bar (estimated).
+		/// </summary>
 		public const int WindowBar = 60;
 
+		/// <summary>
+		/// X-Coordinate of the Graph window.
+		/// </summary>
 		public static int GraphX = 360;
+		/// <summary>
+		/// Y-Coordinate of the Graph window.
+		/// </summary>
 		public static int GraphY = WindowBar;
 
-		public static int GraphWidth = 1920 - GraphX;
-		public static int GraphHeight = 1080 - GraphY - 20;
+		/// <summary>
+		/// Width of the Graph window.
+		/// </summary>
+		public static int GraphWidth = 1920;
 
+		/// <summary>
+		/// Height of the Graph window.
+		/// </summary>
+		public static int GraphHeight = 1080;
+
+		/// <summary>
+		/// Draw graph only when modifying. Enabling this will lead to glitches when moving around but is less power consuming.
+		/// </summary>
 		public static bool EventDriven = false;
 
+		/// <summary>
+		/// Maximal iteration number. Increase to get better results (as long as the palette has the same amount of different colors)
+		/// </summary>
 		public static int IMax = 100;
+		/// <summary>
+		/// Draw fancy. Unused.
+		/// </summary>
 		public static bool Fancy = true;
+		/// <summary>
+		/// Enable three-dimensional view. Unused.
+		/// </summary>
 		public static bool ThreeDimensional = false;
 
+		/// <summary>
+		/// Allows setting the default shader.
+		/// </summary>
 		public static string DefaultShader = "default";
+		/// <summary>
+		/// Allows setting the default palette.
+		/// </summary>
 		public static string DefaultPalette = "palette";
 
+		/// <summary>
+		/// Allows modification of the camera speed.
+		/// </summary>
 		public static float CameraSpeed = 0.01f;
 
+		/// <summary>
+		/// Default scale.
+		/// </summary>
 		public static float Scale = 2f;
 
+		/// <summary>
+		/// Default X-location.
+		/// </summary>
 		public static float LocationX = 0f;
+		/// <summary>
+		/// Default Y-location.
+		/// </summary>
 		public static float LocationY = 0f;
+		/// <summary>
+		/// Default Z-location.
+		/// </summary>
 		public static float LocationZ = 0f;
 
+		/// <summary>
+		/// Default c1-factor.
+		/// </summary>
 		public static float Factor1X = 0f;
+		/// <summary>
+		/// Default c2-factor.
+		/// </summary>
 		public static float Factor1Y = 0f;
+		/// <summary>
+		/// Default d-factor.
+		/// </summary>
 		public static float Factor2 = 0f;
 
+		/// <summary>
+		/// This method reads data from an existing settings.txt if possible. Otherwise it will use the default variables.
+		/// </summary>
 		public static void Initialize()
 		{
 			// Use a settings class to gain access to reflection methods, making assigning variables much easier
@@ -62,6 +123,7 @@ namespace ComplexNumberGrapher
 				// Split into name and variable
 				var split = line.Split('=');
 
+				// Get field of the same name and, if possible, set the value.
 				var field = fields.FirstOrDefault(f => f.Name == split[0].Trim());
 				if (field != null)
 				{

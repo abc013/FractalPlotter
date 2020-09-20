@@ -4,6 +4,9 @@ using System.Windows.Forms;
 
 namespace ComplexNumberGrapher
 {
+	/// <summary>
+	/// Settings window supported by Windows Forms.
+	/// </summary>
 	public partial class SettingsWindow : Form
 	{
 		public bool IsClosing { get; private set; }
@@ -11,6 +14,9 @@ namespace ComplexNumberGrapher
 
 		readonly GraphSettingsPipe pipe;
 
+		/// <summary>
+		///  This is required because when setting some values coming from the graph window, the type event will be invoked and would write the value back, which causes problems.
+		/// </summary>
 		int updated;
 
 		public SettingsWindow(GraphSettingsPipe pipe)
@@ -22,6 +28,8 @@ namespace ComplexNumberGrapher
 
 			fancyCheck.CheckedChanged += changeFancy;
 			dimensionCheck.CheckedChanged += changeDimensional;
+
+			// Add some events to catch special cases and to update values right when they are typed in.
 
 			locX.KeyPress += keyPress;
 			locX.TextChanged += setTranslation;
@@ -48,6 +56,9 @@ namespace ComplexNumberGrapher
 			c1Box.TextChanged += setParameters;
 		}
 
+		/// <summary>
+		/// Write the camera translation.
+		/// </summary>
 		public void UpdateTranslation()
 		{
 			updated += 3;
@@ -56,20 +67,29 @@ namespace ComplexNumberGrapher
 			locZ.Text = Camera.Location.Z.ToString();
 		}
 
+		/// <summary>
+		/// Write the camera scale.
+		/// </summary>
 		public void UpdateScale()
 		{
 			updated += 1;
 			scaleX.Text = Camera.Scale.X.ToString();
 		}
 
+		/// <summary>
+		/// Write the camera rotation.
+		/// </summary>
 		public void UpdateRotation()
 		{
-			updated += 3;
+			//updated += 3;
 			rotX.Text = Camera.Rotation.X.ToString();
 			rotY.Text = Camera.Rotation.Y.ToString();
 			rotZ.Text = Camera.Rotation.Z.ToString();
 		}
 
+		/// <summary>
+		/// Write the cursor location.
+		/// </summary>
 		public void UpdateParameters()
 		{
 			updated += 3;
@@ -78,12 +98,19 @@ namespace ComplexNumberGrapher
 			dBox.Text = MasterRenderer.Factor2.ToString();
 		}
 
+		/// <summary>
+		/// Write the cursor location.
+		/// </summary>
 		public void UpdateCursorLocation(double x, double y)
 		{
-			var str = "00.000000000000";
+			const string str = "00.000000000000";
 			cursorLocation.Text = $"cursor at\n{x.ToString(str)}\n{y.ToString(str)}i";
 		}
 
+		/// <summary>
+		/// Modified exit event which closes the pipe as well, if necessary.
+		/// </summary>
+		/// <param name="e"></param>
 		protected override void OnFormClosing(FormClosingEventArgs e)
 		{
 			IsClosing = true;
@@ -92,6 +119,9 @@ namespace ComplexNumberGrapher
 			base.OnClosing(e);
 		}
 
+		/// <summary>
+		/// Sets some default values already after loading.
+		/// </summary>
 		void load(object sender, EventArgs e)
 		{
 			foreach (var file in FileManager.GetGraphShaderNames())
@@ -108,12 +138,18 @@ namespace ComplexNumberGrapher
 			IsLoaded = true;
 		}
 
+		/// <summary>
+		/// Update the fancy boolean in the graph window.
+		/// </summary>
 		void changeFancy(object sender, EventArgs e)
 		{
 			if (IsLoaded)
 				pipe.FancyCheck(fancyCheck.Checked);
 		}
 
+		/// <summary>
+		/// Update the 3D boolean in the graph window.
+		/// </summary>
 		void changeDimensional(object sender, EventArgs e)
 		{
 			if (IsLoaded)
@@ -123,18 +159,28 @@ namespace ComplexNumberGrapher
 			PaletteList.Enabled = !dimensionCheck.Checked;
 		}
 
+		/// <summary>
+		/// Change the shader in the graph window.
+		/// </summary>
 		void changeShader(object sender, EventArgs e)
 		{
 			if (IsLoaded)
 				pipe.SetCurrentShader(ShaderList.Items[ShaderList.SelectedIndex].ToString());
 		}
 
+		/// <summary>
+		/// Change the palette in the graph window.
+		/// </summary>
 		void changePalette(object sender, EventArgs e)
 		{
 			if (IsLoaded)
 				pipe.SetCurrentPalette(PaletteList.Items[PaletteList.SelectedIndex].ToString());
 		}
 
+		/// <summary>
+		/// KeyPress event which controls that no non-numerical values are inserted.
+		/// Modified code. Original from https://ourcodeworld.com/articles/read/507/how-to-allow-only-numbers-inside-a-textbox-in-winforms-c-sharp.
+		/// </summary>
 		void keyPress(object sender, KeyPressEventArgs e)
 		{
 			if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar) && e.KeyChar != '.' && e.KeyChar != '-')
@@ -149,6 +195,9 @@ namespace ComplexNumberGrapher
 				e.Handled = true;
 		}
 
+		/// <summary>
+		/// Checks and sets the translation and pipes it to the graph window then.
+		/// </summary>
 		void setTranslation(object sender, EventArgs e)
 		{
 			if (updated > 0)
@@ -162,6 +211,9 @@ namespace ComplexNumberGrapher
 			pipe.SetTranslation(x, y, z);
 		}
 
+		/// <summary>
+		/// Checks and sets the scale and pipes it to the graph window then.
+		/// </summary>
 		void setScale(object sender, EventArgs e)
 		{
 			if (updated > 0)
@@ -173,6 +225,9 @@ namespace ComplexNumberGrapher
 			pipe.SetScale(sx, sx, sx);
 		}
 
+		/// <summary>
+		/// Checks and sets the rotation and pipes it to the graph window then.
+		/// </summary>
 		void setRotation(object sender, EventArgs e)
 		{
 			if (updated > 0)
@@ -186,6 +241,9 @@ namespace ComplexNumberGrapher
 			pipe.SetRotation(rx, ry, rz);
 		}
 
+		/// <summary>
+		/// Checks and sets the parameters and pipes it to the graph window then.
+		/// </summary>
 		void setParameters(object sender, EventArgs e)
 		{
 			if (updated > 0)
@@ -199,6 +257,9 @@ namespace ComplexNumberGrapher
 			pipe.SetParameters(c1, c2, d);
 		}
 
+		/// <summary>
+		/// Adds a point exactly where the viewport currently is at.
+		/// </summary>
 		void addPoint(object sender, EventArgs e)
 		{
 			pipe.AddPoint(Camera.ExactLocation);

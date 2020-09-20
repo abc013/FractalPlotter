@@ -2,6 +2,9 @@
 
 namespace ComplexNumberGrapher.Graphics
 {
+	/// <summary>
+	/// Class that contains the variable locations of a shader. These are needed to load in the variables at the right spots.
+	/// </summary>
 	public class UniformManager
 	{
 		public const int PositionID = 0;
@@ -12,6 +15,9 @@ namespace ComplexNumberGrapher.Graphics
 
 		readonly int[] ids;
 
+		/// <summary>
+		/// Get the variable locations.
+		/// </summary>
 		public UniformManager(string name, int programID)
 		{
 			ids = new int[uniformCount];
@@ -33,6 +39,9 @@ namespace ComplexNumberGrapher.Graphics
 			Utils.CheckError("UniformManager2 " + name);
 		}
 
+		/// <summary>
+		/// Push the variables into GPU memory to their location.
+		/// </summary>
 		public void Uniform()
 		{
 			if (ids[0] >= 0)
