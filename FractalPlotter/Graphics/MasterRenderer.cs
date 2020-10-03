@@ -104,7 +104,8 @@ namespace ComplexNumberGrapher.Graphics
 			GL.UseProgram(defaultShader);
 			defaultManager.Uniform();
 
-			PointManager.Render();
+			if (!Settings.Fancy)
+				PointManager.Render();
 
 			if (!Settings.ThreeDimensional)
 			{
