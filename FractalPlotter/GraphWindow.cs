@@ -1,8 +1,8 @@
 ﻿using ComplexNumberGrapher.Graphics;
-using OpenToolkit.Mathematics;
-using OpenToolkit.Windowing.Common;
-using OpenToolkit.Windowing.Common.Input;
-using OpenToolkit.Windowing.Desktop;
+using OpenTK.Mathematics;
+using OpenTK.Windowing.Common;
+using OpenTK.Windowing.GraphicsLibraryFramework;
+using OpenTK.Windowing.Desktop;
 using System.ComponentModel;
 using System.Diagnostics;
 
@@ -26,7 +26,6 @@ namespace ComplexNumberGrapher
 		{
 			this.pipe = pipe;
 			pipe.Add(this);
-
 			watch = new Stopwatch();
 		}
 
@@ -76,13 +75,13 @@ namespace ComplexNumberGrapher
 
 			var x = 0f;
 			var y = 0f;
-			if (KeyboardState.IsKeyDown(Key.Up))
+			if (KeyboardState.IsKeyDown(Keys.Up))
 				y += 1f;
-			if (KeyboardState.IsKeyDown(Key.Down))
+			if (KeyboardState.IsKeyDown(Keys.Down))
 				y -= 1f;
-			if (KeyboardState.IsKeyDown(Key.Right))
+			if (KeyboardState.IsKeyDown(Keys.Right))
 				x += 1f;
-			if (KeyboardState.IsKeyDown(Key.Left))
+			if (KeyboardState.IsKeyDown(Keys.Left))
 				x -= 1f;
 
 			if (x != 0f || y != 0f)
@@ -93,13 +92,13 @@ namespace ComplexNumberGrapher
 
 			var f1 = 0f;
 			var f2 = 0f;
-			if (KeyboardState.IsKeyDown(Key.W))
-				f1 -= 1f;
-			if (KeyboardState.IsKeyDown(Key.S))
+			if (KeyboardState.IsKeyDown(Keys.Q))
 				f1 += 1f;
-			if (KeyboardState.IsKeyDown(Key.A))
+			if (KeyboardState.IsKeyDown(Keys.A))
+				f1 -= 1f;
+			if (KeyboardState.IsKeyDown(Keys.W))
 				f2 += 1f;
-			if (KeyboardState.IsKeyDown(Key.D))
+			if (KeyboardState.IsKeyDown(Keys.S))
 				f2 -= 1f;
 
 			if (f1 != 0f || f2 != 0f)

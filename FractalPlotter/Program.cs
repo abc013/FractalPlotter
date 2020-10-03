@@ -1,5 +1,5 @@
-using OpenToolkit.Windowing.Common;
-using OpenToolkit.Windowing.Desktop;
+using OpenTK.Windowing.Common;
+using OpenTK.Windowing.Desktop;
 using System;
 using System.Globalization;
 using System.Threading;
@@ -65,8 +65,8 @@ namespace ComplexNumberGrapher
 				APIVersion = new Version(3, 3),
 				Profile = ContextProfile.Compatability,
 				IsEventDriven = Settings.EventDriven,
-				Location = new OpenToolkit.Mathematics.Vector2i(Settings.GraphX, Settings.GraphY),
-				Size = new OpenToolkit.Mathematics.Vector2i(Settings.GraphWidth, Settings.GraphHeight)
+				Location = new OpenTK.Mathematics.Vector2i(Settings.GraphX, Settings.GraphY),
+				Size = new OpenTK.Mathematics.Vector2i(Settings.GraphWidth, Settings.GraphHeight)
 			};
 
 			var graphWindow = new GraphWindow(pipe, gameSettings, nativeSettings);

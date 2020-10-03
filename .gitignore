@@ -15,13 +15,15 @@
 /FractalPlotter.runtimeconfig.json
 
 # Packages, fetched via NuGet
-/OpenToolkit.Windowing.GraphicsLibraryFramework.dll
-/OpenToolkit.Windowing.Desktop.dll
-/OpenToolkit.Windowing.Common.dll
-/OpenToolkit.Mathematics.dll
-/OpenToolkit.Input.dll
-/OpenToolkit.Graphics.dll
-/OpenToolkit.Core.dll
+/OpenTK.Windowing.GraphicsLibraryFramework.dll
+/OpenTK.Windowing.Desktop.dll
+/OpenTK.Windowing.Common.dll
+/OpenTK.OpenAL.dll
+/OpenTK.Mathematics.dll
+/OpenTK.Input.dll
+/OpenTK.Graphics.dll
+/OpenTK.Core.dll
+/OpenTK.Compute.dll
 /libglfw.so.3.3
 /glfw3-x86.dll
 /glfw3-x64.dll

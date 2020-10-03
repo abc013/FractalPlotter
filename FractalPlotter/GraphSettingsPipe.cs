@@ -1,5 +1,5 @@
 ﻿using ComplexNumberGrapher.Graphics;
-using OpenToolkit.Mathematics;
+using OpenTK.Mathematics;
 using System;
 
 namespace ComplexNumberGrapher
@@ -143,7 +143,7 @@ namespace ComplexNumberGrapher
 		public void SetCurrentShader(string name)
 		{
 			MasterRenderer.ChangeShader(name);
-			graphWindow.IsFocused = true;
+			graphWindow.Focus();
 		}
 
 		/// <summary>
@@ -152,7 +152,7 @@ namespace ComplexNumberGrapher
 		public void SetCurrentPalette(string name)
 		{
 			MasterRenderer.ChangePalette(name);
-			graphWindow.IsFocused = true;
+			graphWindow.Focus();
 		}
 
 		/// <summary>
@@ -161,7 +161,7 @@ namespace ComplexNumberGrapher
 		public void AddPoint(Vector3d location)
 		{
 			PointManager.Add(location, Utils.RandomColor());
-			graphWindow.IsFocused = true;
+			graphWindow.Focus();
 		}
 
 		/// <summary>

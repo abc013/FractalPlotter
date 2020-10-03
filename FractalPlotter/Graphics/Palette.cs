@@ -1,4 +1,4 @@
-﻿using OpenToolkit.Graphics.OpenGL;
+﻿using OpenTK.Graphics.OpenGL;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
@@ -31,7 +31,7 @@ namespace ComplexNumberGrapher.Graphics
 			GL.TexParameter(TextureTarget.Texture1D, TextureParameterName.TextureMinFilter, (int)All.Nearest);
 			GL.TexParameter(TextureTarget.Texture1D, TextureParameterName.TextureMagFilter, (int)All.Nearest);
 
-			GL.TexImage1D(TextureTarget.Texture1D, 0, PixelInternalFormat.Rgba32f, rect.Width, 0, OpenToolkit.Graphics.OpenGL.PixelFormat.Rgba, PixelType.Float, data);
+			GL.TexImage1D(TextureTarget.Texture1D, 0, PixelInternalFormat.Rgba32f, rect.Width, 0, OpenTK.Graphics.OpenGL.PixelFormat.Rgba, PixelType.Float, data);
 
 			GL.BindTexture(TextureTarget.Texture1D, 0);
 
