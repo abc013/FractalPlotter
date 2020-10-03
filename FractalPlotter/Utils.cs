@@ -36,7 +36,7 @@ namespace ComplexNumberGrapher
 
 			if (float.TryParse(text, out var result))
 				return result;
-			
+
 			return @default;
 		}
 

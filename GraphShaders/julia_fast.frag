@@ -28,7 +28,7 @@ void main()
     for(i=0; i < imax; i++)
 	{
         float x = (z.x * z.x - z.y * z.y) + c.x;
-        float y = (z.y * z.x + z.x * z.y) + c.y;
+        float y = 2 * (z.y * z.x) + c.y;
 
         if((x * x + y * y) > 4.0) break;
         z.x = x;
