@@ -58,7 +58,7 @@
 			this.fancyCheck.Location = new System.Drawing.Point(12, 211);
 			this.fancyCheck.Name = "fancyCheck";
 			this.fancyCheck.Size = new System.Drawing.Size(106, 36);
-			this.fancyCheck.TabIndex = 0;
+			this.fancyCheck.TabIndex = 1;
 			this.fancyCheck.Text = "Fancy";
 			this.fancyCheck.UseVisualStyleBackColor = true;
 			// 
@@ -92,42 +92,42 @@
 			this.locY.Location = new System.Drawing.Point(107, 408);
 			this.locY.Name = "locY";
 			this.locY.Size = new System.Drawing.Size(89, 39);
-			this.locY.TabIndex = 4;
+			this.locY.TabIndex = 5;
 			// 
 			// locZ
 			// 
 			this.locZ.Location = new System.Drawing.Point(202, 408);
 			this.locZ.Name = "locZ";
 			this.locZ.Size = new System.Drawing.Size(89, 39);
-			this.locZ.TabIndex = 4;
+			this.locZ.TabIndex = 6;
 			// 
 			// scaleX
 			// 
 			this.scaleX.Location = new System.Drawing.Point(12, 494);
 			this.scaleX.Name = "scaleX";
 			this.scaleX.Size = new System.Drawing.Size(279, 39);
-			this.scaleX.TabIndex = 4;
+			this.scaleX.TabIndex = 7;
 			// 
 			// rotX
 			// 
 			this.rotX.Location = new System.Drawing.Point(12, 575);
 			this.rotX.Name = "rotX";
 			this.rotX.Size = new System.Drawing.Size(89, 39);
-			this.rotX.TabIndex = 4;
+			this.rotX.TabIndex = 8;
 			// 
 			// rotY
 			// 
 			this.rotY.Location = new System.Drawing.Point(107, 575);
 			this.rotY.Name = "rotY";
 			this.rotY.Size = new System.Drawing.Size(89, 39);
-			this.rotY.TabIndex = 4;
+			this.rotY.TabIndex = 9;
 			// 
 			// rotZ
 			// 
 			this.rotZ.Location = new System.Drawing.Point(202, 575);
 			this.rotZ.Name = "rotZ";
 			this.rotZ.Size = new System.Drawing.Size(89, 39);
-			this.rotZ.TabIndex = 4;
+			this.rotZ.TabIndex = 10;
 			// 
 			// locText
 			// 
@@ -166,7 +166,7 @@
 			this.ShaderList.Name = "ShaderList";
 			this.ShaderList.ScrollAlwaysVisible = true;
 			this.ShaderList.Size = new System.Drawing.Size(310, 162);
-			this.ShaderList.TabIndex = 5;
+			this.ShaderList.TabIndex = 0;
 			this.ShaderList.SelectedIndexChanged += new System.EventHandler(this.changeShader);
 			// 
 			// shaderText
@@ -186,7 +186,7 @@
 			this.PaletteList.Name = "PaletteList";
 			this.PaletteList.ScrollAlwaysVisible = true;
 			this.PaletteList.Size = new System.Drawing.Size(309, 66);
-			this.PaletteList.TabIndex = 6;
+			this.PaletteList.TabIndex = 3;
 			this.PaletteList.SelectedIndexChanged += new System.EventHandler(this.changePalette);
 			// 
 			// label1
@@ -204,7 +204,7 @@
 			this.dimensionCheck.Location = new System.Drawing.Point(124, 211);
 			this.dimensionCheck.Name = "dimensionCheck";
 			this.dimensionCheck.Size = new System.Drawing.Size(76, 36);
-			this.dimensionCheck.TabIndex = 0;
+			this.dimensionCheck.TabIndex = 2;
 			this.dimensionCheck.Text = "3D";
 			this.dimensionCheck.UseVisualStyleBackColor = true;
 			// 
@@ -213,21 +213,21 @@
 			this.dBox.Location = new System.Drawing.Point(202, 658);
 			this.dBox.Name = "dBox";
 			this.dBox.Size = new System.Drawing.Size(89, 39);
-			this.dBox.TabIndex = 4;
+			this.dBox.TabIndex = 13;
 			// 
 			// c2Box
 			// 
 			this.c2Box.Location = new System.Drawing.Point(107, 658);
 			this.c2Box.Name = "c2Box";
 			this.c2Box.Size = new System.Drawing.Size(89, 39);
-			this.c2Box.TabIndex = 4;
+			this.c2Box.TabIndex = 12;
 			// 
 			// c1Box
 			// 
 			this.c1Box.Location = new System.Drawing.Point(12, 658);
 			this.c1Box.Name = "c1Box";
 			this.c1Box.Size = new System.Drawing.Size(89, 39);
-			this.c1Box.TabIndex = 4;
+			this.c1Box.TabIndex = 11;
 			// 
 			// label2
 			// 
@@ -244,7 +244,7 @@
 			this.button1.Location = new System.Drawing.Point(33, 747);
 			this.button1.Name = "button1";
 			this.button1.Size = new System.Drawing.Size(229, 38);
-			this.button1.TabIndex = 7;
+			this.button1.TabIndex = 14;
 			this.button1.Text = "Add Point";
 			this.button1.UseVisualStyleBackColor = true;
 			this.button1.Click += new System.EventHandler(this.addPoint);
