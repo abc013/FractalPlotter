@@ -17,7 +17,7 @@ namespace ComplexNumberGrapher
 		/// <summary>
 		///  This is required because when setting some values coming from the graph window, the type event will be invoked and would write the value back, which causes problems.
 		/// </summary>
-		int updated;
+		bool receivesUpdate;
 
 		public SettingsWindow(GraphSettingsPipe pipe)
 		{
@@ -61,10 +61,11 @@ namespace ComplexNumberGrapher
 		/// </summary>
 		public void UpdateTranslation()
 		{
-			updated += 3;
+			receivesUpdate = true;
 			locX.Text = Camera.Location.X.ToString();
 			locY.Text = Camera.Location.Y.ToString();
 			locZ.Text = Camera.Location.Z.ToString();
+			receivesUpdate = false;
 		}
 
 		/// <summary>
@@ -72,8 +73,9 @@ namespace ComplexNumberGrapher
 		/// </summary>
 		public void UpdateScale()
 		{
-			updated += 1;
+			receivesUpdate = true;
 			scaleX.Text = Camera.Scale.X.ToString();
+			receivesUpdate = false;
 		}
 
 		/// <summary>
@@ -81,10 +83,11 @@ namespace ComplexNumberGrapher
 		/// </summary>
 		public void UpdateRotation()
 		{
-			//updated += 3;
+			receivesUpdate = true;
 			rotX.Text = Camera.Rotation.X.ToString();
 			rotY.Text = Camera.Rotation.Y.ToString();
 			rotZ.Text = Camera.Rotation.Z.ToString();
+			receivesUpdate = false;
 		}
 
 		/// <summary>
@@ -92,10 +95,11 @@ namespace ComplexNumberGrapher
 		/// </summary>
 		public void UpdateParameters()
 		{
-			updated += 3;
+			receivesUpdate = true;
 			c1Box.Text = MasterRenderer.Factor1.X.ToString();
 			c2Box.Text = MasterRenderer.Factor1.Y.ToString();
 			dBox.Text = MasterRenderer.Factor2.ToString();
+			receivesUpdate = false;
 		}
 
 		/// <summary>
@@ -200,11 +204,9 @@ namespace ComplexNumberGrapher
 		/// </summary>
 		void setTranslation(object sender, EventArgs e)
 		{
-			if (updated > 0)
-			{
-				updated -= 1;
+			if (receivesUpdate)
 				return;
-			}
+
 			var x = Utils.ToDouble(locX.Text);
 			var y = Utils.ToDouble(locY.Text);
 			var z = Utils.ToDouble(locZ.Text);
@@ -216,11 +218,9 @@ namespace ComplexNumberGrapher
 		/// </summary>
 		void setScale(object sender, EventArgs e)
 		{
-			if (updated > 0)
-			{
-				updated -= 1;
+			if (receivesUpdate)
 				return;
-			}
+
 			var sx = Utils.ToFloat(scaleX.Text);
 			pipe.SetScale(sx, sx, sx);
 		}
@@ -230,11 +230,9 @@ namespace ComplexNumberGrapher
 		/// </summary>
 		void setRotation(object sender, EventArgs e)
 		{
-			if (updated > 0)
-			{
-				updated -= 1;
+			if (receivesUpdate)
 				return;
-			}
+
 			var rx = Utils.ToFloat(rotX.Text, 0);
 			var ry = Utils.ToFloat(rotY.Text, 0);
 			var rz = Utils.ToFloat(rotZ.Text, 0);
@@ -246,11 +244,9 @@ namespace ComplexNumberGrapher
 		/// </summary>
 		void setParameters(object sender, EventArgs e)
 		{
-			if (updated > 0)
-			{
-				updated -= 1;
+			if (receivesUpdate)
 				return;
-			}
+
 			var c1 = Utils.ToFloat(c1Box.Text, 0);
 			var c2 = Utils.ToFloat(c2Box.Text, 0);
 			var d = Utils.ToFloat(dBox.Text, 0);
