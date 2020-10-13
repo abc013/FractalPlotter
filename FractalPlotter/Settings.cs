@@ -63,6 +63,11 @@ namespace ComplexNumberGrapher
 		public static float CameraSpeed = 0.01f;
 
 		/// <summary>
+		/// Allows modification of regulator speed. This determines how fast e.g. the c-Factors are changed when pressing keys.
+		/// </summary>
+		public static float RegulatorSpeed = 0.001f;
+
+		/// <summary>
 		/// Default scale.
 		/// </summary>
 		public static float Scale = 2f;

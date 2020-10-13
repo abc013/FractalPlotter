@@ -88,7 +88,7 @@ namespace ComplexNumberGrapher
 
 			if (dc1 != 0f || dc2 != 0f || di != 0)
 			{
-				MasterRenderer.Factor1 += new Vector2(dc1 * 0.001f, dc2 * 0.001f);
+				MasterRenderer.Factor1 += new Vector2(dc1 * Settings.RegulatorSpeed / Camera.Scale.X, dc2 * Settings.RegulatorSpeed / Camera.Scale.Y);
 
 				MasterRenderer.IMax += di;
 				if (MasterRenderer.IMax < 0)
