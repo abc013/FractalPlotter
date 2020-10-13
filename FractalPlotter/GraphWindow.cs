@@ -73,39 +73,45 @@ namespace ComplexNumberGrapher
 		{
 			base.OnUpdateFrame(args);
 
-			var x = 0f;
-			var y = 0f;
-			if (KeyboardState.IsKeyDown(Keys.Up))
-				y += 1f;
-			if (KeyboardState.IsKeyDown(Keys.Down))
-				y -= 1f;
-			if (KeyboardState.IsKeyDown(Keys.Right))
-				x += 1f;
-			if (KeyboardState.IsKeyDown(Keys.Left))
-				x -= 1f;
+			var x = checkKeyRegulator(Keys.Right, Keys.Left);
+			var y = checkKeyRegulator(Keys.Up, Keys.Down);
 
 			if (x != 0f || y != 0f)
 			{
-				Camera.Translate(x, y, 0f);
+				Camera.Translate(x, y, 0);
 				pipe.UpdateTranslation();
 			}
 
-			var f1 = 0f;
-			var f2 = 0f;
-			if (KeyboardState.IsKeyDown(Keys.Q))
-				f1 += 1f;
-			if (KeyboardState.IsKeyDown(Keys.A))
-				f1 -= 1f;
-			if (KeyboardState.IsKeyDown(Keys.W))
-				f2 += 1f;
-			if (KeyboardState.IsKeyDown(Keys.S))
-				f2 -= 1f;
+			var dc1 = checkKeyRegulator(Keys.Q, Keys.A);
+			var dc2 = checkKeyRegulator(Keys.W, Keys.S);
+			var di = checkKeyRegulator(Keys.E, Keys.D);
 
-			if (f1 != 0f || f2 != 0f)
+			if (dc1 != 0f || dc2 != 0f || di != 0)
 			{
-				MasterRenderer.Factor1 += new Vector2(f1 * 0.001f, f2 * 0.001f);
+				MasterRenderer.Factor1 += new Vector2(dc1 * 0.001f, dc2 * 0.001f);
+
+				MasterRenderer.IMax += di;
+				if (MasterRenderer.IMax < 0)
+					MasterRenderer.IMax = 0;
+
 				pipe.UpdateParameters();
 			}
+		}
+
+		/// <summary>
+		/// Checks whether two keys are pressed and determines a value based on it.
+		/// </summary>
+		/// <returns>if <c>up</c> is pressed, 1. if <c>down</c> is pressed, -1. if both or none are pressed, 0.</returns>
+		int checkKeyRegulator(Keys up, Keys down)
+		{
+			var delta = 0;
+
+			if (KeyboardState.IsKeyDown(up))
+				delta++;
+			if (KeyboardState.IsKeyDown(down))
+				delta--;
+
+			return delta;
 		}
 
 		/// <summary>

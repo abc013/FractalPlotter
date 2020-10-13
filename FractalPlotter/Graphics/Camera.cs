@@ -80,7 +80,7 @@ namespace ComplexNumberGrapher.Graphics
 		/// Move in the specified directions. The values will be multiplied by the camera speed as well.
 		/// In order to allow movement in deeper regions, moving is also being divided by the current scale.
 		/// </summary>
-		public static void Translate(float x, float y, float z)
+		public static void Translate(int x, int y, int z)
 		{
 			var speed = Settings.CameraSpeed;
 			Location += new Vector3(x * speed / Scale.X, y * speed / Scale.Y, z * speed / Scale.Z);

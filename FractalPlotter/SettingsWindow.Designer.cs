@@ -42,7 +42,7 @@
 			this.PaletteList = new System.Windows.Forms.ListBox();
 			this.label1 = new System.Windows.Forms.Label();
 			this.dimensionCheck = new System.Windows.Forms.CheckBox();
-			this.dBox = new System.Windows.Forms.TextBox();
+			this.imaxBox = new System.Windows.Forms.TextBox();
 			this.c2Box = new System.Windows.Forms.TextBox();
 			this.c1Box = new System.Windows.Forms.TextBox();
 			this.label2 = new System.Windows.Forms.Label();
@@ -208,12 +208,12 @@
 			this.dimensionCheck.Text = "3D";
 			this.dimensionCheck.UseVisualStyleBackColor = true;
 			// 
-			// dBox
+			// imaxBox
 			// 
-			this.dBox.Location = new System.Drawing.Point(202, 658);
-			this.dBox.Name = "dBox";
-			this.dBox.Size = new System.Drawing.Size(89, 39);
-			this.dBox.TabIndex = 13;
+			this.imaxBox.Location = new System.Drawing.Point(202, 658);
+			this.imaxBox.Name = "imaxBox";
+			this.imaxBox.Size = new System.Drawing.Size(89, 39);
+			this.imaxBox.TabIndex = 13;
 			// 
 			// c2Box
 			// 
@@ -235,9 +235,9 @@
 			this.label2.Location = new System.Drawing.Point(12, 623);
 			this.label2.Name = "label2";
 			this.label2.RightToLeft = System.Windows.Forms.RightToLeft.No;
-			this.label2.Size = new System.Drawing.Size(238, 32);
+			this.label2.Size = new System.Drawing.Size(274, 32);
 			this.label2.TabIndex = 3;
-			this.label2.Text = "Parameters (c1, c2, d)";
+			this.label2.Text = "Parameters (c1, c2, imax)";
 			// 
 			// button1
 			// 
@@ -269,7 +269,7 @@
 			this.Controls.Add(this.label2);
 			this.Controls.Add(this.c1Box);
 			this.Controls.Add(this.c2Box);
-			this.Controls.Add(this.dBox);
+			this.Controls.Add(this.imaxBox);
 			this.Controls.Add(this.dimensionCheck);
 			this.Controls.Add(this.label1);
 			this.Controls.Add(this.PaletteList);
@@ -321,7 +321,7 @@
 		private System.Windows.Forms.ListBox PaletteList;
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.CheckBox dimensionCheck;
-		private System.Windows.Forms.TextBox dBox;
+		private System.Windows.Forms.TextBox imaxBox;
 		private System.Windows.Forms.TextBox c2Box;
 		private System.Windows.Forms.TextBox c1Box;
 		private System.Windows.Forms.Label label2;

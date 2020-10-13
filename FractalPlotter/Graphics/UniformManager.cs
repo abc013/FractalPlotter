@@ -11,7 +11,7 @@ namespace ComplexNumberGrapher.Graphics
 		public const int ColorID = 1;
 		public const int TexCoordID = 2;
 
-		const int uniformCount = 7;
+		const int uniformCount = 6;
 
 		readonly int[] ids;
 
@@ -27,8 +27,7 @@ namespace ComplexNumberGrapher.Graphics
 			ids[2] = GL.GetUniformLocation(programID, "scale");
 			ids[3] = GL.GetUniformLocation(programID, "imax");
 			ids[4] = GL.GetUniformLocation(programID, "fac1");
-			ids[5] = GL.GetUniformLocation(programID, "fac2");
-			ids[6] = GL.GetUniformLocation(programID, "projection");
+			ids[5] = GL.GetUniformLocation(programID, "projection");
 
 			Utils.CheckError("UniformManager1 " + name);
 
@@ -54,16 +53,13 @@ namespace ComplexNumberGrapher.Graphics
 				GL.Uniform1(ids[2], Camera.Scale.X);
 
 			if (ids[3] >= 0)
-				GL.Uniform1(ids[3], Settings.IMax);
+				GL.Uniform1(ids[3], MasterRenderer.IMax);
 
 			if (ids[4] >= 0)
 				GL.Uniform2(ids[4], MasterRenderer.Factor1);
 
 			if (ids[5] >= 0)
-				GL.Uniform1(ids[5], MasterRenderer.Factor2);
-
-			if (ids[6] >= 0)
-				GL.UniformMatrix4(ids[6], true, ref Camera.CameraMatrix);
+				GL.UniformMatrix4(ids[5], true, ref Camera.CameraMatrix);
 		}
 	}
 }

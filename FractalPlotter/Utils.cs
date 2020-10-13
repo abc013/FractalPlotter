@@ -25,6 +25,22 @@ namespace ComplexNumberGrapher
 		}
 
 		/// <summary>
+		/// <c>String</c> to <c>int</c> conversion method. If empty, the <c>default</c> parameter will be used.
+		/// </summary>
+		/// <param name="text">Input to convert.</param>
+		/// <param name="default">Default value if input is null, empty, <c>.</c> or <c>-</c>.</param>
+		public static int ToInt(string text, int @default = 0)
+		{
+			if (string.IsNullOrWhiteSpace(text))
+				return @default;
+
+			if (int.TryParse(text, out var result))
+				return result;
+
+			return @default;
+		}
+
+		/// <summary>
 		/// <c>String</c> to <c>float</c> conversion method. If empty, the <c>default</c> parameter will be used.
 		/// </summary>
 		/// <param name="text">Input to convert.</param>

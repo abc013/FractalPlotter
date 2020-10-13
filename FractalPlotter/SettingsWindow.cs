@@ -48,8 +48,8 @@ namespace ComplexNumberGrapher
 			rotZ.KeyPress += keyPress;
 			rotZ.TextChanged += setRotation;
 
-			dBox.KeyPress += keyPress;
-			dBox.TextChanged += setParameters;
+			imaxBox.KeyPress += keyPressInteger;
+			imaxBox.TextChanged += setParameters;
 			c2Box.KeyPress += keyPress;
 			c2Box.TextChanged += setParameters;
 			c1Box.KeyPress += keyPress;
@@ -98,7 +98,7 @@ namespace ComplexNumberGrapher
 			receivesUpdate = true;
 			c1Box.Text = MasterRenderer.Factor1.X.ToString();
 			c2Box.Text = MasterRenderer.Factor1.Y.ToString();
-			dBox.Text = MasterRenderer.Factor2.ToString();
+			imaxBox.Text = MasterRenderer.IMax.ToString();
 			receivesUpdate = false;
 		}
 
@@ -200,6 +200,16 @@ namespace ComplexNumberGrapher
 		}
 
 		/// <summary>
+		/// KeyPress event which controls that no non-numerical positive integer values are inserted.
+		/// Modified code. Original from https://ourcodeworld.com/articles/read/507/how-to-allow-only-numbers-inside-a-textbox-in-winforms-c-sharp.
+		/// </summary>
+		void keyPressInteger(object sender, KeyPressEventArgs e)
+		{
+			if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar))
+				e.Handled = true;
+		}
+
+		/// <summary>
 		/// Checks and sets the translation and pipes it to the graph window then.
 		/// </summary>
 		void setTranslation(object sender, EventArgs e)
@@ -249,8 +259,8 @@ namespace ComplexNumberGrapher
 
 			var c1 = Utils.ToFloat(c1Box.Text, 0);
 			var c2 = Utils.ToFloat(c2Box.Text, 0);
-			var d = Utils.ToFloat(dBox.Text, 0);
-			pipe.SetParameters(c1, c2, d);
+			var imax = Utils.ToInt(imaxBox.Text, 0);
+			pipe.SetParameters(c1, c2, imax);
 		}
 
 		/// <summary>

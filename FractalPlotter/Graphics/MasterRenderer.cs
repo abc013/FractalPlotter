@@ -7,7 +7,7 @@ namespace ComplexNumberGrapher.Graphics
 	public static class MasterRenderer
 	{
 		public static Vector2 Factor1;
-		public static float Factor2;
+		public static int IMax;
 
 		static UniformManager defaultManager;
 		static int defaultShader;
@@ -24,7 +24,7 @@ namespace ComplexNumberGrapher.Graphics
 			Camera.Load();
 
 			Factor1 = new Vector2(Settings.Factor1X, Settings.Factor1Y);
-			Factor2 = Settings.Factor2;
+			IMax = Settings.IMax;
 
 			// Load in all the shaders found.
 			foreach (var name in FileManager.GetGraphShaderNames())

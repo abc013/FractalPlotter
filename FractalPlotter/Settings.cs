@@ -38,7 +38,7 @@ namespace ComplexNumberGrapher
 		/// <summary>
 		/// Maximal iteration number. Increase to get better results (as long as the palette has the same amount of different colors)
 		/// </summary>
-		public static int IMax = 100;
+		public static int IMax = 256;
 		/// <summary>
 		/// Draw fancy. Unused.
 		/// </summary>
@@ -88,10 +88,6 @@ namespace ComplexNumberGrapher
 		/// Default c2-factor.
 		/// </summary>
 		public static float Factor1Y = 0f;
-		/// <summary>
-		/// Default d-factor.
-		/// </summary>
-		public static float Factor2 = 0f;
 
 		/// <summary>
 		/// This method reads data from an existing settings.txt if possible. Otherwise it will use the default variables.

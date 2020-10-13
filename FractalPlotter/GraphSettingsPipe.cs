@@ -115,10 +115,10 @@ namespace ComplexNumberGrapher
 		/// <summary>
 		/// Set parameters in the graph window.
 		/// </summary>
-		public void SetParameters(float c1, float c2, float d)
+		public void SetParameters(float c1, float c2, int imax)
 		{
 			MasterRenderer.Factor1 = new Vector2(c1, c2);
-			MasterRenderer.Factor2 = d;
+			MasterRenderer.IMax = imax;
 		}
 
 		/// <summary>
