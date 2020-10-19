@@ -30,7 +30,7 @@ namespace ComplexNumberGrapher.Graphics
 			catch (System.Exception e)
 			{
 				Log.WriteException(e);
-				Log.WriteInfo("could not initialize shader {name}. Check exception.log for details.");
+				Log.WriteInfo($"could not initialize shader {name}. See shader info for details.");
 				return;
 			}
 
