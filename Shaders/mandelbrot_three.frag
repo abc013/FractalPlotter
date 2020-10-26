@@ -17,6 +17,7 @@ out vec4 color;
 // Original: http://nuclear.mutantstargoat.com/articles/sdr_fract/
 void main(void)
 {
+	double n = 3;
     dvec2 z, c;
 
     c.x = double(vs_texCoord.x) / double(scale) + exactlocation.x;

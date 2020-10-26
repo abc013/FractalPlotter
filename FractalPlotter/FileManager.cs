@@ -16,7 +16,7 @@ namespace ComplexNumberGrapher
 		/// <summary>
 		/// Directory where the shaders are in.
 		/// </summary>
-		public static readonly string GraphShaders = Current + "GraphShaders\\";
+		public static readonly string GraphShaders = Current + "Shaders\\";
 		/// <summary>
 		/// Directory where the palettes are in.
 		/// </summary>
