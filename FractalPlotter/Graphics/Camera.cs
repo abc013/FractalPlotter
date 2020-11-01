@@ -46,6 +46,8 @@ namespace ComplexNumberGrapher.Graphics
 			Scale = new Vector3(Settings.Scale);
 			Rotation = new Vector3();
 			Changed = true;
+
+			ResizeViewport(Settings.GraphWidth, Settings.GraphHeight);
 		}
 
 		/// <summary>

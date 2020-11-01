@@ -1,6 +1,7 @@
 ﻿using FractalPlotter.FractalPlotter;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Mathematics;
+using System;
 
 namespace ComplexNumberGrapher.Graphics
 {
@@ -15,6 +16,9 @@ namespace ComplexNumberGrapher.Graphics
 		static int currentShader;
 
 		static int currentPalette;
+
+		static int plane;
+		static int bufferID;
 
 		/// <summary>
 		/// Initialization process.
@@ -50,6 +54,23 @@ namespace ComplexNumberGrapher.Graphics
 			GL.Enable(EnableCap.AlphaTest);
 			GL.Enable(EnableCap.DepthTest);
 			GL.Enable(EnableCap.Blend);
+
+			// generate a GL Buffer with a plane in it and load it into GPU storage.
+			bufferID = GL.GenBuffer();
+			plane = GL.GenVertexArray();
+			GL.BindVertexArray(plane);
+			GL.BindBuffer(BufferTarget.ArrayBuffer, bufferID);
+			GL.BufferData(BufferTarget.ArrayBuffer, Vector.Size * 6, IntPtr.Zero, BufferUsageHint.DynamicRead);
+			updateFractalDisplay();
+
+			GL.EnableVertexAttribArray(UniformManager.PositionID);
+			GL.VertexAttribPointer(UniformManager.PositionID, 4, VertexAttribPointerType.Float, true, Vector.Size, 0);
+
+			GL.EnableVertexAttribArray(UniformManager.ColorID);
+			GL.VertexAttribPointer(UniformManager.ColorID, 4, VertexAttribPointerType.Float, true, Vector.Size, 16);
+
+			GL.EnableVertexAttribArray(UniformManager.TexCoordID);
+			GL.VertexAttribPointer(UniformManager.TexCoordID, 2, VertexAttribPointerType.Float, true, Vector.Size, 32);
 
 			// Check for GL errors.
 			Utils.CheckError("Load");
@@ -114,22 +135,9 @@ namespace ComplexNumberGrapher.Graphics
 
 				currentManager.Uniform();
 
-				var posID = UniformManager.PositionID;
-				var texcoordID = UniformManager.TexCoordID;
-				var colorID = UniformManager.ColorID;
-
-				GL.LoadIdentity();
-				GL.Begin(PrimitiveType.Quads);
-				GL.VertexAttrib4(colorID, (Vector4)Color4.White);
-				GL.VertexAttrib2(texcoordID, new Vector2(-Camera.Ratio * 2f, -1 * 2f));
-				GL.VertexAttrib4(posID, new Vector4(-1, -1, 0, 1));
-				GL.VertexAttrib2(texcoordID, new Vector2(Camera.Ratio * 2f, -1 * 2f));
-				GL.VertexAttrib4(posID, new Vector4(1, -1, 0, 1));
-				GL.VertexAttrib2(texcoordID, new Vector2(Camera.Ratio * 2f, 1 * 2f));
-				GL.VertexAttrib4(posID, new Vector4(1, 1, 0, 1));
-				GL.VertexAttrib2(texcoordID, new Vector2(-Camera.Ratio * 2f, 1 * 2f));
-				GL.VertexAttrib4(posID, new Vector4(-1, 1, 0, 1));
-				GL.End();
+				GL.BindVertexArray(plane);
+				GL.BindBuffer(BufferTarget.ArrayBuffer, bufferID);
+				GL.DrawArrays(PrimitiveType.Triangles, 0, 6);
 			}
 
 			Utils.CheckError("Render");
@@ -145,7 +153,29 @@ namespace ComplexNumberGrapher.Graphics
 
 			Camera.ResizeViewport(width, height);
 
+			updateFractalDisplay();
+
 			Utils.CheckError("Resize");
+		}
+
+		/// <summary>
+		/// Generate the fractal plane and load it into GPU memory.
+		/// </summary>
+		static void updateFractalDisplay()
+		{
+			var array = new[]
+			{
+				new Vector(new Vector4(-1, -1, 0, 1), Color4.White, new Vector2(-Camera.Ratio * 2f, -1 * 2f)),
+				new Vector(new Vector4(-1, 1, 0, 1), Color4.White, new Vector2(-Camera.Ratio * 2f, 1 * 2f)),
+				new Vector(new Vector4(1, -1, 0, 1), Color4.White, new Vector2(Camera.Ratio * 2f, -1 * 2f)),
+				new Vector(new Vector4(1, -1, 0, 1), Color4.White, new Vector2(Camera.Ratio * 2f, -1 * 2f)),
+				new Vector(new Vector4(-1, 1, 0, 1), Color4.White, new Vector2(-Camera.Ratio * 2f, 1 * 2f)),
+				new Vector(new Vector4(1, 1, 0, 1), Color4.White, new Vector2(Camera.Ratio * 2f, 1 * 2f)),
+			};
+
+			GL.BindVertexArray(plane);
+			GL.BindBuffer(BufferTarget.ArrayBuffer, bufferID);
+			GL.BufferSubData(BufferTarget.ArrayBuffer, IntPtr.Zero, Vector.Size * 6, array);
 		}
 
 		/// <summary>
