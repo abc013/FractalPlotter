@@ -74,7 +74,7 @@ namespace ComplexNumberGrapher
 		public void UpdateScale()
 		{
 			receivesUpdate = true;
-			scaleX.Text = Camera.Scale.X.ToString();
+			scaleX.Text = Camera.Scale.ToString();
 			receivesUpdate = false;
 		}
 
@@ -231,8 +231,8 @@ namespace ComplexNumberGrapher
 			if (receivesUpdate)
 				return;
 
-			var sx = Utils.ToFloat(scaleX.Text);
-			pipe.SetScale(sx, sx, sx);
+			var s = Utils.ToFloat(scaleX.Text);
+			pipe.SetScale(s);
 		}
 
 		/// <summary>

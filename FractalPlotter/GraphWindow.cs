@@ -88,7 +88,7 @@ namespace ComplexNumberGrapher
 
 			if (dc1 != 0f || dc2 != 0f || di != 0)
 			{
-				MasterRenderer.Factor1 += new Vector2(dc1 * Settings.RegulatorSpeed / Camera.Scale.X, dc2 * Settings.RegulatorSpeed / Camera.Scale.Y);
+				MasterRenderer.Factor1 += new Vector2(dc1 * Settings.RegulatorSpeed / Camera.Scale, dc2 * Settings.RegulatorSpeed / Camera.Scale);
 
 				MasterRenderer.IMax += di;
 				if (MasterRenderer.IMax < 0)
@@ -144,8 +144,8 @@ namespace ComplexNumberGrapher
 			var screenX = (MousePosition.X / ClientSize.X) * 4d - 2d;
 			var screenY = (MousePosition.Y / ClientSize.Y) * 4d - 2d;
 			screenX *= Camera.Ratio;
-			screenX /= Camera.Scale.X;
-			screenY /= -Camera.Scale.Y;
+			screenX /= Camera.Scale;
+			screenY /= -Camera.Scale;
 			screenX += Camera.ExactLocation.X;
 			screenY += Camera.ExactLocation.Y;
 

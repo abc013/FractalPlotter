@@ -30,10 +30,10 @@ namespace ComplexNumberGrapher.Graphics
 
 			// Render lines to give a sense where the point is exactly.
 			GL.Begin(PrimitiveType.Lines);
-			GL.VertexAttrib4(posID, new Vector4d(Position + new Vector3d(0.05d / Camera.Scale.X, 0, 0), 1.0f));
-			GL.VertexAttrib4(posID, new Vector4d(Position - new Vector3d(0.05d / Camera.Scale.X, 0, 0), 1.0f));
-			GL.VertexAttrib4(posID, new Vector4d(Position + new Vector3d(0, 0.05d / Camera.Scale.X, 0), 1.0f));
-			GL.VertexAttrib4(posID, new Vector4d(Position - new Vector3d(0, 0.05d / Camera.Scale.X, 0), 1.0f));
+			GL.VertexAttrib4(posID, new Vector4d(Position + new Vector3d(0.05d / Camera.Scale, 0, 0), 1.0f));
+			GL.VertexAttrib4(posID, new Vector4d(Position - new Vector3d(0.05d / Camera.Scale, 0, 0), 1.0f));
+			GL.VertexAttrib4(posID, new Vector4d(Position + new Vector3d(0, 0.05d / Camera.Scale, 0), 1.0f));
+			GL.VertexAttrib4(posID, new Vector4d(Position - new Vector3d(0, 0.05d / Camera.Scale, 0), 1.0f));
 			GL.End();
 
 			// Check for GL errors.

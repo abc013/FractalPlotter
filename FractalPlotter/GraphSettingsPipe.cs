@@ -99,9 +99,9 @@ namespace ComplexNumberGrapher
 		/// <summary>
 		/// Set scale in the graph window.
 		/// </summary>
-		public void SetScale(float x, float y, float z)
+		public void SetScale(float s)
 		{
-			Camera.SetScale(x, y, z);
+			Camera.SetScale(s);
 		}
 
 		/// <summary>

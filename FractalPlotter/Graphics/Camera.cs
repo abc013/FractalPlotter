@@ -28,7 +28,7 @@ namespace ComplexNumberGrapher.Graphics
 		/// <summary>
 		/// Scale. This parameter is accessible in shaders.
 		/// </summary>
-		public static Vector3 Scale { get; private set; }
+		public static float Scale { get; private set; }
 		/// <summary>
 		/// Rotation. Unused.
 		/// </summary>
@@ -43,7 +43,7 @@ namespace ComplexNumberGrapher.Graphics
 		{
 			Location = new Vector3(Settings.LocationX, Settings.LocationY, Settings.LocationZ);
 			ExactLocation = new Vector3d(Settings.LocationX, Settings.LocationY, Settings.LocationZ);
-			Scale = new Vector3(Settings.Scale);
+			Scale = Settings.Scale;
 			Rotation = new Vector3();
 			Changed = true;
 
@@ -63,9 +63,9 @@ namespace ComplexNumberGrapher.Graphics
 		/// <summary>
 		/// Set new scale.
 		/// </summary>
-		public static void SetScale(float sx, float sy, float sz)
+		public static void SetScale(float s)
 		{
-			Scale = new Vector3(sx, sy, sz);
+			Scale = s;
 			Changed = true;
 		}
 
@@ -85,8 +85,8 @@ namespace ComplexNumberGrapher.Graphics
 		public static void Translate(int x, int y, int z)
 		{
 			var speed = Settings.CameraSpeed;
-			Location += new Vector3(x * speed / Scale.X, y * speed / Scale.Y, z * speed / Scale.Z);
-			ExactLocation += new Vector3d(x * (double)speed / Scale.X, y * (double)speed / Scale.Y, z * (double)speed / Scale.Z);
+			Location += new Vector3(x * speed / Scale, y * speed / Scale, z * speed / Scale);
+			ExactLocation += new Vector3d(x * (double)speed / Scale, y * (double)speed / Scale, z * (double)speed / Scale);
 			Changed = true;
 		}
 
@@ -131,14 +131,14 @@ namespace ComplexNumberGrapher.Graphics
 			var locMatrix = Matrix4.CreateTranslation(new Vector3(-Location.X, -Location.Y, Location.Z));
 
 			// TODO for 3D space
-			//var rotMatrixX = Matrix4.CreateRotationX(Rotation.X);
-			//var rotMatrixY = Matrix4.CreateRotationY(Rotation.Y);
-			//var rotMatrixZ = Matrix4.CreateRotationY(Rotation.Z);
+			var rotMatrixX = Matrix4.CreateRotationX(Rotation.X);
+			var rotMatrixY = Matrix4.CreateRotationY(Rotation.Y);
+			var rotMatrixZ = Matrix4.CreateRotationZ(Rotation.Z);
 
 			// TODO: currently only x-scale is used.
-			var scaleMatrix = Matrix4.CreateScale(Scale.X / (2f * Ratio), Scale.Y / 2f, Scale.Z / 2f);
+			var scaleMatrix = Matrix4.CreateScale(Scale / (2f * Ratio), Scale / 2f, Scale / 2f);
 
-			CameraMatrix = locMatrix * scaleMatrix;
+			CameraMatrix = locMatrix * rotMatrixX * rotMatrixY * rotMatrixZ * scaleMatrix;
 		}
 	}
 }
