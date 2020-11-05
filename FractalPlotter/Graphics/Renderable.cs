@@ -1,7 +1,7 @@
 ﻿using OpenTK.Graphics.OpenGL;
 using System;
 
-namespace ComplexNumberGrapher.Graphics
+namespace FractalPlotter.Graphics
 {
 	/// <summary>
 	/// Generate a renderable that can be loaded into GPU memory and then rendered.

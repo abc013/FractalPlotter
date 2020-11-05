@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace ComplexNumberGrapher
+namespace FractalPlotter
 {
 	public static class Log
 	{

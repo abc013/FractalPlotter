@@ -3,7 +3,7 @@ using OpenTK.Mathematics;
 using System;
 using System.Diagnostics;
 
-namespace ComplexNumberGrapher
+namespace FractalPlotter
 {
 	public static class Utils
 	{

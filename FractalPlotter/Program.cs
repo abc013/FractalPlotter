@@ -4,7 +4,7 @@ using System.Globalization;
 using System.Threading;
 using System.Windows.Forms;
 
-namespace ComplexNumberGrapher
+namespace FractalPlotter
 {
 	static class Program
 	{

@@ -1,7 +1,7 @@
 ﻿using OpenTK.Graphics.OpenGL;
 using OpenTK.Mathematics;
 
-namespace ComplexNumberGrapher.Graphics
+namespace FractalPlotter.Graphics
 {
 	/// <summary>
 	/// Class that contains the variable locations of a shader. These are needed to load in the variables at the right spots.

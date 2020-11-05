@@ -2,7 +2,7 @@
 using System.IO;
 using System.Linq;
 
-namespace ComplexNumberGrapher
+namespace FractalPlotter
 {
 	public class Settings
 	{

@@ -1,8 +1,8 @@
-﻿using ComplexNumberGrapher.Graphics;
+﻿using FractalPlotter.Graphics;
 using System;
 using System.Windows.Forms;
 
-namespace ComplexNumberGrapher
+namespace FractalPlotter
 {
 	/// <summary>
 	/// Settings window supported by Windows Forms.

@@ -2,7 +2,7 @@
 using System;
 using System.Runtime.Serialization;
 
-namespace ComplexNumberGrapher
+namespace FractalPlotter
 {
 	/// <summary>
 	/// Exception type to use when a graphic error happens.

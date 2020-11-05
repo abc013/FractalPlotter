@@ -1,4 +1,4 @@
-﻿using ComplexNumberGrapher.Graphics;
+﻿using FractalPlotter.Graphics;
 using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
@@ -6,7 +6,7 @@ using OpenTK.Windowing.GraphicsLibraryFramework;
 using System.ComponentModel;
 using System.Diagnostics;
 
-namespace ComplexNumberGrapher
+namespace FractalPlotter
 {
 	/// <summary>
 	/// Graph window supported by OpenTK.

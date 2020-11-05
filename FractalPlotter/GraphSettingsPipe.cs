@@ -1,8 +1,8 @@
-﻿using ComplexNumberGrapher.Graphics;
+﻿using FractalPlotter.Graphics;
 using OpenTK.Mathematics;
 using System;
 
-namespace ComplexNumberGrapher
+namespace FractalPlotter
 {
 	/// <summary>
 	/// Class to use for information transmittion between the graph window and the settings window.

@@ -2,7 +2,7 @@
 using System.IO;
 using System.Linq;
 
-namespace ComplexNumberGrapher
+namespace FractalPlotter
 {
 	/// <summary>
 	/// Class that keeps track of all the file stuff going on.

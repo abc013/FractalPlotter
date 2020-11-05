@@ -1,6 +1,6 @@
 ﻿using OpenTK.Mathematics;
 
-namespace ComplexNumberGrapher.Graphics
+namespace FractalPlotter.Graphics
 {
 	/// <summary>
 	/// Class used for describing a vector that can be uploaded into GPU memory.

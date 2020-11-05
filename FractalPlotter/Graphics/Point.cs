@@ -1,7 +1,7 @@
 ﻿using OpenTK.Graphics.OpenGL;
 using OpenTK.Mathematics;
 
-namespace ComplexNumberGrapher.Graphics
+namespace FractalPlotter.Graphics
 {
 	/// <summary>
 	/// Class representing a point in 3D space.

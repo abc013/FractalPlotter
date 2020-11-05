@@ -1,6 +1,6 @@
 ﻿using OpenTK.Mathematics;
 
-namespace ComplexNumberGrapher.Graphics
+namespace FractalPlotter.Graphics
 {
 	/// <summary>
 	/// Class to keep track of movement in virtual space.

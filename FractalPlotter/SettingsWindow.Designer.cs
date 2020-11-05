@@ -1,4 +1,4 @@
-﻿namespace ComplexNumberGrapher
+﻿namespace FractalPlotter
 {
 	partial class SettingsWindow
 	{

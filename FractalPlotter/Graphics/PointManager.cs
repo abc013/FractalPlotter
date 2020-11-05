@@ -1,7 +1,7 @@
 ﻿using OpenTK.Mathematics;
 using System.Collections.Generic;
 
-namespace ComplexNumberGrapher.Graphics
+namespace FractalPlotter.Graphics
 {
 	/// <summary>
 	/// Class that keeps track of all points.
