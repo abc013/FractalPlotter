@@ -1,4 +1,5 @@
 ﻿using OpenTK.Graphics.OpenGL;
+using OpenTK.Mathematics;
 
 namespace ComplexNumberGrapher.Graphics
 {
@@ -11,7 +12,7 @@ namespace ComplexNumberGrapher.Graphics
 		public const int ColorID = 1;
 		public const int TexCoordID = 2;
 
-		const int uniformCount = 7;
+		const int uniformCount = 9;
 
 		readonly int[] ids;
 
@@ -29,6 +30,8 @@ namespace ComplexNumberGrapher.Graphics
 			ids[4] = GL.GetUniformLocation(programID, "imax");
 			ids[5] = GL.GetUniformLocation(programID, "fac1");
 			ids[6] = GL.GetUniformLocation(programID, "projection");
+			ids[7] = GL.GetUniformLocation(programID, "modelView");
+			ids[8] = GL.GetUniformLocation(programID, "modelColor");
 
 			Utils.CheckError("UniformManager1 " + name);
 
@@ -62,8 +65,27 @@ namespace ComplexNumberGrapher.Graphics
 			if (ids[5] >= 0)
 				GL.Uniform2(ids[5], MasterRenderer.Factor1);
 
+			UniformProjection(Camera.CameraMatrix);
+			UniformModelView(Camera.IdentityMatrix);
+			UniformColor(Color4.White);
+		}
+
+		public void UniformProjection(Matrix4 matrix)
+		{
 			if (ids[6] >= 0)
-				GL.UniformMatrix4(ids[6], true, ref Camera.CameraMatrix);
+				GL.UniformMatrix4(ids[6], false, ref matrix);
+		}
+
+		public void UniformModelView(Matrix4 objectMatrix)
+		{
+			if (ids[7] >= 0)
+				GL.UniformMatrix4(ids[7], false, ref objectMatrix);
+		}
+
+		public void UniformColor(Color4 color)
+		{
+			if (ids[8] >= 0)
+				GL.Uniform4(ids[8], color);
 		}
 	}
 }

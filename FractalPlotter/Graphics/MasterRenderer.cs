@@ -1,7 +1,6 @@
 ﻿using FractalPlotter.FractalPlotter;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Mathematics;
-using System;
 
 namespace ComplexNumberGrapher.Graphics
 {
@@ -17,8 +16,8 @@ namespace ComplexNumberGrapher.Graphics
 
 		static int currentPalette;
 
-		static int plane;
-		static int bufferID;
+		static Renderable planeRenderable;
+		static Point crosshair1, crosshair2;
 
 		/// <summary>
 		/// Initialization process.
@@ -43,34 +42,25 @@ namespace ComplexNumberGrapher.Graphics
 			ChangePalette(Settings.DefaultPalette);
 
 			// Add some debug points.
-			PointManager.Add(Vector3d.Zero, Color4.Violet);
-			PointManager.Add(Vector3d.One, Color4.Yellow);
-			PointManager.Add(Vector3d.UnitX, Color4.Blue);
-			PointManager.Add(-Vector3d.UnitX, Color4.Red);
+			PointRenderable.Load();
+
+			PointManager.Add(Vector3.Zero, Color4.Violet);
+			PointManager.Add(Vector3.UnitY, Color4.Red);
+			PointManager.Add(-Vector3.UnitY, Color4.Red);
+			PointManager.Add(Vector3.UnitX, Color4.Blue);
+			PointManager.Add(-Vector3.UnitX, Color4.Blue);
+
+			crosshair1 = new Point(Vector3.Zero, Color4.Black, 0.012f);
+			crosshair2 = new Point(new Vector3(0,0,-0.000001f), Color4.White);
 
 			// Configure GL properly.
 			GL.ClearColor(Color4.Black);
-			GL.Enable(EnableCap.ScissorTest);
-			GL.Enable(EnableCap.AlphaTest);
-			GL.Enable(EnableCap.DepthTest);
+
 			GL.Enable(EnableCap.Blend);
+			GL.LineWidth(2f);
 
 			// generate a GL Buffer with a plane in it and load it into GPU storage.
-			bufferID = GL.GenBuffer();
-			plane = GL.GenVertexArray();
-			GL.BindVertexArray(plane);
-			GL.BindBuffer(BufferTarget.ArrayBuffer, bufferID);
-			GL.BufferData(BufferTarget.ArrayBuffer, Vector.Size * 6, IntPtr.Zero, BufferUsageHint.DynamicRead);
-			updateFractalDisplay();
-
-			GL.EnableVertexAttribArray(UniformManager.PositionID);
-			GL.VertexAttribPointer(UniformManager.PositionID, 4, VertexAttribPointerType.Float, true, Vector.Size, 0);
-
-			GL.EnableVertexAttribArray(UniformManager.ColorID);
-			GL.VertexAttribPointer(UniformManager.ColorID, 4, VertexAttribPointerType.Float, true, Vector.Size, 16);
-
-			GL.EnableVertexAttribArray(UniformManager.TexCoordID);
-			GL.VertexAttribPointer(UniformManager.TexCoordID, 2, VertexAttribPointerType.Float, true, Vector.Size, 32);
+			planeRenderable = new Renderable(getPlaneVectors());
 
 			// Check for GL errors.
 			Utils.CheckError("Load");
@@ -122,25 +112,39 @@ namespace ComplexNumberGrapher.Graphics
 
 			GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-			GL.UseProgram(defaultShader);
-			defaultManager.Uniform();
-
-			if (!Settings.Fancy)
-				PointManager.Render();
-
 			if (!Settings.ThreeDimensional)
 			{
 				GL.UseProgram(currentShader);
 				GL.BindTexture(TextureTarget.Texture1D, currentPalette);
-
 				currentManager.Uniform();
 
-				GL.BindVertexArray(plane);
-				GL.BindBuffer(BufferTarget.ArrayBuffer, bufferID);
-				GL.DrawArrays(PrimitiveType.Triangles, 0, 6);
+				planeRenderable.Render();
 			}
 
+			if (!Settings.Fancy)
+			{
+				GL.UseProgram(defaultShader);
+				defaultManager.Uniform();
+
+				PointManager.Render();
+
+				defaultManager.UniformProjection(Camera.ScaleMatrix);
+				crosshair1.Render();
+				crosshair2.Render();
+			}
+
+			// Check for GL errors.
 			Utils.CheckError("Render");
+		}
+
+		public static void UniformColor(Color4 color)
+		{
+			defaultManager.UniformColor(color);
+		}
+
+		public static void UniformObjectMatrix(Matrix4 objectMatrix)
+		{
+			defaultManager.UniformModelView(objectMatrix);
 		}
 
 		/// <summary>
@@ -153,17 +157,14 @@ namespace ComplexNumberGrapher.Graphics
 
 			Camera.ResizeViewport(width, height);
 
-			updateFractalDisplay();
+			planeRenderable.ChangeBuffer(getPlaneVectors());
 
 			Utils.CheckError("Resize");
 		}
 
-		/// <summary>
-		/// Generate the fractal plane and load it into GPU memory.
-		/// </summary>
-		static void updateFractalDisplay()
+		static Vector[] getPlaneVectors()
 		{
-			var array = new[]
+			return new[]
 			{
 				new Vector(new Vector4(-1, -1, 0, 1), Color4.White, new Vector2(-Camera.Ratio * 2f, -1 * 2f)),
 				new Vector(new Vector4(-1, 1, 0, 1), Color4.White, new Vector2(-Camera.Ratio * 2f, 1 * 2f)),
@@ -172,10 +173,6 @@ namespace ComplexNumberGrapher.Graphics
 				new Vector(new Vector4(-1, 1, 0, 1), Color4.White, new Vector2(-Camera.Ratio * 2f, 1 * 2f)),
 				new Vector(new Vector4(1, 1, 0, 1), Color4.White, new Vector2(Camera.Ratio * 2f, 1 * 2f)),
 			};
-
-			GL.BindVertexArray(plane);
-			GL.BindBuffer(BufferTarget.ArrayBuffer, bufferID);
-			GL.BufferSubData(BufferTarget.ArrayBuffer, IntPtr.Zero, Vector.Size * 6, array);
 		}
 
 		/// <summary>
@@ -183,6 +180,11 @@ namespace ComplexNumberGrapher.Graphics
 		/// </summary>
 		public static void Dispose()
 		{
+			planeRenderable.Dispose();
+
+			PointManager.Dispose();
+			PointRenderable.Dispose();
+
 			ShaderManager.Dispose();
 			PaletteManager.Dispose();
 		}

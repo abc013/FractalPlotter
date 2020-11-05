@@ -10,16 +10,11 @@ namespace ComplexNumberGrapher.Graphics
 	{
 		static readonly List<Point> points = new List<Point>();
 
-		public static Point Add(Vector3d position, Color4 color)
+		public static Point Add(Vector3 position, Color4 color)
 		{
-			var point = new Point
-			{
-				Position = position,
-				Color = color
-			};
+			var point = new Point(position, color);
 
 			points.Add(point);
-
 			return point;
 		}
 
@@ -32,6 +27,11 @@ namespace ComplexNumberGrapher.Graphics
 		{
 			foreach (var point in points)
 				point.Render();
+		}
+
+		public static void Dispose()
+		{
+			points.Clear();
 		}
 	}
 }

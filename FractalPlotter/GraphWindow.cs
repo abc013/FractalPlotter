@@ -120,7 +120,10 @@ namespace ComplexNumberGrapher
 		protected override void OnMouseDown(MouseButtonEventArgs e)
 		{
 			if (e.Button == MouseButton.Right)
-				pipe.AddPoint(getCursorLocation());
+			{
+				var location = getCursorLocation();
+				pipe.AddPoint(new Vector3((float)location.X, (float)location.Y, (float)location.Z));
+			}
 		}
 
 		/// <summary>

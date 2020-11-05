@@ -158,7 +158,7 @@ namespace ComplexNumberGrapher
 		/// <summary>
 		/// Adds another point in the graph window.
 		/// </summary>
-		public void AddPoint(Vector3d location)
+		public void AddPoint(Vector3 location)
 		{
 			PointManager.Add(location, Utils.RandomColor());
 			graphWindow.Focus();

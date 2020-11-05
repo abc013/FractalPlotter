@@ -268,7 +268,7 @@ namespace ComplexNumberGrapher
 		/// </summary>
 		void addPoint(object sender, EventArgs e)
 		{
-			pipe.AddPoint(Camera.ExactLocation);
+			pipe.AddPoint(Camera.Location);
 		}
 	}
 }

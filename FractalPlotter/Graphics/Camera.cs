@@ -10,7 +10,10 @@ namespace ComplexNumberGrapher.Graphics
 		/// <summary>
 		/// Camera matrix used for points and other geometry.
 		/// </summary>
+		public static Matrix4 IdentityMatrix = Matrix4.Identity;
 		public static Matrix4 CameraMatrix;
+		public static Matrix4 ScaleMatrix;
+		public static Matrix4 InverseScaleMatrix;
 
 		/// <summary>
 		/// Window ratio.
@@ -84,9 +87,10 @@ namespace ComplexNumberGrapher.Graphics
 		/// </summary>
 		public static void Translate(int x, int y, int z)
 		{
-			var speed = Settings.CameraSpeed;
-			Location += new Vector3(x * speed / Scale, y * speed / Scale, z * speed / Scale);
-			ExactLocation += new Vector3d(x * (double)speed / Scale, y * (double)speed / Scale, z * (double)speed / Scale);
+			var speed = Settings.CameraSpeed / Scale;
+			var exactSpeed = (double)Settings.CameraSpeed / Scale;
+			Location += new Vector3(x * speed, y * speed, z * speed);
+			ExactLocation += new Vector3d(x * exactSpeed, y * exactSpeed, z * exactSpeed);
 			Changed = true;
 		}
 
@@ -131,14 +135,15 @@ namespace ComplexNumberGrapher.Graphics
 			var locMatrix = Matrix4.CreateTranslation(new Vector3(-Location.X, -Location.Y, Location.Z));
 
 			// TODO for 3D space
-			var rotMatrixX = Matrix4.CreateRotationX(Rotation.X);
-			var rotMatrixY = Matrix4.CreateRotationY(Rotation.Y);
-			var rotMatrixZ = Matrix4.CreateRotationZ(Rotation.Z);
+			//var rotMatrixX = Matrix4.CreateRotationX(Rotation.X);
+			//var rotMatrixY = Matrix4.CreateRotationY(Rotation.Y);
+			//var rotMatrixZ = Matrix4.CreateRotationY(Rotation.Z);
 
-			// TODO: currently only x-scale is used.
-			var scaleMatrix = Matrix4.CreateScale(Scale / (2f * Ratio), Scale / 2f, Scale / 2f);
+			var scale = Scale / 2f;
+			ScaleMatrix = Matrix4.CreateScale(scale / Ratio, scale, 0);
 
-			CameraMatrix = locMatrix * rotMatrixX * rotMatrixY * rotMatrixZ * scaleMatrix;
+			InverseScaleMatrix = Matrix4.CreateScale(1 / scale);
+			CameraMatrix = locMatrix * ScaleMatrix;
 		}
 	}
 }

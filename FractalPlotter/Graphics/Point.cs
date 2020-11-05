@@ -8,36 +8,65 @@ namespace ComplexNumberGrapher.Graphics
 	/// </summary>
 	public class Point
 	{
-		public Color4 Color = Color4.White;
-		public float Size = 6f;
-		public Vector3d Position = Vector3d.Zero;
+		readonly Matrix4 objectMatrix;
+		readonly Color4 color;
 
-		public Point() { }
+		public Point(Vector3 position, Color4 color, float size = 0.01f)
+		{
+			objectMatrix = Matrix4.CreateScale(size) * Matrix4.CreateTranslation(position);
+			this.color = color;
+		}
 
 		public void Render()
 		{
-			var posID = UniformManager.PositionID;
-			var colorID = UniformManager.ColorID;
-			var color = (Vector4)Color;
+			MasterRenderer.UniformObjectMatrix(Camera.InverseScaleMatrix * objectMatrix);
+			MasterRenderer.UniformColor(color);
+			PointRenderable.Render();
+		}
+	}
 
+	/// <summary>
+	/// Class designed to render a Point.
+	/// Since all points look the same, only one renderable is necessary.
+	/// This renderable can then be moved via a Matrix to its specific position and colored in the shader. This is why this class is static.
+	/// </summary>
+	public static class PointRenderable
+	{
+		static Renderable renderable;
+
+		public static void Load()
+		{
+			renderable = new Renderable(getVectors(Vector3.Zero, Color4.White));
+		}
+
+		public static void Render()
+		{
 			// Draw a point.
-			GL.PointSize(Size);
-			GL.VertexAttrib4(colorID, color);
+			renderable?.Render(customLength: 6);
+			// Draw the lines.
+			renderable?.Render(PrimitiveType.Lines, 6, 4);
+		}
 
-			GL.Begin(PrimitiveType.Points);
-			GL.VertexAttrib4(posID, new Vector4d(Position, 1.0d));
-			GL.End();
+		public static void Dispose()
+		{
+			renderable.Dispose();
+		}
 
-			// Render lines to give a sense where the point is exactly.
-			GL.Begin(PrimitiveType.Lines);
-			GL.VertexAttrib4(posID, new Vector4d(Position + new Vector3d(0.05d / Camera.Scale, 0, 0), 1.0f));
-			GL.VertexAttrib4(posID, new Vector4d(Position - new Vector3d(0.05d / Camera.Scale, 0, 0), 1.0f));
-			GL.VertexAttrib4(posID, new Vector4d(Position + new Vector3d(0, 0.05d / Camera.Scale, 0), 1.0f));
-			GL.VertexAttrib4(posID, new Vector4d(Position - new Vector3d(0, 0.05d / Camera.Scale, 0), 1.0f));
-			GL.End();
-
-			// Check for GL errors.
-			Utils.CheckError("Render");
+		static Vector[] getVectors(Vector3 position, Color4 color, float size = 1f)
+		{
+			return new[]
+			{
+				new Vector(new Vector4(position + new Vector3(-size, -size, 0), 1.0f), color, Vector2.Zero),
+				new Vector(new Vector4(position + new Vector3(-size, size, 0), 1.0f), color, Vector2.Zero),
+				new Vector(new Vector4(position + new Vector3(size, -size, 0), 1.0f), color, Vector2.Zero),
+				new Vector(new Vector4(position + new Vector3(size, -size, 0), 1.0f), color, Vector2.Zero),
+				new Vector(new Vector4(position + new Vector3(-size, size, 0), 1.0f), color, Vector2.Zero),
+				new Vector(new Vector4(position + new Vector3(size, size, 0), 1.0f), color, Vector2.Zero),
+				new Vector(new Vector4(position + new Vector3(-3 * size, 0, 0), 1.0f), color, Vector2.Zero),
+				new Vector(new Vector4(position + new Vector3( 3 * size, 0, 0), 1.0f), color, Vector2.Zero),
+				new Vector(new Vector4(position + new Vector3(0, -3 * size, 0), 1.0f), color, Vector2.Zero),
+				new Vector(new Vector4(position + new Vector3(0,  3 * size, 0), 1.0f), color, Vector2.Zero),
+			};
 		}
 	}
 }

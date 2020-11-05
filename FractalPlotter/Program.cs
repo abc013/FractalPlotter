@@ -63,7 +63,6 @@ namespace ComplexNumberGrapher
 			{
 				Title = "Graph | FractalPlotter",
 				APIVersion = new Version(3, 3),
-				Profile = ContextProfile.Compatability,
 				IsEventDriven = Settings.EventDriven,
 				Location = new OpenTK.Mathematics.Vector2i(Settings.GraphX, Settings.GraphY),
 				Size = new OpenTK.Mathematics.Vector2i(Settings.GraphWidth, Settings.GraphHeight)
