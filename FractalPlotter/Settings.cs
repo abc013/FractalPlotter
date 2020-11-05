@@ -105,14 +105,20 @@ namespace ComplexNumberGrapher
 
 		Settings()
 		{
+			// Check file path for "settings.txt"
 			var file = FileManager.CheckSettings();
 
+			// If there is none, return;
 			if (string.IsNullOrEmpty(file))
 				return;
 
+			// Load the reader
 			using var reader = new StreamReader(file);
 
+			// Fetch a collection of all fields in this class that are 1) static and 2) public.
 			var fields = GetType().GetFields().Where(f => f.IsStatic && f.IsPublic);
+
+			// While there is something to read
 			while (!reader.EndOfStream)
 			{
 				var line = reader.ReadLine().Trim();
@@ -127,13 +133,17 @@ namespace ComplexNumberGrapher
 				// Get field of the same name and, if possible, set the value.
 				var field = fields.FirstOrDefault(f => f.Name == split[0].Trim());
 				if (field != null)
-				{
 					field.SetValue(this, convert(field.FieldType, split[0].Trim(), split[1].Trim()));
-					continue;
-				}
 			}
 		}
 
+		/// <summary>
+		/// Method used to convert a string into the corresponding type.
+		/// </summary>
+		/// <param name="type">Type to convert to.</param>
+		/// <param name="key">Name of the setting.</param>
+		/// <param name="value">Value to convert.</param>
+		/// <returns></returns>
 		static object convert(Type type, string key, string value)
 		{
 			if (type == typeof(int))
@@ -141,14 +151,14 @@ namespace ComplexNumberGrapher
 				if (int.TryParse(value, out var res))
 					return res;
 
-				throw new Exception($"Invalid value {value} of {key}. {type} expected.");
+				throw new InvalidSettingsException($"Invalid value {value} of {key}. {type} expected.");
 			}
 			else if (type == typeof(float))
 			{
 				if (float.TryParse(value, out var res))
 					return res;
 
-				throw new Exception($"Invalid value {value} of {key}. {type} expected.");
+				throw new InvalidSettingsException($"Invalid value {value} of {key}. {type} expected.");
 			}
 			else if (type == typeof(string))
 			{
@@ -159,10 +169,10 @@ namespace ComplexNumberGrapher
 				if (bool.TryParse(value, out var res))
 					return res;
 
-				throw new Exception($"Invalid value {value} of {key}. {type} expected.");
+				throw new InvalidSettingsException($"Invalid value {value} of {key}. {type} expected.");
 			}
 
-			throw new Exception($"Missing conversion method for type {type}");
+			throw new InvalidSettingsException($"Missing conversion method for type {type}");
 		}
 	}
 }
