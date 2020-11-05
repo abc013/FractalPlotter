@@ -8,8 +8,9 @@ namespace FractalPlotter.Graphics
 		public static Vector2 Factor1;
 		public static int IMax;
 
-		static UniformManager defaultManager;
-		static int defaultShader;
+		public static UniformManager DefaultManager { get; private set; }
+		public static int DefaultShader { get; private set; }
+
 		static UniformManager currentManager;
 		static int currentShader;
 
@@ -79,8 +80,8 @@ namespace FractalPlotter.Graphics
 				currentManager = ShaderManager.FetchManager(currentShader);
 				if (@default)
 				{
-					defaultShader = currentShader;
-					defaultManager = currentManager;
+					DefaultShader = currentShader;
+					DefaultManager = currentManager;
 				}
 			}
 			else
@@ -122,28 +123,18 @@ namespace FractalPlotter.Graphics
 
 			if (!Settings.Fancy)
 			{
-				GL.UseProgram(defaultShader);
-				defaultManager.Uniform();
+				GL.UseProgram(DefaultShader);
+				DefaultManager.Uniform();
 
 				PointManager.Render();
 
-				defaultManager.UniformProjection(Camera.ScaleMatrix);
+				DefaultManager.UniformProjection(Camera.ScaleMatrix);
 				crosshair1.Render();
 				crosshair2.Render();
 			}
 
 			// Check for GL errors.
 			Utils.CheckError("Render");
-		}
-
-		public static void UniformColor(Color4 color)
-		{
-			defaultManager.UniformColor(color);
-		}
-
-		public static void UniformObjectMatrix(Matrix4 objectMatrix)
-		{
-			defaultManager.UniformModelView(objectMatrix);
 		}
 
 		/// <summary>

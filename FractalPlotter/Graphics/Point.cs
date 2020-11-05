@@ -19,8 +19,8 @@ namespace FractalPlotter.Graphics
 
 		public void Render()
 		{
-			MasterRenderer.UniformObjectMatrix(Camera.InverseScaleMatrix * objectMatrix);
-			MasterRenderer.UniformColor(color);
+			MasterRenderer.DefaultManager.UniformModelView(Camera.InverseScaleMatrix * objectMatrix);
+			MasterRenderer.DefaultManager.UniformColor(color);
 			PointRenderable.Render();
 		}
 	}
