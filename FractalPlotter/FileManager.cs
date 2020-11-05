@@ -25,12 +25,12 @@ namespace ComplexNumberGrapher
 		/// <summary>
 		/// Checks whether the settings.txt exists and returns the path if true.
 		/// </summary>
-		public static string CheckSettings()
+		public static string CheckSettings(string file)
 		{
-			var file = Current + "settings.txt";
+			var filePath = Current + file;
 
-			if (File.Exists(file))
-				return file;
+			if (File.Exists(filePath))
+				return filePath;
 
 			return string.Empty;
 		}

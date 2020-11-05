@@ -1,4 +1,3 @@
-using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
 using System;
 using System.Globalization;
@@ -48,7 +47,6 @@ namespace ComplexNumberGrapher
 				Application.SetCompatibleTextRenderingDefault(false);
 
 				var settingsWindow = new SettingsWindow(pipe);
-
 				Application.Run(settingsWindow);
 			}).Start();
 		}
@@ -73,7 +71,7 @@ namespace ComplexNumberGrapher
 		}
 
 		/// <summary>
-		/// Exit the program.
+		/// Closes the logs.
 		/// </summary>
 		public static void Exit()
 		{

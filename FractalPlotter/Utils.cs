@@ -1,5 +1,4 @@
-﻿using FractalPlotter.FractalPlotter;
-using OpenTK.Graphics.OpenGL;
+﻿using OpenTK.Graphics.OpenGL;
 using OpenTK.Mathematics;
 using System;
 using System.Diagnostics;

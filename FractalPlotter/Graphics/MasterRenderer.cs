@@ -1,5 +1,4 @@
-﻿using FractalPlotter.FractalPlotter;
-using OpenTK.Graphics.OpenGL;
+﻿using OpenTK.Graphics.OpenGL;
 using OpenTK.Mathematics;
 
 namespace ComplexNumberGrapher.Graphics
@@ -51,7 +50,7 @@ namespace ComplexNumberGrapher.Graphics
 			PointManager.Add(-Vector3.UnitX, Color4.Blue);
 
 			crosshair1 = new Point(Vector3.Zero, Color4.Black, 0.012f);
-			crosshair2 = new Point(new Vector3(0,0,-0.000001f), Color4.White);
+			crosshair2 = new Point(new Vector3(0, 0, -0.000001f), Color4.White);
 
 			// Configure GL properly.
 			GL.ClearColor(Color4.Black);

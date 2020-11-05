@@ -106,7 +106,7 @@ namespace ComplexNumberGrapher
 		Settings()
 		{
 			// Check file path for "settings.txt"
-			var file = FileManager.CheckSettings();
+			var file = FileManager.CheckSettings("settings.txt");
 
 			// If there is none, return;
 			if (string.IsNullOrEmpty(file))

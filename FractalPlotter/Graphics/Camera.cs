@@ -8,11 +8,20 @@ namespace ComplexNumberGrapher.Graphics
 	public static class Camera
 	{
 		/// <summary>
-		/// Camera matrix used for points and other geometry.
+		/// Default matrix.
 		/// </summary>
 		public static Matrix4 IdentityMatrix = Matrix4.Identity;
+		/// <summary>
+		/// Camera matrix used for points and other geometry.
+		/// </summary>
 		public static Matrix4 CameraMatrix;
+		/// <summary>
+		/// Matrix that saves the scale.
+		/// </summary>
 		public static Matrix4 ScaleMatrix;
+		/// <summary>
+		/// Matrix that saves the inverted scale.
+		/// </summary>
 		public static Matrix4 InverseScaleMatrix;
 
 		/// <summary>
@@ -42,6 +51,9 @@ namespace ComplexNumberGrapher.Graphics
 		/// </summary>
 		public static bool Changed { get; private set; }
 
+		/// <summary>
+		/// Initialize standard camera settings.
+		/// </summary>
 		public static void Load()
 		{
 			Location = new Vector3(Settings.LocationX, Settings.LocationY, Settings.LocationZ);
@@ -88,9 +100,11 @@ namespace ComplexNumberGrapher.Graphics
 		public static void Translate(int x, int y, int z)
 		{
 			var speed = Settings.CameraSpeed / Scale;
-			var exactSpeed = (double)Settings.CameraSpeed / Scale;
 			Location += new Vector3(x * speed, y * speed, z * speed);
+
+			var exactSpeed = (double)Settings.CameraSpeed / Scale;
 			ExactLocation += new Vector3d(x * exactSpeed, y * exactSpeed, z * exactSpeed);
+
 			Changed = true;
 		}
 
@@ -134,15 +148,14 @@ namespace ComplexNumberGrapher.Graphics
 
 			var locMatrix = Matrix4.CreateTranslation(new Vector3(-Location.X, -Location.Y, Location.Z));
 
-			// TODO for 3D space
 			//var rotMatrixX = Matrix4.CreateRotationX(Rotation.X);
 			//var rotMatrixY = Matrix4.CreateRotationY(Rotation.Y);
-			//var rotMatrixZ = Matrix4.CreateRotationY(Rotation.Z);
+			//var rotMatrixZ = Matrix4.CreateRotationZ(Rotation.Z);
 
 			var scale = Scale / 2f;
 			ScaleMatrix = Matrix4.CreateScale(scale / Ratio, scale, 0);
-
 			InverseScaleMatrix = Matrix4.CreateScale(1 / scale);
+
 			CameraMatrix = locMatrix * ScaleMatrix;
 		}
 	}
