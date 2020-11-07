@@ -84,14 +84,17 @@ namespace FractalPlotter
 			var dc1 = checkKeyRegulator(Keys.Q, Keys.A);
 			var dc2 = checkKeyRegulator(Keys.W, Keys.S);
 			var di = checkKeyRegulator(Keys.E, Keys.D);
+			var dl = checkKeyRegulator(Keys.R, Keys.F);
 
-			if (dc1 != 0f || dc2 != 0f || di != 0)
+			if (dc1 != 0f || dc2 != 0f || di != 0 || dl != 0)
 			{
 				MasterRenderer.Factor1 += new Vector2(dc1 * Settings.RegulatorSpeed / Camera.Scale, dc2 * Settings.RegulatorSpeed / Camera.Scale);
 
 				MasterRenderer.IMax += di;
 				if (MasterRenderer.IMax < 0)
 					MasterRenderer.IMax = 0;
+
+				MasterRenderer.SquaredLimit += dl * 0.1f;
 
 				pipe.UpdateParameters();
 			}

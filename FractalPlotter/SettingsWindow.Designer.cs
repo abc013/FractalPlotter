@@ -35,18 +35,18 @@
 			this.ShaderList = new System.Windows.Forms.ListBox();
 			this.shaderText = new System.Windows.Forms.Label();
 			this.PaletteList = new System.Windows.Forms.ListBox();
-			this.label1 = new System.Windows.Forms.Label();
+			this.paletteText = new System.Windows.Forms.Label();
 			this.dimensionCheck = new System.Windows.Forms.CheckBox();
 			this.imaxBox = new System.Windows.Forms.TextBox();
 			this.c2Box = new System.Windows.Forms.TextBox();
 			this.c1Box = new System.Windows.Forms.TextBox();
-			this.label2 = new System.Windows.Forms.Label();
+			this.cText = new System.Windows.Forms.Label();
 			this.pointButton = new System.Windows.Forms.Button();
 			this.cursorLocation = new System.Windows.Forms.Label();
 			this.screenshotButton = new System.Windows.Forms.Button();
 			this.limitBox = new System.Windows.Forms.TextBox();
-			this.label3 = new System.Windows.Forms.Label();
-			this.label4 = new System.Windows.Forms.Label();
+			this.imaxText = new System.Windows.Forms.Label();
+			this.limitText = new System.Windows.Forms.Label();
 			this.SuspendLayout();
 			// 
 			// pointCheck
@@ -168,15 +168,15 @@
 			this.PaletteList.TabIndex = 1;
 			this.PaletteList.SelectedIndexChanged += new System.EventHandler(this.changePalette);
 			// 
-			// label1
+			// paletteText
 			// 
-			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(10, 170);
-			this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(72, 25);
-			this.label1.TabIndex = 3;
-			this.label1.Text = "Palettes";
+			this.paletteText.AutoSize = true;
+			this.paletteText.Location = new System.Drawing.Point(10, 170);
+			this.paletteText.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+			this.paletteText.Name = "paletteText";
+			this.paletteText.Size = new System.Drawing.Size(72, 25);
+			this.paletteText.TabIndex = 3;
+			this.paletteText.Text = "Palettes";
 			// 
 			// dimensionCheck
 			// 
@@ -220,16 +220,16 @@
 			this.c1Box.TextChanged += new System.EventHandler(this.setParameters);
 			this.c1Box.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.keyPress);
 			// 
-			// label2
+			// cText
 			// 
-			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(10, 415);
-			this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-			this.label2.Name = "label2";
-			this.label2.RightToLeft = System.Windows.Forms.RightToLeft.No;
-			this.label2.Size = new System.Drawing.Size(91, 25);
-			this.label2.TabIndex = 3;
-			this.label2.Text = "Parameter";
+			this.cText.AutoSize = true;
+			this.cText.Location = new System.Drawing.Point(10, 415);
+			this.cText.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+			this.cText.Name = "cText";
+			this.cText.RightToLeft = System.Windows.Forms.RightToLeft.No;
+			this.cText.Size = new System.Drawing.Size(91, 25);
+			this.cText.TabIndex = 3;
+			this.cText.Text = "Parameter";
 			// 
 			// pointButton
 			// 
@@ -273,29 +273,29 @@
 			this.limitBox.TextChanged += new System.EventHandler(this.setParameters);
 			this.limitBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.keyPress);
 			// 
-			// label3
+			// imaxText
 			// 
-			this.label3.AutoEllipsis = true;
-			this.label3.AutoSize = true;
-			this.label3.Location = new System.Drawing.Point(10, 480);
-			this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-			this.label3.Name = "label3";
-			this.label3.RightToLeft = System.Windows.Forms.RightToLeft.No;
-			this.label3.Size = new System.Drawing.Size(124, 25);
-			this.label3.TabIndex = 3;
-			this.label3.Text = "Max Iterations";
+			this.imaxText.AutoEllipsis = true;
+			this.imaxText.AutoSize = true;
+			this.imaxText.Location = new System.Drawing.Point(10, 480);
+			this.imaxText.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+			this.imaxText.Name = "imaxText";
+			this.imaxText.RightToLeft = System.Windows.Forms.RightToLeft.No;
+			this.imaxText.Size = new System.Drawing.Size(124, 25);
+			this.imaxText.TabIndex = 3;
+			this.imaxText.Text = "Max Iterations";
 			// 
-			// label4
+			// limitText
 			// 
-			this.label4.AutoEllipsis = true;
-			this.label4.AutoSize = true;
-			this.label4.Location = new System.Drawing.Point(135, 480);
-			this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-			this.label4.Name = "label4";
-			this.label4.RightToLeft = System.Windows.Forms.RightToLeft.No;
-			this.label4.Size = new System.Drawing.Size(88, 25);
-			this.label4.TabIndex = 3;
-			this.label4.Text = "Max Limit";
+			this.limitText.AutoEllipsis = true;
+			this.limitText.AutoSize = true;
+			this.limitText.Location = new System.Drawing.Point(135, 480);
+			this.limitText.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+			this.limitText.Name = "limitText";
+			this.limitText.RightToLeft = System.Windows.Forms.RightToLeft.No;
+			this.limitText.Size = new System.Drawing.Size(88, 25);
+			this.limitText.TabIndex = 3;
+			this.limitText.Text = "Max Limit";
 			// 
 			// SettingsWindow
 			// 
@@ -303,18 +303,18 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(258, 794);
 			this.ControlBox = false;
-			this.Controls.Add(this.label4);
-			this.Controls.Add(this.label3);
+			this.Controls.Add(this.limitText);
+			this.Controls.Add(this.imaxText);
 			this.Controls.Add(this.limitBox);
 			this.Controls.Add(this.screenshotButton);
 			this.Controls.Add(this.cursorLocation);
 			this.Controls.Add(this.pointButton);
-			this.Controls.Add(this.label2);
+			this.Controls.Add(this.cText);
 			this.Controls.Add(this.c1Box);
 			this.Controls.Add(this.c2Box);
 			this.Controls.Add(this.imaxBox);
 			this.Controls.Add(this.dimensionCheck);
-			this.Controls.Add(this.label1);
+			this.Controls.Add(this.paletteText);
 			this.Controls.Add(this.PaletteList);
 			this.Controls.Add(this.shaderText);
 			this.Controls.Add(this.ShaderList);
@@ -353,18 +353,18 @@
 		private System.Windows.Forms.ListBox ShaderList;
 		private System.Windows.Forms.Label shaderText;
 		private System.Windows.Forms.ListBox PaletteList;
-		private System.Windows.Forms.Label label1;
+		private System.Windows.Forms.Label paletteText;
 		private System.Windows.Forms.CheckBox dimensionCheck;
 		private System.Windows.Forms.TextBox imaxBox;
 		private System.Windows.Forms.TextBox c2Box;
 		private System.Windows.Forms.TextBox c1Box;
-		private System.Windows.Forms.Label label2;
+		private System.Windows.Forms.Label cText;
 		private System.Windows.Forms.Button pointButton;
 		private System.Windows.Forms.Label cursorLocation;
 		private System.Windows.Forms.Button screenshotButton;
 		private System.Windows.Forms.TextBox limitBox;
-		private System.Windows.Forms.Label label3;
-		private System.Windows.Forms.Label label4;
+		private System.Windows.Forms.Label imaxText;
+		private System.Windows.Forms.Label limitText;
 	}
 }
 

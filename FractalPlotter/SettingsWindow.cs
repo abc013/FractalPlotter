@@ -98,6 +98,34 @@ namespace FractalPlotter
 			pointCheck.Checked = Settings.Points;
 			dimensionCheck.Checked = Settings.ThreeDimensional;
 
+			// Taken from https://docs.microsoft.com/en-us/dotnet/api/system.windows.forms.tooltip?redirectedfrom=MSDN&view=netcore-3.1
+			var tooltip = new ToolTip();
+
+			tooltip.AutoPopDelay = 5000;
+			tooltip.InitialDelay = 300;
+			tooltip.ReshowDelay = 0;
+			tooltip.ShowAlways = true;
+
+			tooltip.SetToolTip(pointCheck, "Render points.");
+			tooltip.SetToolTip(locX, "Viewport X position. [Arrow left/right]");
+			tooltip.SetToolTip(locY, "Viewport Y position. [Arrow up/down]");
+			tooltip.SetToolTip(locText, "Viewport position [Arrows].");
+			tooltip.SetToolTip(scaleX, "Viewport scale. [Mousewheel]");
+			tooltip.SetToolTip(scaleText, "Viewport scale. [Mousewheel]");
+			tooltip.SetToolTip(ShaderList, "Shader selection. Scroll down to see more options.");
+			tooltip.SetToolTip(shaderText, "Shader selection. Scroll down to see more options.");
+			tooltip.SetToolTip(PaletteList, "Palette selection. Scroll down to see more options.");
+			tooltip.SetToolTip(paletteText, "Palette selection. Scroll down to see more options.");
+			tooltip.SetToolTip(c1Box, "Parameter X value. Other shaders may use this value for other options. [Keys Q/A]");
+			tooltip.SetToolTip(c2Box, "Parameter Y value. Other shaders may use this value for other options. [Keys W/S]");
+			tooltip.SetToolTip(cText, "Parameter used for c in Julia sets. Other shaders may use this value for other options. [Keys Q,A,W,S]");
+			tooltip.SetToolTip(imaxBox, "Maximum value to iterate to. [Keys E/D]");
+			tooltip.SetToolTip(imaxText, "Maximum value to iterate to. [Keys E/D]");
+			tooltip.SetToolTip(limitBox, "Value to choose for the flight criterium. [Keys R/F]");
+			tooltip.SetToolTip(limitText, "Value to choose for the flight criterium. [Keys R/F]");
+			tooltip.SetToolTip(pointButton, "Create a point at viewport center. You can also place points via rightclick.");
+			tooltip.SetToolTip(screenshotButton, "Take a screenshot. Images are saved in the 'Screenshots' folder. [Key Space]");
+
 			IsLoaded = true;
 		}
 
