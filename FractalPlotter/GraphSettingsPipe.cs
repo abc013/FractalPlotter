@@ -126,7 +126,7 @@ namespace FractalPlotter
 		/// </summary>
 		public void FancyCheck(bool @checked)
 		{
-			Settings.Fancy = @checked;
+			Settings.Points = @checked;
 		}
 
 		/// <summary>

@@ -40,9 +40,9 @@ namespace FractalPlotter
 		/// </summary>
 		public static int IMax = 256;
 		/// <summary>
-		/// Draw fancy. Unused.
+		/// Render points and center crosshair.
 		/// </summary>
-		public static bool Fancy = true;
+		public static bool Points = true;
 		/// <summary>
 		/// Enable three-dimensional view. Unused.
 		/// </summary>

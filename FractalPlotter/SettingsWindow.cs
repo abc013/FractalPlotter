@@ -26,7 +26,7 @@ namespace FractalPlotter
 
 			InitializeComponent();
 
-			fancyCheck.CheckedChanged += changeFancy;
+			pointCheck.CheckedChanged += changeFancy;
 			dimensionCheck.CheckedChanged += changeDimensional;
 
 			// Add some events to catch special cases and to update values right when they are typed in.
@@ -136,7 +136,7 @@ namespace FractalPlotter
 				PaletteList.Items.Add(file);
 			PaletteList.SelectedItem = Settings.DefaultPalette;
 
-			fancyCheck.Checked = Settings.Fancy;
+			pointCheck.Checked = Settings.Points;
 			dimensionCheck.Checked = Settings.ThreeDimensional;
 
 			IsLoaded = true;
@@ -148,7 +148,7 @@ namespace FractalPlotter
 		void changeFancy(object sender, EventArgs e)
 		{
 			if (IsLoaded)
-				pipe.FancyCheck(fancyCheck.Checked);
+				pipe.FancyCheck(pointCheck.Checked);
 		}
 
 		/// <summary>

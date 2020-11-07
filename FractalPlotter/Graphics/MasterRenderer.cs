@@ -121,7 +121,7 @@ namespace FractalPlotter.Graphics
 				planeRenderable.Render();
 			}
 
-			if (!Settings.Fancy)
+			if (Settings.Points)
 			{
 				GL.UseProgram(DefaultShader);
 				DefaultManager.Uniform();
