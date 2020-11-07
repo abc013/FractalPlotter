@@ -96,6 +96,9 @@ namespace FractalPlotter
 
 				pipe.UpdateParameters();
 			}
+
+			if (KeyboardState.IsKeyDown(Keys.Space))
+				MasterRenderer.TakeScreenshot(0, 0, ClientSize.X, ClientSize.Y);
 		}
 
 		/// <summary>

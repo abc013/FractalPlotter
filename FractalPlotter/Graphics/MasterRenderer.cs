@@ -152,6 +152,19 @@ namespace FractalPlotter.Graphics
 		}
 
 		/// <summary>
+		/// Used source: https://stackoverflow.com/questions/5844858/how-to-take-screenshot-in-opengl
+		/// </summary>
+		public static void TakeScreenshot(int x, int y, int width, int height)
+		{
+			var data = new byte[width * height * 3];
+			GL.ReadPixels(x, y, width, height, PixelFormat.Rgb, PixelType.UnsignedByte, data);
+
+			Utils.CheckError("Screenshot");
+
+			FileManager.SaveScreenshot(data, width, height);
+		}
+
+		/// <summary>
 		/// Clean up.
 		/// </summary>
 		public static void Dispose()

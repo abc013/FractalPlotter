@@ -1,6 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 
 namespace FractalPlotter
 {
@@ -21,6 +24,10 @@ namespace FractalPlotter
 		/// Directory where the palettes are in.
 		/// </summary>
 		public static readonly string Palettes = Current + "Palettes\\";
+		/// <summary>
+		/// Directory where the screenshots are in.
+		/// </summary>
+		public static readonly string Screenhots = Current + "Screenshots\\";
 
 		/// <summary>
 		/// Checks whether the settings.txt exists and returns the path if true.
@@ -87,6 +94,18 @@ namespace FractalPlotter
 			}
 
 			return results;
+		}
+
+		public static void SaveScreenshot(byte[] data, int width, int height)
+		{
+			if (!Directory.Exists(Screenhots))
+				Directory.CreateDirectory(Screenhots);
+
+			var file = Screenhots + "screenshot_" + DateTime.Now.ToString("HHmmss_ddMMyyyy") + ".png";
+
+			using var img = new Bitmap(width, height, width * 3, System.Drawing.Imaging.PixelFormat.Format24bppRgb, Marshal.UnsafeAddrOfPinnedArrayElement(data, 0));
+
+			img.Save(file);
 		}
 	}
 }

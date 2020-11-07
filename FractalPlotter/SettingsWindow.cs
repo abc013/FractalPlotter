@@ -148,7 +148,7 @@ namespace FractalPlotter
 		void changeFancy(object sender, EventArgs e)
 		{
 			if (IsLoaded)
-				pipe.FancyCheck(pointCheck.Checked);
+				pipe.PointCheck(pointCheck.Checked);
 		}
 
 		/// <summary>
@@ -269,6 +269,14 @@ namespace FractalPlotter
 		void addPoint(object sender, EventArgs e)
 		{
 			pipe.AddPoint(Camera.Location);
+		}
+
+		/// <summary>
+		/// Takes a screenshot of the whole frame.
+		/// </summary>
+		void takeScreenshot(object sender, EventArgs e)
+		{
+			pipe.TakeScreenshot();
 		}
 	}
 }

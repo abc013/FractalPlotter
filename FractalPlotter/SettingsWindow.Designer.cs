@@ -46,8 +46,9 @@
 			this.c2Box = new System.Windows.Forms.TextBox();
 			this.c1Box = new System.Windows.Forms.TextBox();
 			this.label2 = new System.Windows.Forms.Label();
-			this.button1 = new System.Windows.Forms.Button();
+			this.pointButton = new System.Windows.Forms.Button();
 			this.cursorLocation = new System.Windows.Forms.Label();
+			this.screenshotButton = new System.Windows.Forms.Button();
 			this.SuspendLayout();
 			// 
 			// pointCheck
@@ -56,7 +57,7 @@
 			this.pointCheck.Checked = true;
 			this.pointCheck.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.pointCheck.Location = new System.Drawing.Point(9, 165);
-			this.pointCheck.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.pointCheck.Margin = new System.Windows.Forms.Padding(2);
 			this.pointCheck.Name = "pointCheck";
 			this.pointCheck.Size = new System.Drawing.Size(86, 29);
 			this.pointCheck.TabIndex = 1;
@@ -86,7 +87,7 @@
 			// locX
 			// 
 			this.locX.Location = new System.Drawing.Point(9, 319);
-			this.locX.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.locX.Margin = new System.Windows.Forms.Padding(2);
 			this.locX.Name = "locX";
 			this.locX.Size = new System.Drawing.Size(69, 31);
 			this.locX.TabIndex = 4;
@@ -94,7 +95,7 @@
 			// locY
 			// 
 			this.locY.Location = new System.Drawing.Point(82, 319);
-			this.locY.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.locY.Margin = new System.Windows.Forms.Padding(2);
 			this.locY.Name = "locY";
 			this.locY.Size = new System.Drawing.Size(69, 31);
 			this.locY.TabIndex = 5;
@@ -102,7 +103,7 @@
 			// locZ
 			// 
 			this.locZ.Location = new System.Drawing.Point(155, 319);
-			this.locZ.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.locZ.Margin = new System.Windows.Forms.Padding(2);
 			this.locZ.Name = "locZ";
 			this.locZ.Size = new System.Drawing.Size(69, 31);
 			this.locZ.TabIndex = 6;
@@ -110,7 +111,7 @@
 			// scaleX
 			// 
 			this.scaleX.Location = new System.Drawing.Point(9, 386);
-			this.scaleX.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.scaleX.Margin = new System.Windows.Forms.Padding(2);
 			this.scaleX.Name = "scaleX";
 			this.scaleX.Size = new System.Drawing.Size(216, 31);
 			this.scaleX.TabIndex = 7;
@@ -118,7 +119,7 @@
 			// rotX
 			// 
 			this.rotX.Location = new System.Drawing.Point(9, 449);
-			this.rotX.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.rotX.Margin = new System.Windows.Forms.Padding(2);
 			this.rotX.Name = "rotX";
 			this.rotX.Size = new System.Drawing.Size(69, 31);
 			this.rotX.TabIndex = 8;
@@ -126,7 +127,7 @@
 			// rotY
 			// 
 			this.rotY.Location = new System.Drawing.Point(82, 449);
-			this.rotY.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.rotY.Margin = new System.Windows.Forms.Padding(2);
 			this.rotY.Name = "rotY";
 			this.rotY.Size = new System.Drawing.Size(69, 31);
 			this.rotY.TabIndex = 9;
@@ -134,7 +135,7 @@
 			// rotZ
 			// 
 			this.rotZ.Location = new System.Drawing.Point(155, 449);
-			this.rotZ.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.rotZ.Margin = new System.Windows.Forms.Padding(2);
 			this.rotZ.Name = "rotZ";
 			this.rotZ.Size = new System.Drawing.Size(69, 31);
 			this.rotZ.TabIndex = 10;
@@ -176,7 +177,7 @@
 			this.ShaderList.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.ShaderList.ItemHeight = 25;
 			this.ShaderList.Location = new System.Drawing.Point(9, 32);
-			this.ShaderList.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.ShaderList.Margin = new System.Windows.Forms.Padding(2);
 			this.ShaderList.Name = "ShaderList";
 			this.ShaderList.ScrollAlwaysVisible = true;
 			this.ShaderList.Size = new System.Drawing.Size(239, 127);
@@ -198,7 +199,7 @@
 			this.PaletteList.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.PaletteList.ItemHeight = 25;
 			this.PaletteList.Location = new System.Drawing.Point(9, 220);
-			this.PaletteList.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.PaletteList.Margin = new System.Windows.Forms.Padding(2);
 			this.PaletteList.Name = "PaletteList";
 			this.PaletteList.ScrollAlwaysVisible = true;
 			this.PaletteList.Size = new System.Drawing.Size(238, 52);
@@ -218,8 +219,8 @@
 			// dimensionCheck
 			// 
 			this.dimensionCheck.AutoSize = true;
-			this.dimensionCheck.Location = new System.Drawing.Point(95, 165);
-			this.dimensionCheck.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.dimensionCheck.Location = new System.Drawing.Point(114, 165);
+			this.dimensionCheck.Margin = new System.Windows.Forms.Padding(2);
 			this.dimensionCheck.Name = "dimensionCheck";
 			this.dimensionCheck.Size = new System.Drawing.Size(61, 29);
 			this.dimensionCheck.TabIndex = 2;
@@ -229,7 +230,7 @@
 			// imaxBox
 			// 
 			this.imaxBox.Location = new System.Drawing.Point(155, 514);
-			this.imaxBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.imaxBox.Margin = new System.Windows.Forms.Padding(2);
 			this.imaxBox.Name = "imaxBox";
 			this.imaxBox.Size = new System.Drawing.Size(69, 31);
 			this.imaxBox.TabIndex = 13;
@@ -237,7 +238,7 @@
 			// c2Box
 			// 
 			this.c2Box.Location = new System.Drawing.Point(82, 514);
-			this.c2Box.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.c2Box.Margin = new System.Windows.Forms.Padding(2);
 			this.c2Box.Name = "c2Box";
 			this.c2Box.Size = new System.Drawing.Size(69, 31);
 			this.c2Box.TabIndex = 12;
@@ -245,7 +246,7 @@
 			// c1Box
 			// 
 			this.c1Box.Location = new System.Drawing.Point(9, 514);
-			this.c1Box.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.c1Box.Margin = new System.Windows.Forms.Padding(2);
 			this.c1Box.Name = "c1Box";
 			this.c1Box.Size = new System.Drawing.Size(69, 31);
 			this.c1Box.TabIndex = 11;
@@ -261,16 +262,16 @@
 			this.label2.TabIndex = 3;
 			this.label2.Text = "Parameters (c1, c2, imax)";
 			// 
-			// button1
+			// pointButton
 			// 
-			this.button1.Location = new System.Drawing.Point(25, 584);
-			this.button1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-			this.button1.Name = "button1";
-			this.button1.Size = new System.Drawing.Size(176, 30);
-			this.button1.TabIndex = 14;
-			this.button1.Text = "Add Point";
-			this.button1.UseVisualStyleBackColor = true;
-			this.button1.Click += new System.EventHandler(this.addPoint);
+			this.pointButton.Location = new System.Drawing.Point(9, 571);
+			this.pointButton.Margin = new System.Windows.Forms.Padding(2);
+			this.pointButton.Name = "pointButton";
+			this.pointButton.Size = new System.Drawing.Size(215, 36);
+			this.pointButton.TabIndex = 14;
+			this.pointButton.Text = "Add Point";
+			this.pointButton.UseVisualStyleBackColor = true;
+			this.pointButton.Click += new System.EventHandler(this.addPoint);
 			// 
 			// cursorLocation
 			// 
@@ -282,14 +283,26 @@
 			this.cursorLocation.TabIndex = 8;
 			this.cursorLocation.Text = "CursorLocation\r\nX\r\nY\r\n";
 			// 
+			// screenshotButton
+			// 
+			this.screenshotButton.Location = new System.Drawing.Point(11, 611);
+			this.screenshotButton.Margin = new System.Windows.Forms.Padding(2);
+			this.screenshotButton.Name = "screenshotButton";
+			this.screenshotButton.Size = new System.Drawing.Size(215, 36);
+			this.screenshotButton.TabIndex = 14;
+			this.screenshotButton.Text = "Take Screenshot";
+			this.screenshotButton.UseVisualStyleBackColor = true;
+			this.screenshotButton.Click += new System.EventHandler(this.takeScreenshot);
+			// 
 			// SettingsWindow
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(260, 788);
 			this.ControlBox = false;
+			this.Controls.Add(this.screenshotButton);
 			this.Controls.Add(this.cursorLocation);
-			this.Controls.Add(this.button1);
+			this.Controls.Add(this.pointButton);
 			this.Controls.Add(this.label2);
 			this.Controls.Add(this.c1Box);
 			this.Controls.Add(this.c2Box);
@@ -312,7 +325,7 @@
 			this.Controls.Add(this.Info1);
 			this.Controls.Add(this.Info0);
 			this.Controls.Add(this.pointCheck);
-			this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.Margin = new System.Windows.Forms.Padding(2);
 			this.MaximumSize = new System.Drawing.Size(282, 856);
 			this.MinimumSize = new System.Drawing.Size(282, 68);
 			this.Name = "SettingsWindow";
@@ -350,8 +363,9 @@
 		private System.Windows.Forms.TextBox c2Box;
 		private System.Windows.Forms.TextBox c1Box;
 		private System.Windows.Forms.Label label2;
-		private System.Windows.Forms.Button button1;
+		private System.Windows.Forms.Button pointButton;
 		private System.Windows.Forms.Label cursorLocation;
+		private System.Windows.Forms.Button screenshotButton;
 	}
 }
 

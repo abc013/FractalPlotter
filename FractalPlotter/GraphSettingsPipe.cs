@@ -122,9 +122,9 @@ namespace FractalPlotter
 		}
 
 		/// <summary>
-		/// Set the fancy boolean in the settings.
+		/// Set the points boolean in the settings.
 		/// </summary>
-		public void FancyCheck(bool @checked)
+		public void PointCheck(bool @checked)
 		{
 			Settings.Points = @checked;
 		}
@@ -161,6 +161,15 @@ namespace FractalPlotter
 		public void AddPoint(Vector3 location)
 		{
 			PointManager.Add(location, Utils.RandomColor());
+			graphWindow.Focus();
+		}
+
+		/// <summary>
+		/// Adds another point in the graph window.
+		/// </summary>
+		public void TakeScreenshot()
+		{
+			MasterRenderer.TakeScreenshot(0, 0, graphWindow.ClientSize.X, graphWindow.ClientSize.Y);
 			graphWindow.Focus();
 		}
 
