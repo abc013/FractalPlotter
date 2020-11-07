@@ -157,7 +157,7 @@ namespace FractalPlotter.Graphics
 		public static void TakeScreenshot(int x, int y, int width, int height)
 		{
 			var data = new byte[width * height * 3];
-			GL.ReadPixels(x, y, width, height, PixelFormat.Rgb, PixelType.UnsignedByte, data);
+			GL.ReadPixels(x, y, width, height, PixelFormat.Bgr, PixelType.UnsignedByte, data);
 
 			Utils.CheckError("Screenshot");
 

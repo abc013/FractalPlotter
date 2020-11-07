@@ -16,6 +16,11 @@ namespace FractalPlotter
 		SettingsWindow settingsWindow;
 		bool exiting;
 
+		/// <summary>
+		/// Takes a screenshot. The boolean is needed because GL crashes when trying to read pixels when calling MasterRenderer.TakeScreenshot() directly.
+		/// </summary>
+		public bool TakeScreenshot;
+
 		public GraphSettingsPipe() { }
 
 		/// <summary>
@@ -161,15 +166,6 @@ namespace FractalPlotter
 		public void AddPoint(Vector3 location)
 		{
 			PointManager.Add(location, Utils.RandomColor());
-			graphWindow.Focus();
-		}
-
-		/// <summary>
-		/// Adds another point in the graph window.
-		/// </summary>
-		public void TakeScreenshot()
-		{
-			MasterRenderer.TakeScreenshot(0, 0, graphWindow.ClientSize.X, graphWindow.ClientSize.Y);
 			graphWindow.Focus();
 		}
 

@@ -105,6 +105,7 @@ namespace FractalPlotter
 
 			using var img = new Bitmap(width, height, width * 3, System.Drawing.Imaging.PixelFormat.Format24bppRgb, Marshal.UnsafeAddrOfPinnedArrayElement(data, 0));
 
+			img.RotateFlip(RotateFlipType.RotateNoneFlipY);
 			img.Save(file);
 		}
 	}

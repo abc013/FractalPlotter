@@ -276,7 +276,7 @@ namespace FractalPlotter
 		/// </summary>
 		void takeScreenshot(object sender, EventArgs e)
 		{
-			pipe.TakeScreenshot();
+			pipe.TakeScreenshot = true;
 		}
 	}
 }
