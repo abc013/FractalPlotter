@@ -26,7 +26,7 @@ namespace FractalPlotter.Graphics
 			ids[0] = GL.GetUniformLocation(programID, "location");
 			ids[1] = GL.GetUniformLocation(programID, "exactlocation");
 			ids[2] = GL.GetUniformLocation(programID, "scale");
-			ids[3] = GL.GetUniformLocation(programID, "rotation");
+			//ids[3] = GL.GetUniformLocation(programID, "limit");
 			ids[4] = GL.GetUniformLocation(programID, "imax");
 			ids[5] = GL.GetUniformLocation(programID, "fac1");
 			ids[6] = GL.GetUniformLocation(programID, "projection");
@@ -56,8 +56,8 @@ namespace FractalPlotter.Graphics
 			if (ids[2] >= 0)
 				GL.Uniform1(ids[2], Camera.Scale);
 
-			if (ids[3] >= 0)
-				GL.Uniform1(ids[3], Camera.Rotation.Z);
+			//if (ids[3] >= 0)
+			//	GL.Uniform1(ids[3], MasterRenderer);
 
 			if (ids[4] >= 0)
 				GL.Uniform1(ids[4], MasterRenderer.IMax);

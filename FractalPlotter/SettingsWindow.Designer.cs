@@ -31,12 +31,8 @@
 			this.locY = new System.Windows.Forms.TextBox();
 			this.locZ = new System.Windows.Forms.TextBox();
 			this.scaleX = new System.Windows.Forms.TextBox();
-			this.rotX = new System.Windows.Forms.TextBox();
-			this.rotY = new System.Windows.Forms.TextBox();
-			this.rotZ = new System.Windows.Forms.TextBox();
 			this.locText = new System.Windows.Forms.Label();
 			this.scaleText = new System.Windows.Forms.Label();
-			this.rotText = new System.Windows.Forms.Label();
 			this.ShaderList = new System.Windows.Forms.ListBox();
 			this.shaderText = new System.Windows.Forms.Label();
 			this.PaletteList = new System.Windows.Forms.ListBox();
@@ -116,30 +112,6 @@
 			this.scaleX.Size = new System.Drawing.Size(216, 31);
 			this.scaleX.TabIndex = 7;
 			// 
-			// rotX
-			// 
-			this.rotX.Location = new System.Drawing.Point(9, 449);
-			this.rotX.Margin = new System.Windows.Forms.Padding(2);
-			this.rotX.Name = "rotX";
-			this.rotX.Size = new System.Drawing.Size(69, 31);
-			this.rotX.TabIndex = 8;
-			// 
-			// rotY
-			// 
-			this.rotY.Location = new System.Drawing.Point(82, 449);
-			this.rotY.Margin = new System.Windows.Forms.Padding(2);
-			this.rotY.Name = "rotY";
-			this.rotY.Size = new System.Drawing.Size(69, 31);
-			this.rotY.TabIndex = 9;
-			// 
-			// rotZ
-			// 
-			this.rotZ.Location = new System.Drawing.Point(155, 449);
-			this.rotZ.Margin = new System.Windows.Forms.Padding(2);
-			this.rotZ.Name = "rotZ";
-			this.rotZ.Size = new System.Drawing.Size(69, 31);
-			this.rotZ.TabIndex = 10;
-			// 
 			// locText
 			// 
 			this.locText.AutoSize = true;
@@ -160,17 +132,6 @@
 			this.scaleText.Size = new System.Drawing.Size(83, 25);
 			this.scaleText.TabIndex = 3;
 			this.scaleText.Text = "Scalation";
-			// 
-			// rotText
-			// 
-			this.rotText.AutoSize = true;
-			this.rotText.Location = new System.Drawing.Point(9, 422);
-			this.rotText.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-			this.rotText.Name = "rotText";
-			this.rotText.RightToLeft = System.Windows.Forms.RightToLeft.No;
-			this.rotText.Size = new System.Drawing.Size(79, 25);
-			this.rotText.TabIndex = 3;
-			this.rotText.Text = "Rotation";
 			// 
 			// ShaderList
 			// 
@@ -312,12 +273,8 @@
 			this.Controls.Add(this.PaletteList);
 			this.Controls.Add(this.shaderText);
 			this.Controls.Add(this.ShaderList);
-			this.Controls.Add(this.rotText);
 			this.Controls.Add(this.scaleText);
 			this.Controls.Add(this.locText);
-			this.Controls.Add(this.rotZ);
-			this.Controls.Add(this.rotY);
-			this.Controls.Add(this.rotX);
 			this.Controls.Add(this.scaleX);
 			this.Controls.Add(this.locZ);
 			this.Controls.Add(this.locY);
@@ -346,12 +303,8 @@
 		private System.Windows.Forms.TextBox locY;
 		private System.Windows.Forms.TextBox locZ;
 		private System.Windows.Forms.TextBox scaleX;
-		private System.Windows.Forms.TextBox rotX;
-		private System.Windows.Forms.TextBox rotY;
-		private System.Windows.Forms.TextBox rotZ;
 		private System.Windows.Forms.Label locText;
 		private System.Windows.Forms.Label scaleText;
-		private System.Windows.Forms.Label rotText;
 		public System.Windows.Forms.Label Info0;
 		public System.Windows.Forms.Label Info1;
 		private System.Windows.Forms.ListBox ShaderList;

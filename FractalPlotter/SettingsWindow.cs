@@ -41,13 +41,6 @@ namespace FractalPlotter
 			scaleX.KeyPress += keyPress;
 			scaleX.TextChanged += setScale;
 
-			rotX.KeyPress += keyPress;
-			rotX.TextChanged += setRotation;
-			rotY.KeyPress += keyPress;
-			rotY.TextChanged += setRotation;
-			rotZ.KeyPress += keyPress;
-			rotZ.TextChanged += setRotation;
-
 			imaxBox.KeyPress += keyPressInteger;
 			imaxBox.TextChanged += setParameters;
 			c2Box.KeyPress += keyPress;
@@ -75,18 +68,6 @@ namespace FractalPlotter
 		{
 			receivesUpdate = true;
 			scaleX.Text = Camera.Scale.ToString();
-			receivesUpdate = false;
-		}
-
-		/// <summary>
-		/// Write the camera rotation.
-		/// </summary>
-		public void UpdateRotation()
-		{
-			receivesUpdate = true;
-			rotX.Text = Camera.Rotation.X.ToString();
-			rotY.Text = Camera.Rotation.Y.ToString();
-			rotZ.Text = Camera.Rotation.Z.ToString();
 			receivesUpdate = false;
 		}
 
@@ -233,20 +214,6 @@ namespace FractalPlotter
 
 			var s = Utils.ToFloat(scaleX.Text);
 			pipe.SetScale(s);
-		}
-
-		/// <summary>
-		/// Checks and sets the rotation and pipes it to the graph window then.
-		/// </summary>
-		void setRotation(object sender, EventArgs e)
-		{
-			if (receivesUpdate)
-				return;
-
-			var rx = Utils.ToFloat(rotX.Text, 0);
-			var ry = Utils.ToFloat(rotY.Text, 0);
-			var rz = Utils.ToFloat(rotZ.Text, 0);
-			pipe.SetRotation(rx, ry, rz);
 		}
 
 		/// <summary>

@@ -36,7 +36,6 @@ namespace FractalPlotter
 
 			pipe.UpdateTranslation();
 			pipe.UpdateScale();
-			pipe.UpdateRotation();
 			pipe.UpdateParameters();
 
 			IsLoaded = true;

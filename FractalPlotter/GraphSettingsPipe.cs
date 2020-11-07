@@ -70,14 +70,6 @@ namespace FractalPlotter
 		}
 
 		/// <summary>
-		/// Transmit current rotation to the settings window.
-		/// </summary>
-		public void UpdateRotation()
-		{
-			pipe(delegate { settingsWindow.UpdateRotation(); });
-		}
-
-		/// <summary>
 		/// Transmit current parameters to the settings window.
 		/// </summary>
 		public void UpdateParameters()
@@ -107,14 +99,6 @@ namespace FractalPlotter
 		public void SetScale(float s)
 		{
 			Camera.SetScale(s);
-		}
-
-		/// <summary>
-		/// Set rotation in the graph window.
-		/// </summary>
-		public void SetRotation(float x, float y, float z)
-		{
-			Camera.SetRotation(x, y, z);
 		}
 
 		/// <summary>

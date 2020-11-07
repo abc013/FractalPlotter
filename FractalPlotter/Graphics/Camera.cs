@@ -41,10 +41,6 @@ namespace FractalPlotter.Graphics
 		/// Scale. This parameter is accessible in shaders.
 		/// </summary>
 		public static float Scale { get; private set; }
-		/// <summary>
-		/// Rotation. Unused.
-		/// </summary>
-		public static Vector3 Rotation { get; private set; }
 
 		/// <summary>
 		/// Keeps track of whether the matrix needs to be updated.
@@ -59,7 +55,6 @@ namespace FractalPlotter.Graphics
 			Location = new Vector3(Settings.LocationX, Settings.LocationY, Settings.LocationZ);
 			ExactLocation = new Vector3d(Settings.LocationX, Settings.LocationY, Settings.LocationZ);
 			Scale = Settings.Scale;
-			Rotation = new Vector3();
 			Changed = true;
 
 			ResizeViewport(Settings.GraphWidth, Settings.GraphHeight);
@@ -81,15 +76,6 @@ namespace FractalPlotter.Graphics
 		public static void SetScale(float s)
 		{
 			Scale = s;
-			Changed = true;
-		}
-
-		/// <summary>
-		/// Set new rotation.
-		/// </summary>
-		public static void SetRotation(float rx, float ry, float rz)
-		{
-			Rotation = new Vector3(rx, ry, rz);
 			Changed = true;
 		}
 
@@ -119,15 +105,6 @@ namespace FractalPlotter.Graphics
 		}
 
 		/// <summary>
-		/// Add rotation to the current one.
-		/// </summary>
-		public static void Rotate(float x, float y, float z)
-		{
-			Rotation += new Vector3(x, y, z);
-			Changed = true;
-		}
-
-		/// <summary>
 		/// Update the window ratio if the window was resized.
 		/// </summary>
 		public static void ResizeViewport(int width, int height)
@@ -147,10 +124,6 @@ namespace FractalPlotter.Graphics
 			Changed = false;
 
 			var locMatrix = Matrix4.CreateTranslation(new Vector3(-Location.X, -Location.Y, Location.Z));
-
-			//var rotMatrixX = Matrix4.CreateRotationX(Rotation.X);
-			//var rotMatrixY = Matrix4.CreateRotationY(Rotation.Y);
-			//var rotMatrixZ = Matrix4.CreateRotationZ(Rotation.Z);
 
 			var scale = Scale / 2f;
 			ScaleMatrix = Matrix4.CreateScale(scale / Ratio, scale, 0);
