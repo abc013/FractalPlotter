@@ -16,7 +16,6 @@ namespace FractalPlotter.Graphics
 
 		static int currentPalette;
 
-		static Renderable planeRenderable;
 		static Point crosshair1, crosshair2;
 
 		/// <summary>
@@ -41,9 +40,11 @@ namespace FractalPlotter.Graphics
 			ChangeShader(Settings.DefaultShader, true);
 			ChangePalette(Settings.DefaultPalette);
 
-			// Add some debug points.
+			// generate a GL Buffer with a plane in it and load it into GPU storage.
 			PointRenderable.Load();
+			PlaneRenderable.Load();
 
+			// Add some debug points.
 			PointManager.Add(Vector3.Zero, Color4.Violet);
 			PointManager.Add(Vector3.UnitY, Color4.Red);
 			PointManager.Add(-Vector3.UnitY, Color4.Red);
@@ -55,12 +56,10 @@ namespace FractalPlotter.Graphics
 
 			// Configure GL properly.
 			GL.ClearColor(Color4.Black);
+			GL.Enable(EnableCap.ScissorTest);
 
 			GL.Enable(EnableCap.Blend);
 			GL.LineWidth(2f);
-
-			// generate a GL Buffer with a plane in it and load it into GPU storage.
-			planeRenderable = new Renderable(getPlaneVectors());
 
 			// Check for GL errors.
 			Utils.CheckError("Load");
@@ -118,7 +117,7 @@ namespace FractalPlotter.Graphics
 				GL.BindTexture(TextureTarget.Texture1D, currentPalette);
 				currentManager.Uniform();
 
-				planeRenderable.Render();
+				PlaneRenderable.Render();
 			}
 
 			if (Settings.Points)
@@ -147,22 +146,9 @@ namespace FractalPlotter.Graphics
 
 			Camera.ResizeViewport(width, height);
 
-			planeRenderable.ChangeBuffer(getPlaneVectors());
+			PlaneRenderable.UpdateBuffer();
 
 			Utils.CheckError("Resize");
-		}
-
-		static Vector[] getPlaneVectors()
-		{
-			return new[]
-			{
-				new Vector(new Vector4(-1, -1, 0, 1), Color4.White, new Vector2(-Camera.Ratio * 2f, -1 * 2f)),
-				new Vector(new Vector4(-1, 1, 0, 1), Color4.White, new Vector2(-Camera.Ratio * 2f, 1 * 2f)),
-				new Vector(new Vector4(1, -1, 0, 1), Color4.White, new Vector2(Camera.Ratio * 2f, -1 * 2f)),
-				new Vector(new Vector4(1, -1, 0, 1), Color4.White, new Vector2(Camera.Ratio * 2f, -1 * 2f)),
-				new Vector(new Vector4(-1, 1, 0, 1), Color4.White, new Vector2(-Camera.Ratio * 2f, 1 * 2f)),
-				new Vector(new Vector4(1, 1, 0, 1), Color4.White, new Vector2(Camera.Ratio * 2f, 1 * 2f)),
-			};
 		}
 
 		/// <summary>
@@ -170,10 +156,9 @@ namespace FractalPlotter.Graphics
 		/// </summary>
 		public static void Dispose()
 		{
-			planeRenderable.Dispose();
-
 			PointManager.Dispose();
 			PointRenderable.Dispose();
+			PlaneRenderable.Dispose();
 
 			ShaderManager.Dispose();
 			PaletteManager.Dispose();
