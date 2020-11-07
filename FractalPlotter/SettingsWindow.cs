@@ -25,28 +25,6 @@ namespace FractalPlotter
 			pipe.Add(this);
 
 			InitializeComponent();
-
-			pointCheck.CheckedChanged += changeFancy;
-			dimensionCheck.CheckedChanged += changeDimensional;
-
-			// Add some events to catch special cases and to update values right when they are typed in.
-
-			locX.KeyPress += keyPress;
-			locX.TextChanged += setTranslation;
-			locY.KeyPress += keyPress;
-			locY.TextChanged += setTranslation;
-
-			scaleX.KeyPress += keyPress;
-			scaleX.TextChanged += setScale;
-
-			imaxBox.KeyPress += keyPressInteger;
-			imaxBox.TextChanged += setParameters;
-			limitBox.KeyPress += keyPress;
-			limitBox.TextChanged += setParameters;
-			c2Box.KeyPress += keyPress;
-			c2Box.TextChanged += setParameters;
-			c1Box.KeyPress += keyPress;
-			c1Box.TextChanged += setParameters;
 		}
 
 		/// <summary>

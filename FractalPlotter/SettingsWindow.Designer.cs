@@ -61,6 +61,7 @@
 			this.pointCheck.TabIndex = 2;
 			this.pointCheck.Text = "Points";
 			this.pointCheck.UseVisualStyleBackColor = true;
+			this.pointCheck.CheckedChanged += new System.EventHandler(this.changeFancy);
 			// 
 			// Info0
 			// 
@@ -89,6 +90,8 @@
 			this.locX.Name = "locX";
 			this.locX.Size = new System.Drawing.Size(115, 31);
 			this.locX.TabIndex = 4;
+			this.locX.TextChanged += new System.EventHandler(this.setTranslation);
+			this.locX.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.keyPress);
 			// 
 			// locY
 			// 
@@ -97,6 +100,8 @@
 			this.locY.Name = "locY";
 			this.locY.Size = new System.Drawing.Size(115, 31);
 			this.locY.TabIndex = 5;
+			this.locY.TextChanged += new System.EventHandler(this.setTranslation);
+			this.locY.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.keyPress);
 			// 
 			// scaleX
 			// 
@@ -105,6 +110,8 @@
 			this.scaleX.Name = "scaleX";
 			this.scaleX.Size = new System.Drawing.Size(238, 31);
 			this.scaleX.TabIndex = 6;
+			this.scaleX.TextChanged += new System.EventHandler(this.setScale);
+			this.scaleX.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.keyPress);
 			// 
 			// locText
 			// 
@@ -181,6 +188,7 @@
 			this.dimensionCheck.TabIndex = 3;
 			this.dimensionCheck.Text = "3D";
 			this.dimensionCheck.UseVisualStyleBackColor = true;
+			this.dimensionCheck.CheckedChanged += new System.EventHandler(this.changeDimensional);
 			// 
 			// imaxBox
 			// 
@@ -189,6 +197,8 @@
 			this.imaxBox.Name = "imaxBox";
 			this.imaxBox.Size = new System.Drawing.Size(115, 31);
 			this.imaxBox.TabIndex = 9;
+			this.imaxBox.TextChanged += new System.EventHandler(this.setParameters);
+			this.imaxBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.keyPressInteger);
 			// 
 			// c2Box
 			// 
@@ -197,6 +207,8 @@
 			this.c2Box.Name = "c2Box";
 			this.c2Box.Size = new System.Drawing.Size(115, 31);
 			this.c2Box.TabIndex = 8;
+			this.c2Box.TextChanged += new System.EventHandler(this.setParameters);
+			this.c2Box.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.keyPress);
 			// 
 			// c1Box
 			// 
@@ -205,6 +217,8 @@
 			this.c1Box.Name = "c1Box";
 			this.c1Box.Size = new System.Drawing.Size(115, 31);
 			this.c1Box.TabIndex = 7;
+			this.c1Box.TextChanged += new System.EventHandler(this.setParameters);
+			this.c1Box.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.keyPress);
 			// 
 			// label2
 			// 
@@ -256,6 +270,8 @@
 			this.limitBox.Name = "limitBox";
 			this.limitBox.Size = new System.Drawing.Size(115, 31);
 			this.limitBox.TabIndex = 10;
+			this.limitBox.TextChanged += new System.EventHandler(this.setParameters);
+			this.limitBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.keyPress);
 			// 
 			// label3
 			// 
