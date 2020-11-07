@@ -9,6 +9,7 @@ uniform sampler1D pal;
 uniform vec2 location;
 uniform float scale;
 uniform int imax;
+uniform float squaredLimit;
 
 uniform vec2 fac1;
 
@@ -38,7 +39,7 @@ void main(void)
 		float y = pow * sin(natan) + c.y;
 		float x = xtmp;
 
-        if((x * x + y * y) > 4.0) break;
+        if((x * x + y * y) > squaredLimit) break;
         z.x = x;
         z.y = y;
     }

@@ -40,6 +40,10 @@ namespace FractalPlotter
 		/// </summary>
 		public static int IMax = 256;
 		/// <summary>
+		/// Flight criterium value. Usually increased to get better pictures for art. Should not be put below 2.
+		/// </summary>
+		public static float Limit = 2.0f;
+		/// <summary>
 		/// Render points and center crosshair.
 		/// </summary>
 		public static bool Points = true;

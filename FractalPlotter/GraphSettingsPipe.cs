@@ -104,10 +104,11 @@ namespace FractalPlotter
 		/// <summary>
 		/// Set parameters in the graph window.
 		/// </summary>
-		public void SetParameters(float c1, float c2, int imax)
+		public void SetParameters(float c1, float c2, int imax, float limit)
 		{
 			MasterRenderer.Factor1 = new Vector2(c1, c2);
 			MasterRenderer.IMax = imax;
+			MasterRenderer.SquaredLimit = limit*limit;
 		}
 
 		/// <summary>

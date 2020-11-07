@@ -9,6 +9,7 @@ uniform sampler1D pal;
 uniform vec2 location;
 uniform float scale;
 uniform int imax;
+uniform float squaredLimit;
 
 out vec4 color;
 
@@ -28,7 +29,7 @@ void main(void)
         float x = (z.x * z.x - z.y * z.y) + c.x;
         float y = 2 * (z.y * z.x) + c.y;
 
-        if((x * x + y * y) > 4.0) break;
+        if((x * x + y * y) > squaredLimit) break;
         z.x = x;
         z.y = y;
     }

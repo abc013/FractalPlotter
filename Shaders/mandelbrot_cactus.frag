@@ -8,9 +8,10 @@ in vec2 vs_texCoord;
 
 uniform sampler1D pal;
 
-uniform dvec2 exactlocation;
+uniform dvec2 exactLocation;
 uniform float scale;
 uniform int imax;
+uniform float squaredLimit;
 
 out vec4 color;
 
@@ -19,8 +20,8 @@ void main(void)
 {
     dvec2 z, c;
 
-    c.x = double(vs_texCoord.x) / double(scale) + exactlocation.x;
-    c.y = double(vs_texCoord.y) / double(scale) + exactlocation.y;
+    c.x = double(vs_texCoord.x) / double(scale) + exactLocation.x;
+    c.y = double(vs_texCoord.y) / double(scale) + exactLocation.y;
 
 	// theory in https://www.ibiblio.org/e-notes/MSet/period.htm, js: https://www.ibiblio.org/e-notes/MSet/js/FBTFractal1w.js
 	double cr = c.x;
@@ -39,7 +40,7 @@ void main(void)
 
 		squared.x = x * x;
 		squared.y = y * y;
-        if((squared.x + squared.y) > 4.0) break;
+        if((squared.x + squared.y) > squaredLimit) break;
         z.x = x;
         z.y = y;
     }

@@ -8,9 +8,10 @@ in vec2 vs_texCoord;
 
 uniform sampler1D pal;
 
-uniform dvec2 exactlocation;
+uniform dvec2 exactLocation;
 uniform float scale;
 uniform int imax;
+uniform float squaredLimit;
 
 out vec4 color;
 
@@ -20,8 +21,8 @@ void main(void)
 	double n = 3;
     dvec2 z, c;
 
-    c.x = double(vs_texCoord.x) / double(scale) + exactlocation.x;
-    c.y = double(vs_texCoord.y) / double(scale) + exactlocation.y;
+    c.x = double(vs_texCoord.x) / double(scale) + exactLocation.x;
+    c.y = double(vs_texCoord.y) / double(scale) + exactLocation.y;
 	
     z = c;
 
@@ -31,7 +32,7 @@ void main(void)
         double x = z.x * (z.x * z.x - 3 * z.y * z.y) + c.x;
         double y = z.y * (3 * z.x * z.x - z.y * z.y) + c.y;
 
-        if((x * x + y * y) > 4.0) break;
+        if((x * x + y * y) > squaredLimit) break;
         z.x = x;
         z.y = y;
     }

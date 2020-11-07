@@ -35,14 +35,14 @@ namespace FractalPlotter
 			locX.TextChanged += setTranslation;
 			locY.KeyPress += keyPress;
 			locY.TextChanged += setTranslation;
-			locZ.KeyPress += keyPress;
-			locZ.TextChanged += setTranslation;
 
 			scaleX.KeyPress += keyPress;
 			scaleX.TextChanged += setScale;
 
 			imaxBox.KeyPress += keyPressInteger;
 			imaxBox.TextChanged += setParameters;
+			limitBox.KeyPress += keyPress;
+			limitBox.TextChanged += setParameters;
 			c2Box.KeyPress += keyPress;
 			c2Box.TextChanged += setParameters;
 			c1Box.KeyPress += keyPress;
@@ -57,7 +57,6 @@ namespace FractalPlotter
 			receivesUpdate = true;
 			locX.Text = Camera.Location.X.ToString();
 			locY.Text = Camera.Location.Y.ToString();
-			locZ.Text = Camera.Location.Z.ToString();
 			receivesUpdate = false;
 		}
 
@@ -80,6 +79,7 @@ namespace FractalPlotter
 			c1Box.Text = MasterRenderer.Factor1.X.ToString();
 			c2Box.Text = MasterRenderer.Factor1.Y.ToString();
 			imaxBox.Text = MasterRenderer.IMax.ToString();
+			limitBox.Text = Math.Sqrt(MasterRenderer.SquaredLimit).ToString();
 			receivesUpdate = false;
 		}
 
@@ -200,8 +200,7 @@ namespace FractalPlotter
 
 			var x = Utils.ToDouble(locX.Text);
 			var y = Utils.ToDouble(locY.Text);
-			var z = Utils.ToDouble(locZ.Text);
-			pipe.SetTranslation(x, y, z);
+			pipe.SetTranslation(x, y, 0);
 		}
 
 		/// <summary>
@@ -227,7 +226,8 @@ namespace FractalPlotter
 			var c1 = Utils.ToFloat(c1Box.Text, 0);
 			var c2 = Utils.ToFloat(c2Box.Text, 0);
 			var imax = Utils.ToInt(imaxBox.Text, 0);
-			pipe.SetParameters(c1, c2, imax);
+			var limit = Utils.ToFloat(limitBox.Text, 0);
+			pipe.SetParameters(c1, c2, imax, limit);
 		}
 
 		/// <summary>

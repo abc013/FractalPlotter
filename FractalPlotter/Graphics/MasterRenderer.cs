@@ -7,6 +7,7 @@ namespace FractalPlotter.Graphics
 	{
 		public static Vector2 Factor1;
 		public static int IMax;
+		public static float SquaredLimit;
 
 		public static UniformManager DefaultManager { get; private set; }
 		public static int DefaultShader { get; private set; }
@@ -27,6 +28,7 @@ namespace FractalPlotter.Graphics
 
 			Factor1 = new Vector2(Settings.Factor1X, Settings.Factor1Y);
 			IMax = Settings.IMax;
+			SquaredLimit = Settings.Limit * Settings.Limit;
 
 			// Load in all the shaders found.
 			foreach (var name in FileManager.GetGraphShaderNames())
