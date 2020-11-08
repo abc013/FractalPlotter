@@ -30,6 +30,8 @@ namespace FractalPlotter.Graphics
 			GL.BindTexture(TextureTarget.Texture1D, ID);
 			GL.TexParameter(TextureTarget.Texture1D, TextureParameterName.TextureMinFilter, (int)All.Nearest);
 			GL.TexParameter(TextureTarget.Texture1D, TextureParameterName.TextureMagFilter, (int)All.Nearest);
+			GL.TexParameter(TextureTarget.Texture1D, TextureParameterName.TextureWrapS, (int)All.Clamp);
+			GL.TexParameter(TextureTarget.Texture1D, TextureParameterName.TextureWrapT, (int)All.Clamp);
 
 			GL.TexImage1D(TextureTarget.Texture1D, 0, PixelInternalFormat.Rgba32f, rect.Width, 0, OpenTK.Graphics.OpenGL.PixelFormat.Rgba, PixelType.Float, data);
 
