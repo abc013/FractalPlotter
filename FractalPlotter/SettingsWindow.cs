@@ -100,7 +100,6 @@ namespace FractalPlotter
 			PaletteList.SelectedItem = Settings.DefaultPalette;
 
 			pointCheck.Checked = Settings.Points;
-			dimensionCheck.Checked = Settings.ThreeDimensional;
 
 			// Taken from https://docs.microsoft.com/en-us/dotnet/api/system.windows.forms.tooltip?redirectedfrom=MSDN&view=netcore-3.1
 			var tooltip = new ToolTip();
@@ -141,18 +140,6 @@ namespace FractalPlotter
 		{
 			if (IsLoaded)
 				pipe.PointCheck(pointCheck.Checked);
-		}
-
-		/// <summary>
-		/// Update the 3D boolean in the graph window.
-		/// </summary>
-		void changeDimensional(object sender, EventArgs e)
-		{
-			if (IsLoaded)
-				pipe.DimensionCheck(dimensionCheck.Checked);
-
-			ShaderList.Enabled = !dimensionCheck.Checked;
-			PaletteList.Enabled = !dimensionCheck.Checked;
 		}
 
 		/// <summary>

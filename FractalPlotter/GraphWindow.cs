@@ -157,10 +157,6 @@ namespace FractalPlotter
 		/// </summary>
 		Vector3d getCursorLocation()
 		{
-			// Don't calculate in threedimensional space
-			if (Settings.ThreeDimensional)
-				return Vector3d.Zero;
-
 			var screenX = (MousePosition.X / ClientSize.X) * 4d - 2d;
 			var screenY = (MousePosition.Y / ClientSize.Y) * 4d - 2d;
 			screenX *= Camera.Ratio;

@@ -36,7 +36,6 @@
 			this.shaderText = new System.Windows.Forms.Label();
 			this.PaletteList = new System.Windows.Forms.ListBox();
 			this.paletteText = new System.Windows.Forms.Label();
-			this.dimensionCheck = new System.Windows.Forms.CheckBox();
 			this.imaxBox = new System.Windows.Forms.TextBox();
 			this.c2Box = new System.Windows.Forms.TextBox();
 			this.c1Box = new System.Windows.Forms.TextBox();
@@ -57,9 +56,9 @@
 			this.pointCheck.Location = new System.Drawing.Point(10, 255);
 			this.pointCheck.Margin = new System.Windows.Forms.Padding(2);
 			this.pointCheck.Name = "pointCheck";
-			this.pointCheck.Size = new System.Drawing.Size(86, 29);
+			this.pointCheck.Size = new System.Drawing.Size(135, 29);
 			this.pointCheck.TabIndex = 2;
-			this.pointCheck.Text = "Points";
+			this.pointCheck.Text = "Show Points";
 			this.pointCheck.UseVisualStyleBackColor = true;
 			this.pointCheck.CheckedChanged += new System.EventHandler(this.changeFancy);
 			// 
@@ -177,18 +176,6 @@
 			this.paletteText.Size = new System.Drawing.Size(72, 25);
 			this.paletteText.TabIndex = 3;
 			this.paletteText.Text = "Palettes";
-			// 
-			// dimensionCheck
-			// 
-			this.dimensionCheck.AutoSize = true;
-			this.dimensionCheck.Location = new System.Drawing.Point(135, 255);
-			this.dimensionCheck.Margin = new System.Windows.Forms.Padding(2);
-			this.dimensionCheck.Name = "dimensionCheck";
-			this.dimensionCheck.Size = new System.Drawing.Size(61, 29);
-			this.dimensionCheck.TabIndex = 3;
-			this.dimensionCheck.Text = "3D";
-			this.dimensionCheck.UseVisualStyleBackColor = true;
-			this.dimensionCheck.CheckedChanged += new System.EventHandler(this.changeDimensional);
 			// 
 			// imaxBox
 			// 
@@ -313,7 +300,6 @@
 			this.Controls.Add(this.c1Box);
 			this.Controls.Add(this.c2Box);
 			this.Controls.Add(this.imaxBox);
-			this.Controls.Add(this.dimensionCheck);
 			this.Controls.Add(this.paletteText);
 			this.Controls.Add(this.PaletteList);
 			this.Controls.Add(this.shaderText);
@@ -354,7 +340,6 @@
 		private System.Windows.Forms.Label shaderText;
 		private System.Windows.Forms.ListBox PaletteList;
 		private System.Windows.Forms.Label paletteText;
-		private System.Windows.Forms.CheckBox dimensionCheck;
 		private System.Windows.Forms.TextBox imaxBox;
 		private System.Windows.Forms.TextBox c2Box;
 		private System.Windows.Forms.TextBox c1Box;

@@ -47,10 +47,6 @@ namespace FractalPlotter
 		/// Render points and viewport crosshair.
 		/// </summary>
 		public static bool Points = true;
-		/// <summary>
-		/// Enable three-dimensional view. Unused.
-		/// </summary>
-		public static bool ThreeDimensional = false;
 
 		/// <summary>
 		/// Allows setting the default shader which will be used on startup.

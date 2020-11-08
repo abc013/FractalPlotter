@@ -122,14 +122,11 @@ namespace FractalPlotter.Graphics
 
 			GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-			if (!Settings.ThreeDimensional)
-			{
-				GL.UseProgram(currentShader);
-				GL.BindTexture(TextureTarget.Texture1D, currentPalette);
-				currentManager.Uniform();
+			GL.UseProgram(currentShader);
+			GL.BindTexture(TextureTarget.Texture1D, currentPalette);
+			currentManager.Uniform();
 
-				PlaneRenderable.Render();
-			}
+			PlaneRenderable.Render();
 
 			if (Settings.Points)
 			{

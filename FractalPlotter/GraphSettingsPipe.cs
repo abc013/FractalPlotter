@@ -120,14 +120,6 @@ namespace FractalPlotter
 		}
 
 		/// <summary>
-		/// Set the 3D boolean in the settings.
-		/// </summary>
-		public void DimensionCheck(bool @checked)
-		{
-			Settings.ThreeDimensional = @checked;
-		}
-
-		/// <summary>
 		/// Sets the current shader for the graph window.
 		/// </summary>
 		public void SetCurrentShader(string name)
