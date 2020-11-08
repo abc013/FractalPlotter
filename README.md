@@ -24,9 +24,19 @@ After doing so, just run the following command:
 ```sh
 dotnet build
 ```
-This command should fetch the dependencies via NuGet (make sure you have an internect connection!) and build the binaries for you. Done!
+This command should fetch the dependencies via NuGet (make sure you have an internet connection!) and build the binaries for you. Done!
 
-As text editors, Visual Studio 2019 or Visual Studio Code are reccommended.
+As text editors, Visual Studio 2019 or Visual Studio Code are recommended.
+
+## Settings
+Most options can be modified in the program. However, to get access to more settings or to have the same arguments at every startup, you can create a `settings.txt` in the same directory where the executable is. To see what can be modified, please take a look at the [Settings.cs file](https://github.com/abc013/FractalPlotter/blob/master/FractalPlotter/Settings.cs). An example of a `settings.txt` might be:
+```
+Points=false
+DefaultShader=julia
+Scale=1.5
+Factor1X=-0.5
+Factor1Y=0.55
+```
 
 ## Issues
 If you encounter any problems or bugs while compiling or running the program, feel free to [open an issue](https://github.com/abc013/FractalPlotter/issues/new)! Please don't forget to atttach the `exception.log` and `information.log` files.
