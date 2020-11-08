@@ -4,7 +4,7 @@ namespace FractalPlotter.Graphics
 {
 	/// <summary>
 	/// Class designed to render the viewport plane, on which the fractals get displayed.
-	/// Since there only needs to be , only one renderable is necessary.
+	/// Since there only needs to be, only one renderable is necessary.
 	/// </summary>
 	public static class PlaneRenderable
 	{

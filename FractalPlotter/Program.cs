@@ -16,6 +16,7 @@ namespace FractalPlotter
 		[STAThread]
 		public static void Main()
 		{
+			// Reset culture to invariant. This is needed because otherwise string parsing of floats in different countries can lead to different results/crashing.
 			CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
 
 			Log.Initialize();

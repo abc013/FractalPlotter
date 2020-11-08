@@ -19,6 +19,10 @@ namespace FractalPlotter
 		/// </summary>
 		bool receivesUpdate;
 
+		/// <summary>
+		/// Initialize the settings window.
+		/// Most of the initialization is handled by Windows Forms.
+		/// </summary>
 		public SettingsWindow(GraphSettingsPipe pipe)
 		{
 			this.pipe = pipe;
@@ -28,7 +32,7 @@ namespace FractalPlotter
 		}
 
 		/// <summary>
-		/// Write the camera translation.
+		/// Display the new camera translation.
 		/// </summary>
 		public void UpdateTranslation()
 		{
@@ -39,7 +43,7 @@ namespace FractalPlotter
 		}
 
 		/// <summary>
-		/// Write the camera scale.
+		///  Display the new camera scale.
 		/// </summary>
 		public void UpdateScale()
 		{
@@ -49,7 +53,7 @@ namespace FractalPlotter
 		}
 
 		/// <summary>
-		/// Write the cursor location.
+		///  Display the new parameters.
 		/// </summary>
 		public void UpdateParameters()
 		{
@@ -62,7 +66,7 @@ namespace FractalPlotter
 		}
 
 		/// <summary>
-		/// Write the cursor location.
+		///  Display the new cursor location.
 		/// </summary>
 		public void UpdateCursorLocation(double x, double y)
 		{
@@ -106,6 +110,7 @@ namespace FractalPlotter
 			tooltip.ReshowDelay = 0;
 			tooltip.ShowAlways = true;
 
+			// Set a tooltip for all elements in the window.
 			tooltip.SetToolTip(pointCheck, "Render points.");
 			tooltip.SetToolTip(locX, "Viewport X position. [Arrow left/right]");
 			tooltip.SetToolTip(locY, "Viewport Y position. [Arrow up/down]");

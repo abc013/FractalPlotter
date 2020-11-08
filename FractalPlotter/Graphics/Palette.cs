@@ -26,13 +26,14 @@ namespace FractalPlotter.Graphics
 
 			var data = loadTexture(bmp, rect);
 
+			// Generate a texture, specifiy it only has one dimension.
 			ID = GL.GenTexture();
 			GL.BindTexture(TextureTarget.Texture1D, ID);
 			GL.TexParameter(TextureTarget.Texture1D, TextureParameterName.TextureMinFilter, (int)All.Nearest);
 			GL.TexParameter(TextureTarget.Texture1D, TextureParameterName.TextureMagFilter, (int)All.Nearest);
 			GL.TexParameter(TextureTarget.Texture1D, TextureParameterName.TextureWrapS, (int)All.Clamp);
 			GL.TexParameter(TextureTarget.Texture1D, TextureParameterName.TextureWrapT, (int)All.Clamp);
-
+			// Load in the data.
 			GL.TexImage1D(TextureTarget.Texture1D, 0, PixelInternalFormat.Rgba32f, rect.Width, 0, OpenTK.Graphics.OpenGL.PixelFormat.Rgba, PixelType.Float, data);
 
 			GL.BindTexture(TextureTarget.Texture1D, 0);

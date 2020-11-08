@@ -41,7 +41,7 @@ namespace FractalPlotter
 		}
 
 		/// <summary>
-		/// Unlock the ´log files properly for other processes.
+		/// Unlock the log files properly for other processes.
 		/// </summary>
 		public static void Exit()
 		{

@@ -3,18 +3,25 @@ using OpenTK.Mathematics;
 
 namespace FractalPlotter.Graphics
 {
+	/// <summary>
+	/// Master class dedicated to controlling the interaction with GL.
+	/// For more information about how GL works, visit https://glumpy.github.io/modern-gl.html.
+	/// </summary>
 	public static class MasterRenderer
 	{
 		public static Vector2 Factor1;
 		public static int IMax;
 		public static float SquaredLimit;
 
+		// Default shader: It is used to render points and the crosshair.
 		public static UniformManager DefaultManager { get; private set; }
 		public static int DefaultShader { get; private set; }
 
+		// Current shader: It is used to render the current fractal.
 		static UniformManager currentManager;
 		static int currentShader;
 
+		// Current palette ID to use.
 		static int currentPalette;
 
 		static Point crosshair1, crosshair2;
@@ -26,6 +33,7 @@ namespace FractalPlotter.Graphics
 		{
 			Camera.Load();
 
+			// Set variables to the settings default.
 			Factor1 = new Vector2(Settings.Factor1X, Settings.Factor1Y);
 			IMax = Settings.IMax;
 			SquaredLimit = Settings.Limit * Settings.Limit;
@@ -42,6 +50,13 @@ namespace FractalPlotter.Graphics
 			ChangeShader(Settings.DefaultShader, true);
 			ChangePalette(Settings.DefaultPalette);
 
+			// Configure GL properly.
+			GL.ClearColor(Color4.Black);
+			GL.Enable(EnableCap.ScissorTest);
+
+			GL.Enable(EnableCap.Blend);
+			GL.LineWidth(2f);
+
 			// generate a GL Buffer with a plane in it and load it into GPU storage.
 			PointRenderable.Load();
 			PlaneRenderable.Load();
@@ -53,15 +68,9 @@ namespace FractalPlotter.Graphics
 			PointManager.Add(Vector3.UnitX, Color4.Blue);
 			PointManager.Add(-Vector3.UnitX, Color4.Blue);
 
+			// Initialize the crosshair.
 			crosshair1 = new Point(Vector3.Zero, Color4.Black, 0.012f);
 			crosshair2 = new Point(new Vector3(0, 0, -0.000001f), Color4.White);
-
-			// Configure GL properly.
-			GL.ClearColor(Color4.Black);
-			GL.Enable(EnableCap.ScissorTest);
-
-			GL.Enable(EnableCap.Blend);
-			GL.LineWidth(2f);
 
 			// Check for GL errors.
 			Utils.CheckError("Load");
@@ -71,7 +80,7 @@ namespace FractalPlotter.Graphics
 		/// Change the shader.
 		/// </summary>
 		/// <param name="name">Name of the shader.</param>
-		/// <param name="default">Parameter to use when the shader is the first loaded.</param>
+		/// <param name="default">Sets the default shader to this shader.</param>
 		public static void ChangeShader(string name, bool @default = false)
 		{
 			var newShader = ShaderManager.Fetch(name);

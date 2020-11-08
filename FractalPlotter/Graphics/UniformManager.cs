@@ -4,7 +4,8 @@ using OpenTK.Mathematics;
 namespace FractalPlotter.Graphics
 {
 	/// <summary>
-	/// Class that contains the variable locations of a shader. These are needed to load in the variables at the right spots.
+	/// Class that stores the variable locations of a shader.
+	/// These are needed to load in the parameters at the right spots into GPU memory.
 	/// </summary>
 	public class UniformManager
 	{
@@ -17,12 +18,13 @@ namespace FractalPlotter.Graphics
 		readonly int[] ids;
 
 		/// <summary>
-		/// Get the variable locations.
+		/// Gets/Sets the variable locations of the specific shader.
 		/// </summary>
 		public UniformManager(string name, int programID)
 		{
 			ids = new int[uniformCount];
 
+			// Get the uniform locations. The call returns -1 if the uniform variable is not used in the shader.
 			ids[0] = GL.GetUniformLocation(programID, "location");
 			ids[1] = GL.GetUniformLocation(programID, "exactLocation");
 			ids[2] = GL.GetUniformLocation(programID, "scale");
@@ -35,6 +37,7 @@ namespace FractalPlotter.Graphics
 
 			Utils.CheckError("UniformManager1 " + name);
 
+			// Set attribute locations to the given ones.
 			GL.BindAttribLocation(programID, PositionID, "position");
 			GL.BindAttribLocation(programID, ColorID, "color");
 			GL.BindAttribLocation(programID, TexCoordID, "texCoord");
@@ -43,7 +46,7 @@ namespace FractalPlotter.Graphics
 		}
 
 		/// <summary>
-		/// Push the variables into GPU memory to their location.
+		/// Push the uniform variables into GPU memory to their location.
 		/// </summary>
 		public void Uniform()
 		{
@@ -70,18 +73,33 @@ namespace FractalPlotter.Graphics
 			UniformColor(Color4.White);
 		}
 
+		/// <summary>
+		/// Push the projection matrix into GPU memory to their location.
+		/// 
+		/// This matrix determines the camera position in 3D space.
+		/// </summary>
 		public void UniformProjection(Matrix4 matrix)
 		{
 			if (ids[6] >= 0)
 				GL.UniformMatrix4(ids[6], false, ref matrix);
 		}
 
+		/// <summary>
+		/// Push the modelView matrix into GPU memory to their location.
+		/// 
+		/// This matrix translates, rotates and scales an object in 3D space.
+		/// </summary>
 		public void UniformModelView(Matrix4 objectMatrix)
 		{
 			if (ids[7] >= 0)
 				GL.UniformMatrix4(ids[7], false, ref objectMatrix);
 		}
 
+		/// <summary>
+		/// Push the uniform color into GPU memory to their location.
+		/// 
+		/// The color will be multiplied with the color given in the Vector structure.
+		/// </summary>
 		public void UniformColor(Color4 color)
 		{
 			if (ids[8] >= 0)

@@ -18,10 +18,16 @@ namespace FractalPlotter
 
 		readonly GraphSettingsPipe pipe;
 
+		/// <summary>
+		/// Stopwatch used for measuring the time each render frame needs.
+		/// </summary>
 		readonly Stopwatch watch;
 
 		int localTick;
 
+		/// <summary>
+		/// Initialize the graph window. This calls a base constructor in OpenTK which handles window creation for us.
+		/// </summary>
 		public GraphWindow(GraphSettingsPipe pipe, GameWindowSettings gameSettings, NativeWindowSettings nativeSettings) : base(gameSettings, nativeSettings)
 		{
 			this.pipe = pipe;
@@ -29,6 +35,9 @@ namespace FractalPlotter
 			watch = new Stopwatch();
 		}
 
+		/// <summary>
+		/// Signals that the window is now loaded, which means we can load our graphics now.
+		/// </summary>
 		protected override void OnLoad()
 		{
 			base.OnLoad();

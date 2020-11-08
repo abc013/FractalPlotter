@@ -13,9 +13,12 @@ namespace FractalPlotter.Graphics
 		readonly int length;
 		bool disposed;
 
+		/// <summary>
+		/// generate a GL Buffer with the given vectors and load it into GPU storage.
+		/// </summary>
+		/// <param name="array"></param>
 		public Renderable(Vector[] array)
 		{
-			// generate a GL Buffer with a plane in it and load it into GPU storage.
 			bufferID = GL.GenBuffer();
 			arrayID = GL.GenVertexArray();
 			length = array.Length;
@@ -35,6 +38,10 @@ namespace FractalPlotter.Graphics
 			GL.VertexAttribPointer(UniformManager.TexCoordID, 2, VertexAttribPointerType.Float, true, Vector.Size, 32);
 		}
 
+		/// <summary>
+		/// Change the vertices stored in the buffer.
+		/// </summary>
+		/// <param name="array"></param>
 		public void ChangeBuffer(Vector[] array)
 		{
 			if (disposed || array.Length != length)
@@ -45,6 +52,12 @@ namespace FractalPlotter.Graphics
 			GL.BufferSubData(BufferTarget.ArrayBuffer, IntPtr.Zero, Vector.Size * length, array);
 		}
 
+		/// <summary>
+		/// Renders the vertices given.
+		/// </summary>
+		/// <param name="type">Tells GL in what way to render the vertices</param>
+		/// <param name="start">Parameter that determines from which index the vertices should be rendered</param>
+		/// <param name="customLength">Determines how many vertices should be rendered. If set to 0, the full count is rendered.</param>
 		public void Render(PrimitiveType type = PrimitiveType.Triangles, int start = 0, int customLength = 0)
 		{
 			if (disposed)
@@ -57,6 +70,9 @@ namespace FractalPlotter.Graphics
 			GL.DrawArrays(type, start, customLength);
 		}
 
+		/// <summary>
+		/// Free the buffer properly.
+		/// </summary>
 		public void Dispose()
 		{
 			disposed = true;

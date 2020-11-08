@@ -40,11 +40,11 @@ namespace FractalPlotter
 		/// </summary>
 		public static int IMax = 256;
 		/// <summary>
-		/// Flight criterium value. Usually increased to get better pictures for art. Should not be put below 2.
+		/// Escape condition value. Usually increased to get better pictures for art. Should not be put below 2.
 		/// </summary>
 		public static float Limit = 2.0f;
 		/// <summary>
-		/// Render points and center crosshair.
+		/// Render points and viewport crosshair.
 		/// </summary>
 		public static bool Points = true;
 		/// <summary>
@@ -53,11 +53,11 @@ namespace FractalPlotter
 		public static bool ThreeDimensional = false;
 
 		/// <summary>
-		/// Allows setting the default shader.
+		/// Allows setting the default shader which will be used on startup.
 		/// </summary>
 		public static string DefaultShader = "default";
 		/// <summary>
-		/// Allows setting the default palette.
+		/// Allows setting the default palette which will be used on startup.
 		/// </summary>
 		public static string DefaultPalette = "palette";
 
@@ -110,7 +110,7 @@ namespace FractalPlotter
 		Settings()
 		{
 			// Check file path for "settings.txt"
-			var file = FileManager.CheckSettings("settings.txt");
+			var file = FileManager.CheckFile("settings.txt");
 
 			// If there is none, return;
 			if (string.IsNullOrEmpty(file))

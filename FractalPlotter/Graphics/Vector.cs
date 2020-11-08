@@ -8,6 +8,9 @@ namespace FractalPlotter.Graphics
 	/// </summary>
 	public struct Vector
 	{
+		/// <summary>
+		/// Size of the vector in bytes.
+		/// </summary>
 		public const int Size = 4 * (4 + 4 + 2);
 
 		public readonly Vector4 Position;

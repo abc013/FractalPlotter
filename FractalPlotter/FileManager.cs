@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 namespace FractalPlotter
 {
 	/// <summary>
-	/// Class that keeps track of all the file stuff going on.
+	/// Class that is responsible of all the IO activity going on.
 	/// </summary>
 	public static class FileManager
 	{
@@ -30,9 +30,11 @@ namespace FractalPlotter
 		public static readonly string Screenhots = Current + "Screenshots\\";
 
 		/// <summary>
-		/// Checks whether the settings.txt exists and returns the path if true.
+		/// Checks whether the given file exists in the default directory and returns the path if true.
 		/// </summary>
-		public static string CheckSettings(string file)
+		/// <param name="file">the filename to check</param>
+		/// <returns></returns>
+		public static string CheckFile(string file)
 		{
 			var filePath = Current + file;
 
@@ -96,6 +98,12 @@ namespace FractalPlotter
 			return results;
 		}
 
+		/// <summary>
+		/// Writes a screenshot into the screenshots directory with current timestamp.
+		/// </summary>
+		/// <param name="data">picture data.</param>
+		/// <param name="width">width of the picture.</param>
+		/// <param name="height">height of the picture.</param>
 		public static void SaveScreenshot(byte[] data, int width, int height)
 		{
 			if (!Directory.Exists(Screenhots))
