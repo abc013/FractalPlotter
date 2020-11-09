@@ -3,12 +3,30 @@
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <UseWindowsForms>true</UseWindowsForms>
     <OutDir>../</OutDir>
+	<SatelliteResourceLanguages>en</SatelliteResourceLanguages>
+	<ApplicationIcon>icon.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="OpenTK" Version="4.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ResolvedFileToPublish Include="..\Shaders\**\*">
+      <RelativePath>Shaders/%(RecursiveDir)%(Filename)%(Extension)</RelativePath>
+    </ResolvedFileToPublish>
+    <ResolvedFileToPublish Include="..\Palettes\**\*">
+      <RelativePath>Palettes/%(RecursiveDir)%(Filename)%(Extension)</RelativePath>
+    </ResolvedFileToPublish>
+    <ResolvedFileToPublish Include="..\icon.ico" />
+    <ResolvedFileToPublish Include="..\icon.png" />
   </ItemGroup>
 
 </Project>
