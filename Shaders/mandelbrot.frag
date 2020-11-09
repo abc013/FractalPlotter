@@ -35,7 +35,7 @@ void main(void)
     int i;
     for(i=0; i < imax; i++)
     {
-		// calculate the next z with f(x)=x²+c
+		// calculate the next z with f(x)=x^2+c
         double x = (squared.x - squared.y) + c.x;
         double y = 2 * (z.y * z.x) + c.y;
 

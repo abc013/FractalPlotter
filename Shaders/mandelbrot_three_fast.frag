@@ -33,7 +33,7 @@ void main(void)
     int i;
     for(i=0; i < imax; i++)
     {
-		// calculate the next z with f(x)=x³+c
+		// calculate the next z with f(x)=x^3+c
         float x = z.x * (squared.x - 3 * squared.y) + c.x;
         float y = z.y * (3 * squared.x - squared.y) + c.y;
 
