@@ -17,16 +17,4 @@
   <ItemGroup>
     <PackageReference Include="OpenTK" Version="4.0.0" />
   </ItemGroup>
-
-  <ItemGroup>
-    <ResolvedFileToPublish Include="..\Shaders\**\*">
-      <RelativePath>Shaders/%(RecursiveDir)%(Filename)%(Extension)</RelativePath>
-    </ResolvedFileToPublish>
-    <ResolvedFileToPublish Include="..\Palettes\**\*">
-      <RelativePath>Palettes/%(RecursiveDir)%(Filename)%(Extension)</RelativePath>
-    </ResolvedFileToPublish>
-    <ResolvedFileToPublish Include="..\icon.ico" />
-    <ResolvedFileToPublish Include="..\icon.png" />
-  </ItemGroup>
-
 </Project>
