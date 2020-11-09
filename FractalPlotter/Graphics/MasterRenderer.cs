@@ -46,8 +46,11 @@ namespace FractalPlotter.Graphics
 			foreach (var name in FileManager.GetPaletteImageNames())
 				PaletteManager.Add(name);
 
+			// Set the default shader for points
+			ChangeShader(Settings.PointShader, true);
+
 			// Activate the default shader and palette.
-			ChangeShader(Settings.DefaultShader, true);
+			ChangeShader(Settings.DefaultShader);
 			ChangePalette(Settings.DefaultPalette);
 
 			// Configure GL properly.

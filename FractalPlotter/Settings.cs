@@ -49,6 +49,10 @@ namespace FractalPlotter
 		public static bool Points = true;
 
 		/// <summary>
+		/// Allows setting the point shader which will be used for points.
+		/// </summary>
+		public static string PointShader = "default";
+		/// <summary>
 		/// Allows setting the default shader which will be used on startup.
 		/// </summary>
 		public static string DefaultShader = "default";
