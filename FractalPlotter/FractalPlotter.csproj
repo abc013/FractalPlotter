@@ -6,8 +6,9 @@
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <UseWindowsForms>true</UseWindowsForms>
     <OutDir>../</OutDir>
-	<SatelliteResourceLanguages>en</SatelliteResourceLanguages>
+	<SatelliteResourceLanguages>en-US</SatelliteResourceLanguages>
 	<ApplicationIcon>icon.ico</ApplicationIcon>
+	<RunPostBuildEvent>Always</RunPostBuildEvent>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -16,5 +17,21 @@
 
   <ItemGroup>
     <PackageReference Include="OpenTK" Version="4.0.0" />
+  </ItemGroup>
+
+  <!-- for publishing -->
+  <ItemGroup>
+    <ResolvedFileToPublish Include="..\README.md">
+      <RelativePath>README.md</RelativePath>
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+    </ResolvedFileToPublish>
+    <ResolvedFileToPublish Include="..\Shaders\**\*">
+      <RelativePath>Shaders/%(RecursiveDir)%(Filename)%(Extension)</RelativePath>
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+    </ResolvedFileToPublish>
+    <ResolvedFileToPublish Include="..\Palettes\**\*">
+      <RelativePath>Palettes/%(RecursiveDir)%(Filename)%(Extension)</RelativePath>
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+    </ResolvedFileToPublish>
   </ItemGroup>
 </Project>
