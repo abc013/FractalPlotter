@@ -33,3 +33,7 @@
 /information.log
 # Settings file, specific settings for every user
 /settings.txt
+# Ignore screenshots
+/Screenshots
+# Ignore packaging output
+/publish_win-x64
