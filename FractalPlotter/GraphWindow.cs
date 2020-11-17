@@ -132,14 +132,19 @@ namespace FractalPlotter
 		}
 
 		/// <summary>
-		/// Adds a point when the mouse is getting clicked.
+		/// Adds a point when the mouse is getting clicked on the right button.
+		/// Moves to the viewport center to the cursor location when the left button is clicked.
 		/// </summary>
 		protected override void OnMouseDown(MouseButtonEventArgs e)
 		{
+			var location = getCursorLocation();
 			if (e.Button == MouseButton.Right)
-			{
-				var location = getCursorLocation();
 				pipe.AddPoint(new Vector3((float)location.X, (float)location.Y, (float)location.Z));
+			else if (e.Button == MouseButton.Left)
+			{
+				Camera.SetTranslation(location.X, location.Y, location.Z);
+				pipe.UpdateTranslation();
+				MousePosition = new Vector2(Bounds.HalfSize.X, Bounds.HalfSize.Y);
 			}
 		}
 

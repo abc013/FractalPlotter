@@ -113,7 +113,7 @@ namespace FractalPlotter
 			tooltip.SetToolTip(pointCheck, "Render points.");
 			tooltip.SetToolTip(locX, "Viewport X position. [Arrow left/right]");
 			tooltip.SetToolTip(locY, "Viewport Y position. [Arrow up/down]");
-			tooltip.SetToolTip(locText, "Viewport position [Arrows].");
+			tooltip.SetToolTip(locText, "Viewport position [Arrows/Left click].");
 			tooltip.SetToolTip(scaleX, "Viewport scale. [Mousewheel]");
 			tooltip.SetToolTip(scaleText, "Viewport scale. [Mousewheel]");
 			tooltip.SetToolTip(ShaderList, "Shader selection. Scroll down to see more options.");
