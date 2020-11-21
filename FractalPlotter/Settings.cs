@@ -79,15 +79,15 @@ namespace FractalPlotter
 		/// <summary>
 		/// Default X-location.
 		/// </summary>
-		public static float LocationX = 0f;
+		public static double LocationX = 0f;
 		/// <summary>
 		/// Default Y-location.
 		/// </summary>
-		public static float LocationY = 0f;
+		public static double LocationY = 0f;
 		/// <summary>
 		/// Default Z-location.
 		/// </summary>
-		public static float LocationZ = 0f;
+		public static double LocationZ = 0f;
 
 		/// <summary>
 		/// Default c1-factor.
@@ -164,9 +164,12 @@ namespace FractalPlotter
 
 				throw new InvalidSettingsException($"Invalid value {value} of {key}. {type} expected.");
 			}
-			else if (type == typeof(string))
+			else if (type == typeof(double))
 			{
-				return value;
+				if (double.TryParse(value, out var res))
+					return res;
+
+				throw new InvalidSettingsException($"Invalid value {value} of {key}. {type} expected.");
 			}
 			else if (type == typeof(bool))
 			{
@@ -174,6 +177,10 @@ namespace FractalPlotter
 					return res;
 
 				throw new InvalidSettingsException($"Invalid value {value} of {key}. {type} expected.");
+			}
+			else if (type == typeof(string))
+			{
+				return value;
 			}
 
 			throw new InvalidSettingsException($"Missing conversion method for type {type}");

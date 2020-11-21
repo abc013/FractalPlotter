@@ -52,7 +52,7 @@ namespace FractalPlotter.Graphics
 		/// </summary>
 		public static void Load()
 		{
-			Location = new Vector3(Settings.LocationX, Settings.LocationY, Settings.LocationZ);
+			Location = new Vector3((float)Settings.LocationX, (float)Settings.LocationY, (float)Settings.LocationZ);
 			ExactLocation = new Vector3d(Settings.LocationX, Settings.LocationY, Settings.LocationZ);
 			Scale = Settings.Scale;
 			Changed = true;

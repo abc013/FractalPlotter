@@ -37,8 +37,8 @@ namespace FractalPlotter
 		public void UpdateTranslation()
 		{
 			receivesUpdate = true;
-			locX.Text = Camera.Location.X.ToString();
-			locY.Text = Camera.Location.Y.ToString();
+			locX.Text = Camera.ExactLocation.X.ToString();
+			locY.Text = Camera.ExactLocation.Y.ToString();
 			receivesUpdate = false;
 		}
 
