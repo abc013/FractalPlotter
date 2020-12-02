@@ -176,9 +176,12 @@ namespace FractalPlotter
 		/// <summary>
 		/// Scales when the mouse wheel is used.
 		/// </summary>
+		float currentOffset;
 		protected override void OnMouseWheel(MouseWheelEventArgs e)
 		{
-			Camera.Scaling(e.OffsetY * 0.1f);
+			var diff = e.OffsetY - currentOffset;
+			currentOffset = e.OffsetY;
+			Camera.Scaling(diff * 0.1f);
 			pipe.UpdateScale();
 		}
 
