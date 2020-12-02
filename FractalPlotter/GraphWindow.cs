@@ -1,4 +1,5 @@
 ﻿using FractalPlotter.Graphics;
+using ImGuiNET;
 using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
@@ -23,6 +24,11 @@ namespace FractalPlotter
 		/// </summary>
 		readonly Stopwatch watch;
 
+		/// <summary>
+		/// ImGui controller that is used to handle the ImGui windows.
+		/// </summary>
+		ImGuiController controller;
+
 		int localTick;
 
 		/// <summary>
@@ -33,6 +39,9 @@ namespace FractalPlotter
 			this.pipe = pipe;
 			pipe.Add(this);
 			watch = new Stopwatch();
+
+			shaders = FileManager.GetGraphShaderNames().ToArray();
+			palettes = FileManager.GetPaletteImageNames().ToArray();
 		}
 
 		/// <summary>
@@ -42,6 +51,11 @@ namespace FractalPlotter
 		{
 			base.OnLoad();
 			MasterRenderer.Load();
+			controller = new ImGuiController(ClientSize.X, ClientSize.Y);
+			controller.SetScale(2f);
+			//ImGui.SetWindowPos(System.Numerics.Vector2.Zero);
+			//ImGui.SetWindowCollapsed(true);
+			//ImGui.SetWindowSize(new System.Numerics.Vector2(ClientSize.X / 16, ClientSize.Y));
 
 			pipe.UpdateTranslation();
 			pipe.UpdateScale();
@@ -50,6 +64,12 @@ namespace FractalPlotter
 			IsLoaded = true;
 		}
 
+		long lastms;
+		readonly string[] shaders;
+		int currentShader;
+		readonly string[] palettes;
+		int currentPalette;
+		Vector3d cursorLocation;
 		/// <summary>
 		/// Render frame, which renders the whole window.
 		/// </summary>
@@ -59,18 +79,113 @@ namespace FractalPlotter
 
 			if (Camera.Changed)
 			{
-				var location = getCursorLocation();
-				pipe.UpdateCursorLocation(location.X, location.Y);
+				cursorLocation = getCursorLocation();
+				pipe.UpdateCursorLocation(cursorLocation.X, cursorLocation.Y);
 			}
 
 			base.OnRenderFrame(args);
 			MasterRenderer.RenderFrame();
+
+			ImGui.Begin("Information window");
+			ImGui.Spacing();
+			ImGui.Checkbox("Show points", ref Settings.Points);
+			if (ImGui.CollapsingHeader("Shaders"))
+			{
+				ImGui.Text("Please select a shader from the list below.");
+				ImGui.Text("Hover above this text for more information.");
+				if (ImGui.IsItemHovered())
+					ImGui.SetTooltip(".");
+
+				if (ImGui.Combo("Shaders", ref currentShader, shaders, shaders.Length))
+					MasterRenderer.ChangeShader(shaders[currentShader]);
+			}
+			if (ImGui.CollapsingHeader("Palettes"))
+			{
+				ImGui.Text("Please select a palette from the list below.");
+				ImGui.Text("Hover above this text for more information.");
+				if (ImGui.IsItemHovered())
+					ImGui.SetTooltip(".");
+
+				if (ImGui.Combo("Palettes", ref currentPalette, palettes, palettes.Length))
+					MasterRenderer.ChangePalette(palettes[currentShader]);
+			}
+			if (ImGui.CollapsingHeader("Viewport settings"))
+			{
+				var posChanged = false;
+				var x = Camera.ExactLocation.X;
+				var y = Camera.ExactLocation.Y;
+
+				ImGui.Text("Location");
+
+				posChanged |= ImGui.InputDouble("X", ref x);
+				posChanged |= ImGui.InputDouble("Y", ref y);
+
+				if (posChanged)
+					Camera.SetTranslation(x, y, 0);
+
+				var s = Camera.Scale;
+
+				ImGui.Text("Scale");
+
+				if (ImGui.InputFloat("S", ref s))
+					Camera.SetScale(s);
+			}
+			if (ImGui.CollapsingHeader("Parameter settings"))
+			{
+				var factorChanged = false;
+
+				var x = MasterRenderer.Factor1.X;
+				var y = MasterRenderer.Factor1.Y;
+
+				ImGui.Text("Parameter value (c)");
+
+				factorChanged |= ImGui.InputFloat("X", ref x);
+				factorChanged |= ImGui.InputFloat("Y", ref y);
+
+				if (factorChanged)
+					MasterRenderer.Factor1 = new Vector2(x, y);
+
+				var i = MasterRenderer.IMax;
+
+				ImGui.Text("Maximum number of iterations (imax)");
+
+				if (ImGui.InputInt("I", ref i))
+					MasterRenderer.IMax = i;
+
+				var l = MasterRenderer.SquaredLimit;
+
+				ImGui.Text("Escape criterion value");
+
+				if (ImGui.InputFloat("L", ref l))
+					MasterRenderer.SquaredLimit = l;
+			}
+			if (ImGui.CollapsingHeader("Debug"))
+			{
+				ImGui.Text($"current: {localTick++} ticks");
+				ImGui.Text($"render: {lastms} ms");
+			}
+
+			ImGui.NewLine();
+			if (ImGui.Button("Add Point at current position"))
+				PointManager.Add(Camera.Location, Utils.RandomColor());
+
+			if (ImGui.Button("Take Screenshot"))
+				MasterRenderer.TakeScreenshot(0, 0, ClientSize.X, ClientSize.Y);
+
+			ImGui.NewLine();
+			const string str = "00.000000000000";
+			ImGui.Text($"cursor at\n{cursorLocation.X.ToString(str)}\n{cursorLocation.Y.ToString(str)}i");
+
+			ImGui.End();
+			
+			controller.Render();
 
 			SwapBuffers();
 
 			pipe.PipeInfo($"current: {localTick++} ticks", true);
 			pipe.PipeInfo($"render: {watch.ElapsedMilliseconds} ms", false);
 
+			lastms = watch.ElapsedMilliseconds;
 			watch.Reset();
 		}
 
@@ -80,6 +195,11 @@ namespace FractalPlotter
 		protected override void OnUpdateFrame(FrameEventArgs args)
 		{
 			base.OnUpdateFrame(args);
+
+			controller.Update(this, (float)args.Time);
+
+			if (ImGui.IsWindowHovered(ImGuiHoveredFlags.AnyWindow))
+				return;
 
 			var x = checkKeyRegulator(Keys.Right, Keys.Left);
 			var y = checkKeyRegulator(Keys.Up, Keys.Down);
@@ -137,6 +257,9 @@ namespace FractalPlotter
 		/// </summary>
 		protected override void OnMouseDown(MouseButtonEventArgs e)
 		{
+			if (ImGui.IsWindowHovered(ImGuiHoveredFlags.AnyWindow))
+				return;
+
 			var location = getCursorLocation();
 			if (e.Button == MouseButton.Right)
 				pipe.AddPoint(new Vector3((float)location.X, (float)location.Y, (float)location.Z));
@@ -153,8 +276,8 @@ namespace FractalPlotter
 		/// </summary>
 		protected override void OnMouseMove(MouseMoveEventArgs e)
 		{
-			var location = getCursorLocation();
-			pipe.UpdateCursorLocation(location.X, location.Y);
+			cursorLocation = getCursorLocation();
+			pipe.UpdateCursorLocation(cursorLocation.X, cursorLocation.Y);
 		}
 
 		/// <summary>
@@ -179,10 +302,22 @@ namespace FractalPlotter
 		float currentOffset;
 		protected override void OnMouseWheel(MouseWheelEventArgs e)
 		{
+			if (ImGui.IsWindowHovered(ImGuiHoveredFlags.AnyWindow))
+			{
+				currentOffset = e.OffsetY;
+				return;
+			}
+
 			var diff = e.OffsetY - currentOffset;
 			currentOffset = e.OffsetY;
 			Camera.Scaling(diff * 0.1f);
 			pipe.UpdateScale();
+		}
+
+		protected override void OnTextInput(TextInputEventArgs e)
+		{
+			foreach (var c in e.AsString)
+				controller.PressChar(c);
 		}
 
 		/// <summary>
@@ -190,8 +325,8 @@ namespace FractalPlotter
 		/// </summary>
 		protected override void OnResize(ResizeEventArgs e)
 		{
-			base.OnResize(e);
 			MasterRenderer.ResizeViewport(ClientSize.X, ClientSize.Y);
+			controller.WindowResized(ClientSize.X, ClientSize.Y);
 		}
 
 		/// <summary>
@@ -204,6 +339,7 @@ namespace FractalPlotter
 			pipe.Exit();
 
 			MasterRenderer.Dispose();
+			controller.Dispose();
 		}
 	}
 }

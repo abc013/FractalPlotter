@@ -102,12 +102,13 @@ namespace FractalPlotter
 			pointCheck.Checked = Settings.Points;
 
 			// Taken from https://docs.microsoft.com/en-us/dotnet/api/system.windows.forms.tooltip?redirectedfrom=MSDN&view=netcore-3.1
-			var tooltip = new ToolTip();
-
-			tooltip.AutoPopDelay = 5000;
-			tooltip.InitialDelay = 300;
-			tooltip.ReshowDelay = 0;
-			tooltip.ShowAlways = true;
+			var tooltip = new ToolTip
+			{
+				AutoPopDelay = 5000,
+				InitialDelay = 300,
+				ReshowDelay = 0,
+				ShowAlways = true
+			};
 
 			// Set a tooltip for all elements in the window.
 			tooltip.SetToolTip(pointCheck, "Render points.");
