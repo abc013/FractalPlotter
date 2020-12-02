@@ -27,6 +27,7 @@
 /libglfw.so.3.3
 /glfw3-x86.dll
 /glfw3-x64.dll
+/ImGui.NET.dll
 
 # Outputs generated from the program
 /exception.log
@@ -37,3 +38,6 @@
 /Screenshots
 # Ignore packaging output
 /publish_win-x64
+# Ignore imgui config/log files
+/imgui.ini
+/imgui_log.txt
