@@ -4,7 +4,6 @@ using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
 using OpenTK.Windowing.GraphicsLibraryFramework;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 
@@ -29,6 +28,10 @@ namespace FractalPlotter
 		/// ImGui controller that is used to handle the ImGui windows.
 		/// </summary>
 		ImGuiController controller;
+		/// <summary>
+		/// ImGui window that contains some window states and controls what is drawn.
+		/// </summary>
+		ImGuiWindow window;
 
 		int localTick;
 
@@ -40,9 +43,6 @@ namespace FractalPlotter
 			this.pipe = pipe;
 			pipe.Add(this);
 			watch = new Stopwatch();
-
-			shaders = FileManager.GetGraphShaderNames().ToArray();
-			palettes = FileManager.GetPaletteImageNames().ToArray();
 		}
 
 		/// <summary>
@@ -54,9 +54,7 @@ namespace FractalPlotter
 			MasterRenderer.Load();
 			controller = new ImGuiController(ClientSize.X, ClientSize.Y);
 			controller.SetScale(2f);
-			//ImGui.SetWindowPos(System.Numerics.Vector2.Zero);
-			//ImGui.SetWindowCollapsed(true);
-			//ImGui.SetWindowSize(new System.Numerics.Vector2(ClientSize.X / 16, ClientSize.Y));
+			window = new ImGuiWindow(this, controller);
 
 			pipe.UpdateTranslation();
 			pipe.UpdateScale();
@@ -66,18 +64,8 @@ namespace FractalPlotter
 		}
 
 		long lastms;
-
-		readonly string[] shaders;
-		int currentShader;
-
-		readonly string[] palettes;
-		int currentPalette;
-
 		Vector3d cursorLocation;
 
-		readonly Queue<float> lastMS = new Queue<float>();
-		readonly Queue<float> lastVertexBufferSize = new Queue<float>();
-		readonly Queue<float> lastIndexBufferSize = new Queue<float>();
 		/// <summary>
 		/// Render frame, which renders the whole window.
 		/// </summary>
@@ -94,121 +82,7 @@ namespace FractalPlotter
 			base.OnRenderFrame(args);
 			MasterRenderer.RenderFrame();
 
-			ImGui.Begin("Information window");
-			ImGui.Spacing();
-			ImGui.Checkbox("Show points", ref Settings.Points);
-			if (ImGui.CollapsingHeader("Shaders"))
-			{
-				ImGui.Text("Select a shader from the list below.");
-				ImGui.SameLine();
-				ImGui.TextDisabled("[?]");
-				if (ImGui.IsItemHovered())
-					ImGui.SetTooltip("Change the current shader by clicking on one of the names below.\nThe shaders themselves can be found in the 'Shaders' directory.");
-
-				if (ImGui.ListBox("Shaders", ref currentShader, shaders, shaders.Length))
-					MasterRenderer.ChangeShader(shaders[currentShader]);
-			}
-			if (ImGui.CollapsingHeader("Palettes"))
-			{
-				ImGui.Text("Select a palette from the list below.");
-				ImGui.SameLine();
-				ImGui.TextDisabled("[?]");
-				if (ImGui.IsItemHovered())
-					ImGui.SetTooltip("Change current palette by clicking on one of the names below.\nThe palettes can be found in the 'Palettes' directory.\nPlease note that the default palettes contain 256 different colors.\nThis means that, when increasing imax over that limit, no more colors will be added.");
-
-				if (ImGui.ListBox("Palettes", ref currentPalette, palettes, palettes.Length))
-					MasterRenderer.ChangePalette(palettes[currentPalette]);
-			}
-			if (ImGui.CollapsingHeader("Viewport settings"))
-			{
-				var posChanged = false;
-				var x = Camera.ExactLocation.X;
-				var y = Camera.ExactLocation.Y;
-
-				ImGui.Text("Location");
-
-				posChanged |= ImGui.InputDouble("X", ref x);
-				posChanged |= ImGui.InputDouble("Y", ref y);
-
-				if (posChanged)
-					Camera.SetTranslation(x, y, 0);
-
-				var s = Camera.Scale;
-
-				ImGui.Text("Scale");
-
-				if (ImGui.InputFloat("S", ref s))
-					Camera.SetScale(s);
-			}
-			if (ImGui.CollapsingHeader("Parameter settings"))
-			{
-				var factorChanged = false;
-
-				var x = MasterRenderer.Factor1.X;
-				var y = MasterRenderer.Factor1.Y;
-
-				ImGui.Text("Parameter value (c)");
-
-				factorChanged |= ImGui.InputFloat("X", ref x);
-				factorChanged |= ImGui.InputFloat("Y", ref y);
-
-				if (factorChanged)
-					MasterRenderer.Factor1 = new Vector2(x, y);
-
-				var i = MasterRenderer.IMax;
-
-				ImGui.Text("Maximum number of iterations (imax)");
-
-				if (ImGui.InputInt("I", ref i))
-					MasterRenderer.IMax = i;
-
-				var l = MasterRenderer.SquaredLimit;
-
-				ImGui.Text("Escape criterion value");
-
-				if (ImGui.InputFloat("L", ref l))
-					MasterRenderer.SquaredLimit = l;
-			}
-
-			lastMS.Enqueue(lastms);
-			if (lastMS.Count > 300)
-				lastMS.Dequeue();
-
-			if (controller.BufferChanged)
-			{
-				lastVertexBufferSize.Enqueue(controller.VertexBufferSize);
-				lastIndexBufferSize.Enqueue(controller.IndexBufferSize);
-			}
-
-			if (ImGui.CollapsingHeader("Debug"))
-			{
-				ImGui.Text($"current: {localTick++} ticks");
-				ImGui.Text($"render: {lastms} ms");
-
-				var array = lastMS.ToArray();
-				ImGui.PlotLines("graph", ref array[0], array.Length);
-
-				ImGui.Text("buffer history");
-				var array2 = lastVertexBufferSize.ToArray();
-				ImGui.PlotHistogram("vertex", ref array2[0], array2.Length);
-
-				var array3 = lastIndexBufferSize.ToArray();
-				ImGui.PlotHistogram("index", ref array3[0], array3.Length);
-			}
-
-			ImGui.NewLine();
-			if (ImGui.Button("Add Point at current position"))
-				PointManager.Add(Camera.Location, Utils.RandomColor());
-
-			if (ImGui.Button("Take Screenshot"))
-				MasterRenderer.TakeScreenshot(0, 0, ClientSize.X, ClientSize.Y);
-
-			ImGui.NewLine();
-			const string str = "00.000000000000";
-			ImGui.Text($"cursor at\n{cursorLocation.X.ToString(str)}\n{cursorLocation.Y.ToString(str)}i");
-
-			ImGui.End();
-			
+			window.ShowWindow(lastms, cursorLocation);
 			controller.Render();
 
 			SwapBuffers();
