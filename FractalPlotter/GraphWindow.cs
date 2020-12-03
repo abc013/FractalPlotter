@@ -4,6 +4,7 @@ using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
 using OpenTK.Windowing.GraphicsLibraryFramework;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 
@@ -65,11 +66,18 @@ namespace FractalPlotter
 		}
 
 		long lastms;
+
 		readonly string[] shaders;
 		int currentShader;
+
 		readonly string[] palettes;
 		int currentPalette;
+
 		Vector3d cursorLocation;
+
+		readonly Queue<float> lastMS = new Queue<float>();
+		readonly Queue<float> lastVertexBufferSize = new Queue<float>();
+		readonly Queue<float> lastIndexBufferSize = new Queue<float>();
 		/// <summary>
 		/// Render frame, which renders the whole window.
 		/// </summary>
@@ -159,10 +167,31 @@ namespace FractalPlotter
 				if (ImGui.InputFloat("L", ref l))
 					MasterRenderer.SquaredLimit = l;
 			}
+
+			lastMS.Enqueue(lastms);
+			if (lastMS.Count > 300)
+				lastMS.Dequeue();
+
+			if (controller.BufferChanged)
+			{
+				lastVertexBufferSize.Enqueue(controller.VertexBufferSize);
+				lastIndexBufferSize.Enqueue(controller.IndexBufferSize);
+			}
+
 			if (ImGui.CollapsingHeader("Debug"))
 			{
 				ImGui.Text($"current: {localTick++} ticks");
 				ImGui.Text($"render: {lastms} ms");
+
+				var array = lastMS.ToArray();
+				ImGui.PlotLines("graph", ref array[0], array.Length);
+
+				ImGui.Text("buffer history");
+				var array2 = lastVertexBufferSize.ToArray();
+				ImGui.PlotHistogram("vertex", ref array2[0], array2.Length);
+
+				var array3 = lastIndexBufferSize.ToArray();
+				ImGui.PlotHistogram("index", ref array3[0], array3.Length);
 			}
 
 			ImGui.NewLine();

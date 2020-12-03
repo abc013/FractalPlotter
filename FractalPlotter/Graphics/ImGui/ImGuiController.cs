@@ -16,6 +16,10 @@ namespace FractalPlotter.Graphics
 	/// </summary>
 	public class ImGuiController : IDisposable
 	{
+		public bool BufferChanged = true;
+		public int VertexBufferSize => vertexBufferSize;
+		public int IndexBufferSize => indexBufferSize;
+
 		bool firstFrameOver;
 
 		// objects
@@ -141,7 +145,7 @@ void main()
 		public void RecreateFontDeviceTexture()
 		{
 			ImGuiIOPtr io = ImGui.GetIO();
-			io.Fonts.GetTexDataAsRGBA32(out IntPtr pixels, out int width, out int height, out int bytesPerPixel);
+			io.Fonts.GetTexDataAsRGBA32(out IntPtr pixels, out int width, out int height, out _);
 
 			fontTexture = new ImGuiTexture("ImGui Text Atlas", width, height, pixels);
 			fontTexture.SetMagFilter(TextureMagFilter.Linear);
@@ -265,35 +269,39 @@ void main()
 
 		void renderInternal(ImDrawDataPtr draw_data)
 		{
-			var vertexOffsetInVertices = 0u;
-			var indexOffsetInElements = 0u;
+			BufferChanged = false;
 
 			if (draw_data.CmdListsCount == 0)
 				return;
 
-			for (int i = 0; i < draw_data.CmdListsCount; i++)
+			var vertexSize = draw_data.TotalVtxCount * Unsafe.SizeOf<ImDrawVert>();
+			if (vertexSize > vertexBufferSize)
 			{
-				var cmd_list = draw_data.CmdListsRange[i];
+				BufferChanged = true;
 
-				var vertexSize = cmd_list.VtxBuffer.Size * Unsafe.SizeOf<ImDrawVert>();
-				if (vertexSize > vertexBufferSize)
-				{
-					int newSize = (int)Math.Max(vertexBufferSize * 1.5f, vertexSize);
-					GL.NamedBufferData(vertexBuffer, newSize, IntPtr.Zero, BufferUsageHint.DynamicDraw);
-					vertexBufferSize = newSize;
+				var newSize = (int)(vertexSize * 1.5f);
+				GL.DeleteBuffer(vertexBuffer);
+				GL.CreateBuffers(1, out vertexBuffer);
+				GL.NamedBufferData(vertexBuffer, newSize, IntPtr.Zero, BufferUsageHint.DynamicDraw);
+				GL.VertexArrayVertexBuffer(vertexArray, 0, vertexBuffer, IntPtr.Zero, Unsafe.SizeOf<ImDrawVert>());
+				vertexBufferSize = newSize;
 
-					Console.WriteLine($"Resized dear imgui vertex buffer to new size {vertexBufferSize}");
-				}
+				Console.WriteLine($"Resized dear imgui vertex buffer to new size {vertexBufferSize}");
+			}
 
-				var indexSize = cmd_list.IdxBuffer.Size * sizeof(ushort);
-				if (indexSize > indexBufferSize)
-				{
-					int newSize = (int)Math.Max(indexBufferSize * 1.5f, indexSize);
-					GL.NamedBufferData(indexBuffer, newSize, IntPtr.Zero, BufferUsageHint.DynamicDraw);
-					indexBufferSize = newSize;
+			var indexSize = draw_data.TotalIdxCount * sizeof(ushort);
+			if (indexSize > indexBufferSize)
+			{
+				BufferChanged = true;
 
-					Console.WriteLine($"Resized dear imgui index buffer to new size {indexBufferSize}");
-				}
+				var newSize = (int)(indexSize * 1.5f);
+				GL.DeleteBuffer(indexBuffer);
+				GL.CreateBuffers(1, out indexBuffer);
+				GL.NamedBufferData(indexBuffer, newSize, IntPtr.Zero, BufferUsageHint.DynamicDraw);
+				GL.VertexArrayElementBuffer(vertexArray, indexBuffer);
+				indexBufferSize = newSize;
+
+				Console.WriteLine($"Resized dear imgui index buffer to new size {indexBufferSize}");
 			}
 
 			// Setup orthographic projection matrix into our constant buffer
@@ -327,7 +335,7 @@ void main()
 			// Render command lists
 			for (int n = 0; n < draw_data.CmdListsCount; n++)
 			{
-				ImDrawListPtr cmd_list = draw_data.CmdListsRange[n];
+				var cmd_list = draw_data.CmdListsRange[n];
 
 				GL.NamedBufferSubData(vertexBuffer, IntPtr.Zero, cmd_list.VtxBuffer.Size * Unsafe.SizeOf<ImDrawVert>(), cmd_list.VtxBuffer.Data);
 				Utils.CheckError($"Data Vert {n}");
@@ -337,7 +345,6 @@ void main()
 
 				int vtx_offset = 0;
 				int idx_offset = 0;
-
 				for (int cmd_i = 0; cmd_i < cmd_list.CmdBuffer.Size; cmd_i++)
 				{
 					ImDrawCmdPtr pcmd = cmd_list.CmdBuffer[cmd_i];
