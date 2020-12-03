@@ -17,8 +17,6 @@ namespace FractalPlotter
 		public bool IsClosing { get; private set; }
 		public bool IsLoaded { get; private set; }
 
-		readonly GraphSettingsPipe pipe;
-
 		/// <summary>
 		/// Stopwatch used for measuring the time each render frame needs.
 		/// </summary>
@@ -33,15 +31,11 @@ namespace FractalPlotter
 		/// </summary>
 		ImGuiWindow window;
 
-		int localTick;
-
 		/// <summary>
 		/// Initialize the graph window. This calls a base constructor in OpenTK which handles window creation for us.
 		/// </summary>
-		public GraphWindow(GraphSettingsPipe pipe, GameWindowSettings gameSettings, NativeWindowSettings nativeSettings) : base(gameSettings, nativeSettings)
+		public GraphWindow(GameWindowSettings gameSettings, NativeWindowSettings nativeSettings) : base(gameSettings, nativeSettings)
 		{
-			this.pipe = pipe;
-			pipe.Add(this);
 			watch = new Stopwatch();
 		}
 
@@ -55,10 +49,6 @@ namespace FractalPlotter
 			controller = new ImGuiController(ClientSize.X, ClientSize.Y);
 			controller.SetScale(2f);
 			window = new ImGuiWindow(this, controller);
-
-			pipe.UpdateTranslation();
-			pipe.UpdateScale();
-			pipe.UpdateParameters();
 
 			IsLoaded = true;
 		}
@@ -74,10 +64,7 @@ namespace FractalPlotter
 			watch.Start();
 
 			if (Camera.Changed)
-			{
 				cursorLocation = getCursorLocation();
-				pipe.UpdateCursorLocation(cursorLocation.X, cursorLocation.Y);
-			}
 
 			base.OnRenderFrame(args);
 			MasterRenderer.RenderFrame();
@@ -86,9 +73,6 @@ namespace FractalPlotter
 			controller.Render();
 
 			SwapBuffers();
-
-			pipe.PipeInfo($"current: {localTick++} ticks", true);
-			pipe.PipeInfo($"render: {watch.ElapsedMilliseconds} ms", false);
 
 			lastms = watch.ElapsedMilliseconds;
 			watch.Reset();
@@ -110,10 +94,7 @@ namespace FractalPlotter
 			var y = checkKeyRegulator(Keys.Up, Keys.Down);
 
 			if (x != 0f || y != 0f)
-			{
 				Camera.Translate(x, y, 0);
-				pipe.UpdateTranslation();
-			}
 
 			var dc1 = checkKeyRegulator(Keys.Q, Keys.A);
 			var dc2 = checkKeyRegulator(Keys.W, Keys.S);
@@ -129,15 +110,10 @@ namespace FractalPlotter
 					MasterRenderer.IMax = 0;
 
 				MasterRenderer.SquaredLimit += dl * 0.1f;
-
-				pipe.UpdateParameters();
 			}
 
-			if (pipe.TakeScreenshot || KeyboardState.IsKeyDown(Keys.Space))
-			{
-				pipe.TakeScreenshot = false;
+			if (KeyboardState.IsKeyDown(Keys.Space))
 				MasterRenderer.TakeScreenshot(0, 0, ClientSize.X, ClientSize.Y);
-			}
 		}
 
 		/// <summary>
@@ -165,13 +141,12 @@ namespace FractalPlotter
 			if (ImGui.IsWindowHovered(ImGuiHoveredFlags.AnyWindow))
 				return;
 
-			var location = getCursorLocation();
+			var location = cursorLocation;
 			if (e.Button == MouseButton.Right)
-				pipe.AddPoint(new Vector3((float)location.X, (float)location.Y, (float)location.Z));
+				PointManager.Add(new Vector3((float)location.X, (float)location.Y, (float)location.Z), Utils.RandomColor());
 			else if (e.Button == MouseButton.Left)
 			{
 				Camera.SetTranslation(location.X, location.Y, location.Z);
-				pipe.UpdateTranslation();
 				MousePosition = new Vector2(Bounds.HalfSize.X, Bounds.HalfSize.Y);
 			}
 		}
@@ -182,7 +157,6 @@ namespace FractalPlotter
 		protected override void OnMouseMove(MouseMoveEventArgs e)
 		{
 			cursorLocation = getCursorLocation();
-			pipe.UpdateCursorLocation(cursorLocation.X, cursorLocation.Y);
 		}
 
 		/// <summary>
@@ -216,7 +190,6 @@ namespace FractalPlotter
 			var diff = e.OffsetY - currentOffset;
 			currentOffset = e.OffsetY;
 			Camera.Scaling(diff * 0.1f);
-			pipe.UpdateScale();
 		}
 
 		protected override void OnTextInput(TextInputEventArgs e)
@@ -241,7 +214,6 @@ namespace FractalPlotter
 		protected override void OnClosing(CancelEventArgs e)
 		{
 			IsClosing = true;
-			pipe.Exit();
 
 			MasterRenderer.Dispose();
 			controller.Dispose();

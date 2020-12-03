@@ -28,6 +28,8 @@
 /glfw3-x86.dll
 /glfw3-x64.dll
 /ImGui.NET.dll
+/Microsoft.Win32.SystemEvents.dll
+/System.Drawing.Common.dll
 
 # Outputs generated from the program
 /exception.log

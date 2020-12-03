@@ -1,15 +1,11 @@
 using OpenTK.Windowing.Desktop;
 using System;
 using System.Globalization;
-using System.Threading;
-using System.Windows.Forms;
 
 namespace FractalPlotter
 {
 	static class Program
 	{
-		static readonly GraphSettingsPipe pipe = new GraphSettingsPipe();
-
 		/// <summary>
 		/// Entry point.
 		/// </summary>
@@ -23,8 +19,7 @@ namespace FractalPlotter
 			AppDomain.CurrentDomain.UnhandledException += handleError;
 			Settings.Initialize();
 
-			initSettingsWindow();
-			initGraphWindow();
+			initWindow();
 		}
 
 		/// <summary>
@@ -36,26 +31,9 @@ namespace FractalPlotter
 		}
 
 		/// <summary>
-		/// Initializes the settings window in an independent thread and runs it.
-		/// </summary>
-		static void initSettingsWindow()
-		{
-			// Run in secondary thread, as the first one will be reserved for the GraphWindow instance.
-			new Thread(() =>
-			{
-				Application.SetHighDpiMode(HighDpiMode.SystemAware);
-				Application.EnableVisualStyles();
-				Application.SetCompatibleTextRenderingDefault(false);
-
-				var settingsWindow = new SettingsWindow(pipe);
-				Application.Run(settingsWindow);
-			}).Start();
-		}
-
-		/// <summary>
 		/// Initializes the graph window and runs it.
 		/// </summary>
-		static void initGraphWindow()
+		static void initWindow()
 		{
 			var gameSettings = GameWindowSettings.Default;
 			var nativeSettings = new NativeWindowSettings()
@@ -67,7 +45,7 @@ namespace FractalPlotter
 				Size = new OpenTK.Mathematics.Vector2i(Settings.GraphWidth, Settings.GraphHeight)
 			};
 
-			var graphWindow = new GraphWindow(pipe, gameSettings, nativeSettings);
+			var graphWindow = new GraphWindow(gameSettings, nativeSettings);
 			graphWindow.Run();
 		}
 
