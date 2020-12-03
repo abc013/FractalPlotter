@@ -285,8 +285,6 @@ void main()
 				GL.NamedBufferData(vertexBuffer, newSize, IntPtr.Zero, BufferUsageHint.DynamicDraw);
 				GL.VertexArrayVertexBuffer(vertexArray, 0, vertexBuffer, IntPtr.Zero, Unsafe.SizeOf<ImDrawVert>());
 				vertexBufferSize = newSize;
-
-				Console.WriteLine($"Resized dear imgui vertex buffer to new size {vertexBufferSize}");
 			}
 
 			var indexSize = draw_data.TotalIdxCount * sizeof(ushort);
@@ -300,8 +298,6 @@ void main()
 				GL.NamedBufferData(indexBuffer, newSize, IntPtr.Zero, BufferUsageHint.DynamicDraw);
 				GL.VertexArrayElementBuffer(vertexArray, indexBuffer);
 				indexBufferSize = newSize;
-
-				Console.WriteLine($"Resized dear imgui index buffer to new size {indexBufferSize}");
 			}
 
 			// Setup orthographic projection matrix into our constant buffer
@@ -343,7 +339,6 @@ void main()
 				GL.NamedBufferSubData(indexBuffer, IntPtr.Zero, cmd_list.IdxBuffer.Size * sizeof(ushort), cmd_list.IdxBuffer.Data);
 				Utils.CheckError($"Data Idx {n}");
 
-				int vtx_offset = 0;
 				int idx_offset = 0;
 				for (int cmd_i = 0; cmd_i < cmd_list.CmdBuffer.Size; cmd_i++)
 				{
@@ -361,14 +356,13 @@ void main()
 					Utils.CheckError("Scissor");
 
 					if ((io.BackendFlags & ImGuiBackendFlags.RendererHasVtxOffset) != 0)
-						GL.DrawElementsBaseVertex(PrimitiveType.Triangles, (int)pcmd.ElemCount, DrawElementsType.UnsignedShort, (IntPtr)(idx_offset * sizeof(ushort)), vtx_offset);
+						GL.DrawElementsBaseVertex(PrimitiveType.Triangles, (int)pcmd.ElemCount, DrawElementsType.UnsignedShort, (IntPtr)(idx_offset * sizeof(ushort)), 0);
 					else
 						GL.DrawElements(BeginMode.Triangles, (int)pcmd.ElemCount, DrawElementsType.UnsignedShort, (int)pcmd.IdxOffset * sizeof(ushort));
 					Utils.CheckError("Draw");
 
 					idx_offset += (int)pcmd.ElemCount;
 				}
-				vtx_offset += cmd_list.VtxBuffer.Size;
 			}
 
 			GL.ActiveTexture(TextureUnit.Texture0);
