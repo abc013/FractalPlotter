@@ -99,23 +99,25 @@ namespace FractalPlotter
 			ImGui.Checkbox("Show points", ref Settings.Points);
 			if (ImGui.CollapsingHeader("Shaders"))
 			{
-				ImGui.Text("Please select a shader from the list below.");
-				ImGui.Text("Hover above this text for more information.");
+				ImGui.Text("Select a shader from the list below.");
+				ImGui.SameLine();
+				ImGui.TextDisabled("[?]");
 				if (ImGui.IsItemHovered())
-					ImGui.SetTooltip(".");
+					ImGui.SetTooltip("Change the current shader by clicking on one of the names below.\nThe shaders themselves can be found in the 'Shaders' directory.");
 
-				if (ImGui.Combo("Shaders", ref currentShader, shaders, shaders.Length))
+				if (ImGui.ListBox("Shaders", ref currentShader, shaders, shaders.Length))
 					MasterRenderer.ChangeShader(shaders[currentShader]);
 			}
 			if (ImGui.CollapsingHeader("Palettes"))
 			{
-				ImGui.Text("Please select a palette from the list below.");
-				ImGui.Text("Hover above this text for more information.");
+				ImGui.Text("Select a palette from the list below.");
+				ImGui.SameLine();
+				ImGui.TextDisabled("[?]");
 				if (ImGui.IsItemHovered())
-					ImGui.SetTooltip(".");
+					ImGui.SetTooltip("Change current palette by clicking on one of the names below.\nThe palettes can be found in the 'Palettes' directory.\nPlease note that the default palettes contain 256 different colors.\nThis means that, when increasing imax over that limit, no more colors will be added.");
 
-				if (ImGui.Combo("Palettes", ref currentPalette, palettes, palettes.Length))
-					MasterRenderer.ChangePalette(palettes[currentShader]);
+				if (ImGui.ListBox("Palettes", ref currentPalette, palettes, palettes.Length))
+					MasterRenderer.ChangePalette(palettes[currentPalette]);
 			}
 			if (ImGui.CollapsingHeader("Viewport settings"))
 			{
