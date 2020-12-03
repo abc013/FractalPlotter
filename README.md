@@ -5,7 +5,9 @@ FractalPlotter is using a GL backend and shaders for each fractal structure, suc
 
 ## Dependencies
 ### Framework: [.NET Core 3.1](https://dotnet.microsoft.com/download/dotnet-core/3.1)
-### Wrapper for OpenGL: [OpenTK](https://github.com/opentk/opentk)
+- [OpenTK](https://github.com/opentk/opentk)
+- [ImGui.NET](https://github.com/mellinoe/ImGui.NET)
+- System.Drawing.Common
 
 ## Download
 Releases are available [here](https://github.com/abc013/FractalPlotter/releases).
