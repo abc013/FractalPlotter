@@ -64,13 +64,6 @@ namespace FractalPlotter.Graphics
 			PointRenderable.Load();
 			PlaneRenderable.Load();
 
-			// Add some debug points.
-			PointManager.Add(Vector3.Zero, Color4.Violet);
-			PointManager.Add(Vector3.UnitY, Color4.Red);
-			PointManager.Add(-Vector3.UnitY, Color4.Red);
-			PointManager.Add(Vector3.UnitX, Color4.Blue);
-			PointManager.Add(-Vector3.UnitX, Color4.Blue);
-
 			// Initialize the crosshair.
 			crosshair1 = new Point(Vector3.Zero, Color4.Black, 0.012f);
 			crosshair2 = new Point(new Vector3(0, 0, -0.000001f), Color4.White);

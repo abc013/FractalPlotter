@@ -58,6 +58,36 @@ namespace FractalPlotter.Graphics
 			if (ImGui.CollapsingHeader("Point settings"))
 			{
 				ImGui.Checkbox("Show points", ref Settings.Points);
+				if (ImGui.TreeNode("Points"))
+				{
+					var points = PointManager.Points;
+					var pointsToRemove = new List<Point>();
+					for (int i = 0; i < points.Count; i++)
+					{
+						var point = points[i];
+						if (ImGui.TreeNode($"Point{i}"))
+						{
+							ImGui.Text($"X: {point.Position.X}");
+							ImGui.SameLine();
+							ImGui.Text($"Y: {point.Position.Y}i");
+
+							if (ImGui.Button("Copy to clipboard"))
+								ImGui.SetClipboardText($"{point.Position.X},{point.Position.Y}");
+
+							var c = new System.Numerics.Vector4(point.Color.R, point.Color.G, point.Color.B, point.Color.A);
+							if (ImGui.ColorEdit4("", ref c))
+								point.Color = new Color4(c.X, c.Y, c.Z, c.W);
+
+							if (ImGui.Button("Remove"))
+								pointsToRemove.Add(point);
+							ImGui.TreePop();
+						}
+					}
+					ImGui.TreePop();
+
+					if (pointsToRemove.Count != 0)
+						points.RemoveAll(p => pointsToRemove.Contains(p));
+				}
 				ImGui.TextWrapped("Place points by clicking the right mouse button or using the button.");
 				ImGui.Checkbox("Use random color", ref Settings.UseRandomColor);
 				if (!Settings.UseRandomColor)
