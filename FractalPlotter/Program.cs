@@ -38,7 +38,7 @@ namespace FractalPlotter
 			var gameSettings = GameWindowSettings.Default;
 			var nativeSettings = new NativeWindowSettings()
 			{
-				Title = "Graph | FractalPlotter",
+				Title = "FractalPlotter",
 				APIVersion = new Version(3, 3),
 				IsEventDriven = Settings.EventDriven,
 				Location = new OpenTK.Mathematics.Vector2i(Settings.GraphX, Settings.GraphY),
