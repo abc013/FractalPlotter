@@ -7,6 +7,8 @@ namespace FractalPlotter.Graphics
 	/// </summary>
 	public static class Camera
 	{
+		public static float RelativeSpeed => Settings.CameraSpeed / Scale;
+
 		/// <summary>
 		/// Default matrix.
 		/// </summary>
@@ -85,10 +87,10 @@ namespace FractalPlotter.Graphics
 		/// </summary>
 		public static void Translate(int x, int y, int z)
 		{
-			var speed = Settings.CameraSpeed / Scale;
+			var speed = RelativeSpeed;
 			Location += new Vector3(x * speed, y * speed, z * speed);
 
-			var exactSpeed = (double)Settings.CameraSpeed / Scale;
+			var exactSpeed = (double)RelativeSpeed;
 			ExactLocation += new Vector3d(x * exactSpeed, y * exactSpeed, z * exactSpeed);
 
 			Changed = true;

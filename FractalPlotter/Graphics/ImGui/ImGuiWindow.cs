@@ -76,8 +76,8 @@ namespace FractalPlotter.Graphics
 
 				ImGui.Text("Location");
 
-				posChanged |= ImGui.InputDouble("X", ref x);
-				posChanged |= ImGui.InputDouble("Y", ref y);
+				posChanged |= ImGui.InputDouble("X", ref x, Camera.RelativeSpeed, Camera.RelativeSpeed * 5);
+				posChanged |= ImGui.InputDouble("Y", ref y, Camera.RelativeSpeed, Camera.RelativeSpeed * 5);
 
 				if (posChanged)
 					Camera.SetTranslation(x, y, 0);
@@ -86,8 +86,13 @@ namespace FractalPlotter.Graphics
 
 				ImGui.Text("Scale");
 
-				if (ImGui.InputFloat("S", ref s))
+				if (ImGui.InputFloat("S", ref s, .1f, .2f))
 					Camera.SetScale(s);
+
+				ImGui.NewLine();
+				ImGui.Text("Camera Speed");
+				helpButton("Determines how fast the viewport is moved around by pressing keys.");
+				ImGui.SliderFloat("Speed", ref Settings.CameraSpeed, 0.001f, .02f, "%.3f");
 			}
 			if (ImGui.CollapsingHeader("Parameter settings"))
 			{
@@ -100,8 +105,8 @@ namespace FractalPlotter.Graphics
 				helpButton("This is the parameter value used for e.g. julia fractals." +
 					"\nOther shaders may use this parameters for other purposes.");
 
-				factorChanged |= ImGui.InputFloat("X", ref x);
-				factorChanged |= ImGui.InputFloat("Y", ref y);
+				factorChanged |= ImGui.InputFloat("X", ref x, Settings.RegulatorSpeed, Settings.RegulatorSpeed * 5);
+				factorChanged |= ImGui.InputFloat("Y", ref y, Settings.RegulatorSpeed, Settings.RegulatorSpeed * 5);
 
 				if (factorChanged)
 					MasterRenderer.Factor1 = new Vector2(x, y);
@@ -119,8 +124,13 @@ namespace FractalPlotter.Graphics
 				ImGui.Text("Escape criterion value");
 				helpButton("Value that determines when the iteration is stopped. Recommended is the value 2.");
 
-				if (ImGui.InputFloat("L", ref l))
+				if (ImGui.InputFloat("L", ref l, Settings.RegulatorSpeed, Settings.RegulatorSpeed * 5))
 					MasterRenderer.SquaredLimit = l*l;
+
+				ImGui.NewLine();
+				ImGui.Text("Change Speed");
+				helpButton("Determines how fast the c parameter are changed when pressing keys.");
+				ImGui.SliderFloat("Speed", ref Settings.RegulatorSpeed, 0.0001f, .01f, "%.4f");
 			}
 
 			lastMS.Enqueue(lastms);
@@ -165,12 +175,10 @@ namespace FractalPlotter.Graphics
 
 		static void helpButton(string description)
 		{
-
 			ImGui.SameLine();
 			ImGui.TextDisabled("[?]");
 			if (ImGui.IsItemHovered())
 				ImGui.SetTooltip(description);
-
 		}
 	}
 }
