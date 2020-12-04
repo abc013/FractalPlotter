@@ -11,6 +11,7 @@ namespace FractalPlotter.Graphics
 		readonly ImGuiController controller;
 
 		int localTick;
+		bool firstTick = true;
 
 		readonly string[] shaders;
 		int currentShader;
@@ -33,6 +34,12 @@ namespace FractalPlotter.Graphics
 
 		public void ShowWindow(long lastms, Vector3d cursorLocation)
 		{
+			if (firstTick)
+			{
+				ImGui.SetNextWindowPos(System.Numerics.Vector2.Zero);
+				ImGui.SetNextWindowSize(new System.Numerics.Vector2(window.ClientSize.X / 8, window.ClientSize.Y));
+				firstTick = false;
+			}
 			ImGui.Begin("Information Window");
 			ImGui.Spacing();
 			if (ImGui.CollapsingHeader("Shaders"))
