@@ -55,6 +55,7 @@ namespace FractalPlotter.Graphics
 			CreateDeviceResources();
 			setKeyMappings();
 
+			// Magic value
 			updateData(1f / 60f);
 
 			ImGui.NewFrame();
@@ -86,7 +87,7 @@ namespace FractalPlotter.Graphics
 			GL.NamedBufferData(vertexBuffer, vertexBufferSize, IntPtr.Zero, BufferUsageHint.DynamicDraw);
 			GL.NamedBufferData(indexBuffer, indexBufferSize, IntPtr.Zero, BufferUsageHint.DynamicDraw);
 
-			RecreateFontDeviceTexture();
+			recreateFontDeviceTexture();
 
 			const string VertexSource = @"#version 330 core
 
@@ -119,7 +120,7 @@ void main()
 	outputColor = color * texture(in_fontTexture, texCoord);
 }";
 
-			shader = new ImGuiShader("ImGui", VertexSource, FragmentSource);
+			shader = new ImGuiShader(VertexSource, FragmentSource);
 
 			GL.VertexArrayVertexBuffer(vertexArray, 0, vertexBuffer, IntPtr.Zero, Unsafe.SizeOf<ImDrawVert>());
 			GL.VertexArrayElementBuffer(vertexArray, indexBuffer);
@@ -142,12 +143,12 @@ void main()
 		/// <summary>
 		/// Recreates the device texture used to render text.
 		/// </summary>
-		public void RecreateFontDeviceTexture()
+		void recreateFontDeviceTexture()
 		{
 			ImGuiIOPtr io = ImGui.GetIO();
 			io.Fonts.GetTexDataAsRGBA32(out IntPtr pixels, out int width, out int height, out _);
 
-			fontTexture = new ImGuiTexture("ImGui Text Atlas", width, height, pixels);
+			fontTexture = new ImGuiTexture(width, height, pixels);
 			fontTexture.SetMagFilter(TextureMagFilter.Linear);
 			fontTexture.SetMinFilter(TextureMinFilter.Linear);
 

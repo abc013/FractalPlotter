@@ -1,131 +1,75 @@
 ﻿using OpenTK.Graphics.OpenGL;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Runtime.CompilerServices;
 
 namespace FractalPlotter.Graphics
 {
-    struct UniformFieldInfo
-    {
-        public int Location;
-        public string Name;
-        public int Size;
-        public ActiveUniformType Type;
-    }
+	/// <summary>
+	/// Shader used for ImGui.
+	/// Taken from https://github.com/NogginBops/ImGui.NET_OpenTK_Sample, thanks to NogginBops!
+	/// </summary>
+	class ImGuiShader
+	{
+		public int Program { get; private set; }
 
-    /// <summary>
-    /// Shader used for ImGui.
-    /// Taken from https://github.com/NogginBops/ImGui.NET_OpenTK_Sample, thanks to NogginBops!
-    /// </summary>
-    class ImGuiShader
-    {
-        public readonly string Name;
-        public int Program { get; private set; }
-        readonly Dictionary<string, int> uniformToLocation = new Dictionary<string, int>();
-        bool initialized = false;
+		readonly Dictionary<string, int> uniformLocations = new Dictionary<string, int>();
 
-        public ImGuiShader(string name, string vertexShader, string fragmentShader)
-        {
-            Name = name;
-            var files = new[]{
-                (ShaderType.VertexShader, vertexShader),
-                (ShaderType.FragmentShader, fragmentShader),
-            };
-            Program = createProgram(name, files);
-        }
+		public ImGuiShader(string vertexShader, string fragmentShader)
+		{
+			Program = GL.CreateProgram();
 
-        public void Dispose()
-        {
-            if (initialized)
-            {
-                GL.DeleteProgram(Program);
-                initialized = false;
-            }
-        }
+			var shaders = new int[2];
+			shaders[0] = compileShader(ShaderType.VertexShader, vertexShader);
+			shaders[1] = compileShader(ShaderType.FragmentShader, fragmentShader);
 
-        public UniformFieldInfo[] GetUniforms()
-        {
-            GL.GetProgram(Program, GetProgramParameterName.ActiveUniforms, out int UnifromCount);
+			foreach (var shader in shaders)
+				GL.AttachShader(Program, shader);
 
-            UniformFieldInfo[] Uniforms = new UniformFieldInfo[UnifromCount];
+			GL.LinkProgram(Program);
 
-            for (int i = 0; i < UnifromCount; i++)
-            {
-                string Name = GL.GetActiveUniform(Program, i, out int Size, out ActiveUniformType Type);
+			GL.GetProgram(Program, GetProgramParameterName.LinkStatus, out int Success);
+			if (Success == 0)
+				Log.WriteInfo($"ImGuiShader generated following log: {GL.GetProgramInfoLog(Program)}");
 
-                UniformFieldInfo FieldInfo;
-                FieldInfo.Location = GetUniformLocation(Name);
-                FieldInfo.Name = Name;
-                FieldInfo.Size = Size;
-                FieldInfo.Type = Type;
+			foreach (var Shader in shaders)
+			{
+				GL.DetachShader(Program, Shader);
+				GL.DeleteShader(Shader);
+			}
+		}
 
-                Uniforms[i] = FieldInfo;
-            }
+		int compileShader(ShaderType type, string source)
+		{
+			var shader = GL.CreateShader(type);
 
-            return Uniforms;
-        }
+			GL.ShaderSource(shader, source);
+			GL.CompileShader(shader);
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int GetUniformLocation(string uniform)
-        {
-            if (uniformToLocation.TryGetValue(uniform, out int location) == false)
-            {
-                location = GL.GetUniformLocation(Program, uniform);
-                uniformToLocation.Add(uniform, location);
+			GL.GetShader(shader, ShaderParameter.CompileStatus, out int success);
+			if (success == 0)
+				Log.WriteInfo($"ImGuiShader generated following log: {GL.GetShaderInfoLog(shader)}");
 
-                if (location == -1)
-                    Debug.Print($"The uniform '{uniform}' does not exist in the shader '{Name}'!");
-            }
+			return shader;
+		}
 
-            return location;
-        }
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public int GetUniformLocation(string uniform)
+		{
+			if (uniformLocations.TryGetValue(uniform, out int location) == false)
+			{
+				location = GL.GetUniformLocation(Program, uniform);
+				uniformLocations.Add(uniform, location);
 
-        int createProgram(string name, params (ShaderType Type, string source)[] shaderPaths)
-        {
-            var program = GL.CreateProgram();
+				if (location == -1)
+					Log.WriteInfo($"The uniform '{uniform}' does not exist in the ImGui shader!");
+			}
 
-            var shaders = new int[shaderPaths.Length];
-            for (int i = 0; i < shaderPaths.Length; i++)
-                shaders[i] = compileShader(shaderPaths[i].Type, shaderPaths[i].source);
+			return location;
+		}
 
-            foreach (var shader in shaders)
-                GL.AttachShader(program, shader);
-
-            GL.LinkProgram(program);
-
-            GL.GetProgram(program, GetProgramParameterName.LinkStatus, out int Success);
-            if (Success == 0)
-            {
-                string Info = GL.GetProgramInfoLog(program);
-                Debug.WriteLine($"GL.LinkProgram had info log [{name}]:\n{Info}");
-            }
-
-            foreach (var Shader in shaders)
-            {
-                GL.DetachShader(program, Shader);
-                GL.DeleteShader(Shader);
-            }
-
-            initialized = true;
-
-            return program;
-        }
-
-        int compileShader(ShaderType type, string source)
-        {
-            var shader = GL.CreateShader(type);
-
-            GL.ShaderSource(shader, source);
-            GL.CompileShader(shader);
-
-            GL.GetShader(shader, ShaderParameter.CompileStatus, out int success);
-            if (success == 0)
-            {
-                string Info = GL.GetShaderInfoLog(shader);
-                Debug.WriteLine($"GL.CompileShader for shader '{Name}' [{type}] had info log:\n{Info}");
-            }
-
-            return shader;
-        }
-    }
+		public void Dispose()
+		{
+			GL.DeleteProgram(Program);
+		}
+	}
 }
