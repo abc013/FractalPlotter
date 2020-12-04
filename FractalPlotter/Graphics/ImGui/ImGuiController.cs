@@ -320,7 +320,6 @@ void main()
 
 			draw_data.ScaleClipRects(io.DisplayFramebufferScale);
 
-			GL.Enable(EnableCap.Blend);
 			GL.Enable(EnableCap.ScissorTest);
 			GL.BlendEquation(BlendEquationMode.FuncAdd);
 			GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
@@ -368,7 +367,6 @@ void main()
 			GL.ActiveTexture(TextureUnit.Texture0);
 			GL.BindTexture(TextureTarget.Texture2D, 0);
 
-			GL.Disable(EnableCap.Blend);
 			GL.Disable(EnableCap.ScissorTest);
 
 			GL.BindVertexArray(0);

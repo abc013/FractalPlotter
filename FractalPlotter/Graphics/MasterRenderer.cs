@@ -55,7 +55,6 @@ namespace FractalPlotter.Graphics
 
 			// Configure GL properly.
 			GL.ClearColor(Color4.Black);
-			GL.Enable(EnableCap.ScissorTest);
 
 			GL.Enable(EnableCap.Blend);
 			GL.LineWidth(2f);
