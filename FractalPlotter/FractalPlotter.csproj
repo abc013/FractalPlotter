@@ -19,6 +19,10 @@
       <RelativePath>README.md</RelativePath>
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
     </ResolvedFileToPublish>
+    <ResolvedFileToPublish Include="..\LICENSE">
+      <RelativePath>LICENSE</RelativePath>
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+    </ResolvedFileToPublish>
     <ResolvedFileToPublish Include="..\Shaders\**\*">
       <RelativePath>Shaders/%(RecursiveDir)%(Filename)%(Extension)</RelativePath>
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
