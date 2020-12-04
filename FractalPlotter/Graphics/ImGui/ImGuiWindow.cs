@@ -37,7 +37,7 @@ namespace FractalPlotter.Graphics
 			if (firstTick)
 			{
 				ImGui.SetNextWindowPos(System.Numerics.Vector2.Zero);
-				ImGui.SetNextWindowSize(new System.Numerics.Vector2(window.ClientSize.X / 8, window.ClientSize.Y));
+				ImGui.SetNextWindowSize(new System.Numerics.Vector2(window.ClientSize.X / 8, window.ClientSize.Y / 2));
 				firstTick = false;
 			}
 			ImGui.Begin("Information Window");
@@ -112,6 +112,7 @@ namespace FractalPlotter.Graphics
 				var y = Camera.ExactLocation.Y;
 
 				ImGui.Text("Location");
+				helpButton("Hotkeys: [Arrows]");
 
 				posChanged |= ImGui.InputDouble("X", ref x, Camera.RelativeSpeed, Camera.RelativeSpeed * 5);
 				posChanged |= ImGui.InputDouble("Y", ref y, Camera.RelativeSpeed, Camera.RelativeSpeed * 5);
@@ -140,7 +141,8 @@ namespace FractalPlotter.Graphics
 
 				ImGui.Text("Parameter value (c)");
 				helpButton("This is the parameter value used for e.g. julia fractals." +
-					"\nOther shaders may use this parameters for other purposes.");
+					"\nOther shaders may use this parameters for other purposes." +
+					"\nHotkeys: [X: Q, A; Y: W, S]");
 
 				factorChanged |= ImGui.InputFloat("X", ref x, Settings.RegulatorSpeed, Settings.RegulatorSpeed * 5);
 				factorChanged |= ImGui.InputFloat("Y", ref y, Settings.RegulatorSpeed, Settings.RegulatorSpeed * 5);
@@ -151,7 +153,8 @@ namespace FractalPlotter.Graphics
 				var i = MasterRenderer.IMax;
 
 				ImGui.Text("Maximum iterations (imax)");
-				helpButton("Maximum value to iterate to in order to determine the color of a single pixel.");
+				helpButton("Maximum value to iterate to in order to determine the color of a single pixel." +
+					"\nHotkeys: [E, D]");
 
 				if (ImGui.InputInt("I", ref i))
 					MasterRenderer.IMax = i;
@@ -159,7 +162,8 @@ namespace FractalPlotter.Graphics
 				var l = (float)Math.Sqrt(MasterRenderer.SquaredLimit);
 
 				ImGui.Text("Escape criterion value");
-				helpButton("Value that determines when the iteration is stopped. Recommended is the value 2.");
+				helpButton("Value that determines when the iteration is stopped. Recommended is the value 2." +
+					"\nHotkeys: [R, F]");
 
 				if (ImGui.InputFloat("L", ref l, Settings.RegulatorSpeed, Settings.RegulatorSpeed * 5))
 					MasterRenderer.SquaredLimit = l*l;
