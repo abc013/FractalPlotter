@@ -1,5 +1,6 @@
 ﻿using ImGuiNET;
 using OpenTK.Mathematics;
+using System;
 using System.Collections.Generic;
 
 namespace FractalPlotter.Graphics
@@ -38,10 +39,8 @@ namespace FractalPlotter.Graphics
 			if (ImGui.CollapsingHeader("Shaders"))
 			{
 				ImGui.Text("Select a shader from the list below.");
-				ImGui.SameLine();
-				ImGui.TextDisabled("[?]");
-				if (ImGui.IsItemHovered())
-					ImGui.SetTooltip("Change the current shader by clicking on one of the names below.\nThe shaders themselves can be found in the 'Shaders' directory.");
+				helpButton("Change the current shader by clicking on one of the names below." +
+					"\nThe shaders themselves can be found in the 'Shaders' directory.");
 
 				if (ImGui.ListBox("Shaders", ref currentShader, shaders, shaders.Length))
 					MasterRenderer.ChangeShader(shaders[currentShader]);
@@ -49,10 +48,10 @@ namespace FractalPlotter.Graphics
 			if (ImGui.CollapsingHeader("Palettes"))
 			{
 				ImGui.Text("Select a palette from the list below.");
-				ImGui.SameLine();
-				ImGui.TextDisabled("[?]");
-				if (ImGui.IsItemHovered())
-					ImGui.SetTooltip("Change current palette by clicking on one of the names below.\nThe palettes can be found in the 'Palettes' directory.\nPlease note that the default palettes contain 256 different colors.\nThis means that, when increasing imax over that limit, no more colors will be added.");
+				helpButton("Change current palette by clicking on one of the names below." +
+					"\nThe palettes can be found in the 'Palettes' directory." +
+					"\nPlease note that the default palettes contain 256 different colors." +
+					"\nThis means that, when increasing imax over that limit, no more colors will be added.");
 
 				if (ImGui.ListBox("Palettes", ref currentPalette, palettes, palettes.Length))
 					MasterRenderer.ChangePalette(palettes[currentPalette]);
@@ -86,6 +85,8 @@ namespace FractalPlotter.Graphics
 				var y = MasterRenderer.Factor1.Y;
 
 				ImGui.Text("Parameter value (c)");
+				helpButton("This is the parameter value used for e.g. julia fractals." +
+					"\nOther shaders may use this parameters for other purposes.");
 
 				factorChanged |= ImGui.InputFloat("X", ref x);
 				factorChanged |= ImGui.InputFloat("Y", ref y);
@@ -95,17 +96,19 @@ namespace FractalPlotter.Graphics
 
 				var i = MasterRenderer.IMax;
 
-				ImGui.Text("Maximum number of iterations (imax)");
+				ImGui.Text("Maximum iterations (imax)");
+				helpButton("Maximum value to iterate to in order to determine the color of a single pixel.");
 
 				if (ImGui.InputInt("I", ref i))
 					MasterRenderer.IMax = i;
 
-				var l = MasterRenderer.SquaredLimit;
+				var l = (float)Math.Sqrt(MasterRenderer.SquaredLimit);
 
 				ImGui.Text("Escape criterion value");
+				helpButton("Value that determines when the iteration is stopped. Recommended is the value 2.");
 
 				if (ImGui.InputFloat("L", ref l))
-					MasterRenderer.SquaredLimit = l;
+					MasterRenderer.SquaredLimit = l*l;
 			}
 
 			lastMS.Enqueue(lastms);
@@ -146,6 +149,16 @@ namespace FractalPlotter.Graphics
 			ImGui.Text($"cursor at\n{cursorLocation.X.ToString(str)}\n{cursorLocation.Y.ToString(str)}i");
 
 			ImGui.End();
+		}
+
+		static void helpButton(string description)
+		{
+
+			ImGui.SameLine();
+			ImGui.TextDisabled("[?]");
+			if (ImGui.IsItemHovered())
+				ImGui.SetTooltip(description);
+
 		}
 	}
 }
