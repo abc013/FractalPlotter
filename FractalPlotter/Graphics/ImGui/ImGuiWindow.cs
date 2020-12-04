@@ -130,7 +130,7 @@ namespace FractalPlotter.Graphics
 				ImGui.NewLine();
 				ImGui.Text("Camera Speed");
 				helpButton("Determines how fast the viewport is moved around by pressing keys.");
-				ImGui.SliderFloat("Speed", ref Settings.CameraSpeed, 0.001f, .02f, "%.3f");
+				ImGui.SliderFloat("C-Speed", ref Settings.CameraSpeed, 0.001f, .02f, "%.3f");
 			}
 			if (ImGui.CollapsingHeader("Parameter settings"))
 			{
@@ -171,7 +171,7 @@ namespace FractalPlotter.Graphics
 				ImGui.NewLine();
 				ImGui.Text("Change Speed");
 				helpButton("Determines how fast the c parameter are changed when pressing keys.");
-				ImGui.SliderFloat("Speed", ref Settings.RegulatorSpeed, 0.0001f, .01f, "%.4f");
+				ImGui.SliderFloat("P-Speed", ref Settings.RegulatorSpeed, 0.0001f, .01f, "%.4f");
 			}
 
 			lastMS.Enqueue(lastms);
