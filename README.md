@@ -1,5 +1,4 @@
 # FractalPlotter
-## Please note: This program is a work in progress!
 FractalPlotter is a program written in c# to display and examine fractal structures. It supports switching fractals/shaders and color palettes seamlessly as well as adjusting parametes in runtime.
 FractalPlotter is using a GL backend and shaders for each fractal structure, such as the Mandelbrot and Julia fractals. 
 
