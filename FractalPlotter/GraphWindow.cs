@@ -143,7 +143,7 @@ namespace FractalPlotter
 
 			var location = cursorLocation;
 			if (e.Button == MouseButton.Right)
-				PointManager.Add(new Vector3((float)location.X, (float)location.Y, (float)location.Z), Utils.RandomColor());
+				PointManager.Add(new Vector3((float)location.X, (float)location.Y, (float)location.Z), Utils.GetColor());
 			else if (e.Button == MouseButton.Left)
 			{
 				Camera.SetTranslation(location.X, location.Y, location.Z);

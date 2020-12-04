@@ -33,9 +33,8 @@ namespace FractalPlotter.Graphics
 
 		public void ShowWindow(long lastms, Vector3d cursorLocation)
 		{
-			ImGui.Begin("Information window");
+			ImGui.Begin("Information Window");
 			ImGui.Spacing();
-			ImGui.Checkbox("Show points", ref Settings.Points);
 			if (ImGui.CollapsingHeader("Shaders"))
 			{
 				ImGui.Text("Select a shader from the list below.");
@@ -55,6 +54,19 @@ namespace FractalPlotter.Graphics
 
 				if (ImGui.ListBox("Palettes", ref currentPalette, palettes, palettes.Length))
 					MasterRenderer.ChangePalette(palettes[currentPalette]);
+			}
+			if (ImGui.CollapsingHeader("Point settings"))
+			{
+				ImGui.Checkbox("Show points", ref Settings.Points);
+				ImGui.TextWrapped("Place points by clicking the right mouse button or using the button.");
+				ImGui.Checkbox("Use random color", ref Settings.UseRandomColor);
+				if (!Settings.UseRandomColor)
+				{
+					ImGui.NewLine();
+					var c = new System.Numerics.Vector4(Utils.StandardColor.R, Utils.StandardColor.G, Utils.StandardColor.B, Utils.StandardColor.A);
+					if (ImGui.ColorPicker4("Color", ref c))
+						Utils.StandardColor = new Color4(c.X, c.Y, c.Z, c.W);
+				}
 			}
 			if (ImGui.CollapsingHeader("Viewport settings"))
 			{
@@ -138,10 +150,10 @@ namespace FractalPlotter.Graphics
 			}
 
 			ImGui.NewLine();
-			if (ImGui.Button("Add Point at current position"))
-				PointManager.Add(Camera.Location, Utils.RandomColor());
+			if (ImGui.Button("Add Point at current position", new System.Numerics.Vector2(ImGui.GetWindowContentRegionWidth(), 20)))
+				PointManager.Add(Camera.Location, Utils.GetColor());
 
-			if (ImGui.Button("Take Screenshot"))
+			if (ImGui.Button("Take Screenshot", new System.Numerics.Vector2(ImGui.GetWindowContentRegionWidth(), 20)))
 				MasterRenderer.TakeScreenshot(0, 0, window.ClientSize.X, window.ClientSize.Y);
 
 			ImGui.NewLine();

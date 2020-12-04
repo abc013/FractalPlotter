@@ -47,6 +47,14 @@ namespace FractalPlotter
 		/// Render points and viewport crosshair.
 		/// </summary>
 		public static bool Points = true;
+		/// <summary>
+		/// Always use a random color when generating a point.
+		/// </summary>
+		public static bool UseRandomColor = true;
+		/// <summary>
+		/// if <see cref="UseRandomColor"/> is set to false, use this color (defined as hex value) instead.
+		/// </summary>
+		public static string StandardColor = "#ffffffff";
 
 		/// <summary>
 		/// Allows setting the point shader which will be used for points.
@@ -105,6 +113,9 @@ namespace FractalPlotter
 		{
 			// Use a settings class to gain access to reflection methods, making assigning variables much easier
 			new Settings();
+
+			// Translate the Hex-string into a color
+			Utils.StandardColor = System.Drawing.ColorTranslator.FromHtml(StandardColor);
 		}
 
 		Settings()

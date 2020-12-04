@@ -7,6 +7,8 @@ namespace FractalPlotter
 {
 	public static class Utils
 	{
+		public static Color4 StandardColor;
+
 		static readonly Random random = new Random();
 
 		/// <summary>
@@ -69,6 +71,18 @@ namespace FractalPlotter
 				return result;
 
 			return @default;
+		}
+
+		/// <summary>
+		/// Gets a color based on <see cref="Settings.UseRandomColor"/>:
+		/// If true, the function returns a random color value. If false, it returns the <see cref="StandardColor"/>.
+		/// </summary>
+		public static Color4 GetColor()
+		{
+			if (Settings.UseRandomColor)
+				return RandomColor();
+
+			return StandardColor;
 		}
 
 		/// <summary>
