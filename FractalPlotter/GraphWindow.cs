@@ -18,6 +18,11 @@ namespace FractalPlotter
 		public bool IsLoaded { get; private set; }
 
 		/// <summary>
+		/// If set to true, a screenshot will be taken next or in this frame.
+		/// </summary>
+		bool screenshot;
+
+		/// <summary>
 		/// Stopwatch used for measuring the time each render frame needs.
 		/// </summary>
 		readonly Stopwatch watch;
@@ -70,7 +75,16 @@ namespace FractalPlotter
 			MasterRenderer.RenderFrame();
 
 			window.ShowWindow(lastms, cursorLocation);
+
+			// Without UI, since it isn't rendered yet
+			if (screenshot && !Settings.ScreenshotUI)
+				takeScreenshot();
+
 			controller.Render();
+
+			// With UI, since it is rendered now
+			if (screenshot && Settings.ScreenshotUI)
+				takeScreenshot();
 
 			SwapBuffers();
 
@@ -113,7 +127,7 @@ namespace FractalPlotter
 			}
 
 			if (KeyboardState.IsKeyDown(Keys.Space))
-				MasterRenderer.TakeScreenshot(0, 0, ClientSize.X, ClientSize.Y);
+				DoScreenshot();
 		}
 
 		/// <summary>
@@ -130,6 +144,23 @@ namespace FractalPlotter
 				delta--;
 
 			return delta;
+		}
+
+		/// <summary>
+		/// Tells that this or next frame, a screenshot has to be taken.
+		/// </summary>
+		public void DoScreenshot()
+		{
+			screenshot = true;
+		}
+
+		/// <summary>
+		/// Takes a screenshot.
+		/// </summary>
+		void takeScreenshot()
+		{
+			MasterRenderer.TakeScreenshot(0, 0, ClientSize.X, ClientSize.Y);
+			screenshot = false;
 		}
 
 		/// <summary>

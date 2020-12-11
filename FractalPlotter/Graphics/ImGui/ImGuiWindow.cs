@@ -205,7 +205,9 @@ namespace FractalPlotter.Graphics
 				PointManager.Add(Camera.Location, Utils.GetColor());
 
 			if (ImGui.Button("Take Screenshot", new System.Numerics.Vector2(ImGui.GetWindowContentRegionWidth(), 20)))
-				MasterRenderer.TakeScreenshot(0, 0, window.ClientSize.X, window.ClientSize.Y);
+				window.DoScreenshot();
+
+			ImGui.Checkbox("Show UI in Screenshot", ref Settings.ScreenshotUI);
 
 			ImGui.NewLine();
 			const string str = "00.000000000000";

@@ -36,6 +36,11 @@ namespace FractalPlotter
 		public static bool EventDriven = false;
 
 		/// <summary>
+		/// Determines whether to include the UI in the screenshot.
+		/// </summary>
+		public static bool ScreenshotUI = false;
+
+		/// <summary>
 		/// Maximal iteration number. Increase to get better results (as long as the palette has the same amount of different colors)
 		/// </summary>
 		public static int IMax = 256;
