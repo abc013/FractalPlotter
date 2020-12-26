@@ -41,6 +41,11 @@ namespace FractalPlotter
 		public static bool ShowWelcomeDialog = true;
 
 		/// <summary>
+		/// Automatically resizes and positions the information window. Disable this if you want to keep your latest size and position arguments saved.
+		/// </summary>
+		public static bool AutoResizeWindow = true;
+
+		/// <summary>
 		/// Determines whether to include the UI in the screenshot.
 		/// </summary>
 		public static bool ScreenshotUI = false;

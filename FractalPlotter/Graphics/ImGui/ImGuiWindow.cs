@@ -37,7 +37,7 @@ namespace FractalPlotter.Graphics
 
 		public void ShowWindow(long lastms, Vector3d cursorLocation)
 		{
-			if (firstTick)
+			if (firstTick && Settings.AutoResizeWindow)
 			{
 				ImGui.SetNextWindowPos(System.Numerics.Vector2.Zero);
 				ImGui.SetNextWindowSize(new System.Numerics.Vector2(window.ClientSize.X / 8, window.ClientSize.Y / 2));
