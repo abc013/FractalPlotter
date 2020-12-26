@@ -52,7 +52,7 @@ namespace FractalPlotter
 			base.OnLoad();
 			MasterRenderer.Load();
 			controller = new ImGuiController(ClientSize.X, ClientSize.Y);
-			controller.SetScale(2f);
+			controller.SetScale(Settings.UIScaling);
 			window = new ImGuiWindow(this, controller);
 
 			IsLoaded = true;

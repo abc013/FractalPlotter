@@ -12,21 +12,21 @@ namespace FractalPlotter
 		public const int WindowBar = 60;
 
 		/// <summary>
-		/// X-Coordinate of the Graph window.
+		/// X-Coordinate of the window.
 		/// </summary>
-		public static int GraphX = 360;
+		public static int GraphX = 0;
 		/// <summary>
-		/// Y-Coordinate of the Graph window.
+		/// Y-Coordinate of the window.
 		/// </summary>
 		public static int GraphY = WindowBar;
 
 		/// <summary>
-		/// Width of the Graph window.
+		/// Width of the window.
 		/// </summary>
 		public static int GraphWidth = 1920;
 
 		/// <summary>
-		/// Height of the Graph window.
+		/// Height of the window.
 		/// </summary>
 		public static int GraphHeight = 1080;
 
@@ -44,6 +44,11 @@ namespace FractalPlotter
 		/// Automatically resizes and positions the information window. Disable this if you want to keep your latest size and position arguments saved.
 		/// </summary>
 		public static bool AutoResizeWindow = true;
+
+		/// <summary>
+		/// Enables scaling the UI window. Greater value means bigger.
+		/// </summary>
+		public static float UIScaling = 2f;
 
 		/// <summary>
 		/// Determines whether to include the UI in the screenshot.

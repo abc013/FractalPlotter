@@ -40,7 +40,7 @@ namespace FractalPlotter.Graphics
 			if (firstTick && Settings.AutoResizeWindow)
 			{
 				ImGui.SetNextWindowPos(System.Numerics.Vector2.Zero);
-				ImGui.SetNextWindowSize(new System.Numerics.Vector2(window.ClientSize.X / 8, window.ClientSize.Y / 2));
+				ImGui.SetNextWindowSize(new System.Numerics.Vector2(window.ClientSize.X / (Settings.UIScaling * 4), window.ClientSize.Y / Settings.UIScaling));
 				firstTick = false;
 			}
 			ImGui.Begin("Information Window");
@@ -224,7 +224,7 @@ namespace FractalPlotter.Graphics
 			if (showDialog)
 			{
 				ImGui.SetNextWindowFocus();
-				ImGui.SetNextWindowPos(new System.Numerics.Vector2(window.ClientSize.X / 4 - 150, window.ClientSize.Y / 4 - 110));
+				ImGui.SetNextWindowPos(new System.Numerics.Vector2(window.ClientSize.X / (Settings.UIScaling * 2) - 150, window.ClientSize.Y / (Settings.UIScaling * 2) - 110));
 				ImGui.SetNextWindowSize(new System.Numerics.Vector2(300, 220));
 				ImGui.Begin("Welcome!", ImGuiWindowFlags.NoDecoration);
 				ImGui.Text("Welcome to FractalPlotter!");
