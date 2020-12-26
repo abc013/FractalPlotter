@@ -101,7 +101,7 @@ namespace FractalPlotter
 
 			controller.Update(this, (float)args.Time);
 
-			if (ImGui.IsWindowHovered(ImGuiHoveredFlags.AnyWindow))
+			if (ImGui.IsAnyItemActive())
 				return;
 
 			var x = checkKeyRegulator(Keys.Right, Keys.Left);
