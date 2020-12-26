@@ -234,8 +234,8 @@ namespace FractalPlotter
 		/// </summary>
 		protected override void OnResize(ResizeEventArgs e)
 		{
-			MasterRenderer.ResizeViewport(ClientSize.X, ClientSize.Y);
-			controller.WindowResized(ClientSize.X, ClientSize.Y);
+			MasterRenderer.ResizeViewport(e.Width, e.Height);
+			controller.WindowResized(e.Width, e.Height);
 		}
 
 		/// <summary>
