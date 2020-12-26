@@ -42,6 +42,20 @@ namespace FractalPlotter
 		public GraphWindow(GameWindowSettings gameSettings, NativeWindowSettings nativeSettings) : base(gameSettings, nativeSettings)
 		{
 			watch = new Stopwatch();
+
+			// Initialize values
+			int maxWidth, maxHeight;
+			unsafe
+			{
+				var mode = GLFW.GetVideoMode(CurrentMonitor.ToUnsafePtr<Monitor>());
+				maxWidth = mode->Width;
+				maxHeight = mode->Height;
+			}
+
+			if (Settings.GraphWidth > maxWidth)
+				Settings.GraphWidth = maxWidth;
+			if (Settings.GraphHeight > maxHeight)
+				Settings.GraphHeight = maxHeight;
 		}
 
 		/// <summary>
@@ -63,6 +77,8 @@ namespace FractalPlotter
 			controller = new ImGuiController(ClientSize.X, ClientSize.Y);
 			controller.SetScale(Settings.UIScaling);
 			window = new ImGuiWindow(this, controller);
+
+			ClientRectangle = new Box2i(ClientRectangle.Min.X, ClientRectangle.Min.Y, Settings.GraphWidth, Settings.GraphHeight);
 
 			IsLoaded = true;
 		}

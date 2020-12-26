@@ -21,12 +21,12 @@ namespace FractalPlotter
 		public static int GraphY = WindowBar;
 
 		/// <summary>
-		/// Width of the window.
+		/// Width of the window. If it is bigger than the width of the screen, the width of the screen will be used instead.
 		/// </summary>
 		public static int GraphWidth = 1920;
 
 		/// <summary>
-		/// Height of the window.
+		/// Height of the window. If it is bigger than the height of the screen, the height of the screen will be used instead.
 		/// </summary>
 		public static int GraphHeight = 1080;
 
