@@ -51,6 +51,15 @@ namespace FractalPlotter
 		{
 			base.OnLoad();
 			MasterRenderer.Load();
+
+			if (Settings.UseSystemUIScaling)
+			{
+				if (TryGetCurrentMonitorDpi(out float hdpi, out _))
+					Settings.UIScaling = hdpi / 100;
+				else
+					Log.WriteInfo("Failed to fetch system dpi scaling.");
+			}
+
 			controller = new ImGuiController(ClientSize.X, ClientSize.Y);
 			controller.SetScale(Settings.UIScaling);
 			window = new ImGuiWindow(this, controller);

@@ -46,9 +46,14 @@ namespace FractalPlotter
 		public static bool AutoResizeWindow = true;
 
 		/// <summary>
-		/// Enables scaling the UI window. Greater value means bigger.
+		/// Enables scaling the UI window. Greater value means bigger. This is only active when <see cref="UseSystemUIScaling"/> is false.
 		/// </summary>
 		public static float UIScaling = 1.5f;
+
+		/// <summary>
+		/// Enable using the system dpi settings for scaling of the UI window.
+		/// </summary>
+		public static bool UseSystemUIScaling = true;
 
 		/// <summary>
 		/// Determines whether to include the UI in the screenshot.
