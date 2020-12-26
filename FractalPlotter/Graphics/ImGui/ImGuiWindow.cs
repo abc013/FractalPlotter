@@ -223,7 +223,6 @@ namespace FractalPlotter.Graphics
 
 			if (showDialog)
 			{
-				ImGui.SetNextWindowFocus();
 				ImGui.SetNextWindowPos(new System.Numerics.Vector2(window.ClientSize.X / (Settings.UIScaling * 2) - 150, window.ClientSize.Y / (Settings.UIScaling * 2) - 110));
 				ImGui.SetNextWindowSize(new System.Numerics.Vector2(300, 220));
 				ImGui.Begin("Welcome!", ImGuiWindowFlags.NoDecoration);
