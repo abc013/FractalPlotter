@@ -36,6 +36,11 @@ namespace FractalPlotter
 		public static bool EventDriven = false;
 
 		/// <summary>
+		/// Enables the welcome dialog, which will be shown on startup.
+		/// </summary>
+		public static bool ShowWelcomeDialog = true;
+
+		/// <summary>
 		/// Determines whether to include the UI in the screenshot.
 		/// </summary>
 		public static bool ScreenshotUI = false;

@@ -12,6 +12,7 @@ namespace FractalPlotter.Graphics
 
 		int localTick;
 		bool firstTick = true;
+		bool showDialog;
 
 		readonly string[] shaders;
 		int currentShader;
@@ -30,6 +31,8 @@ namespace FractalPlotter.Graphics
 
 			shaders = FileManager.GetGraphShaderNames().ToArray();
 			palettes = FileManager.GetPaletteImageNames().ToArray();
+
+			showDialog = Settings.ShowWelcomeDialog;
 		}
 
 		public void ShowWindow(long lastms, Vector3d cursorLocation)
@@ -198,6 +201,9 @@ namespace FractalPlotter.Graphics
 
 				var array3 = lastIndexBufferSize.ToArray();
 				ImGui.PlotHistogram("index", ref array3[0], array3.Length);
+
+				if (ImGui.Button("Show welcome dialog", new System.Numerics.Vector2(ImGui.GetWindowContentRegionWidth(), 20)))
+					showDialog = true;
 			}
 
 			ImGui.NewLine();
@@ -214,6 +220,24 @@ namespace FractalPlotter.Graphics
 			ImGui.Text($"cursor at\n{cursorLocation.X.ToString(str)}\n{cursorLocation.Y.ToString(str)}i");
 
 			ImGui.End();
+
+			if (showDialog)
+			{
+				ImGui.SetNextWindowFocus();
+				ImGui.SetNextWindowPos(new System.Numerics.Vector2(window.ClientSize.X / 4 - 150, window.ClientSize.Y / 4 - 110));
+				ImGui.SetNextWindowSize(new System.Numerics.Vector2(300, 220));
+				ImGui.Begin("Welcome!", ImGuiWindowFlags.NoDecoration);
+				ImGui.Text("Welcome to FractalPlotter!");
+				ImGui.TextWrapped("Click on the headers to open/close their contents.");
+				ImGui.TextWrapped("You can get more information about the parameters when hovering above this symbol: ");
+				ImGui.Text("Parameter");
+				helpButton("Parameter information!");
+				ImGui.TextWrapped("The information window can be resized by clicking and dragging the lower right corner. It can be closed by clicking on the arrow next to the title.");
+				ImGui.Text("Enjoy!");
+				if (ImGui.Button("Close this window", new System.Numerics.Vector2(ImGui.GetWindowContentRegionWidth(), 20)))
+					showDialog = false;
+				ImGui.End();
+			}
 		}
 
 		static void helpButton(string description)
