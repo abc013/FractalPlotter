@@ -48,7 +48,7 @@ namespace FractalPlotter
 		/// <summary>
 		/// Enables scaling the UI window. Greater value means bigger.
 		/// </summary>
-		public static float UIScaling = 2f;
+		public static float UIScaling = 1.5f;
 
 		/// <summary>
 		/// Determines whether to include the UI in the screenshot.
