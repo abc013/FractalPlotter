@@ -142,10 +142,10 @@ namespace FractalPlotter.Graphics
 				ImGui.Text("Parameter value (c)");
 				helpButton("This is the parameter value used for e.g. julia fractals." +
 					"\nOther shaders may use this parameters for other purposes." +
-					"\nHotkeys: [X: Q, A; Y: W, S]");
+					"\nHotkeys: [cX: Q, A; cY: W, S]");
 
-				factorChanged |= ImGui.InputFloat("X", ref x, Settings.RegulatorSpeed, Settings.RegulatorSpeed * 5);
-				factorChanged |= ImGui.InputFloat("Y", ref y, Settings.RegulatorSpeed, Settings.RegulatorSpeed * 5);
+				factorChanged |= ImGui.InputFloat("cX", ref x, Settings.RegulatorSpeed, Settings.RegulatorSpeed * 5);
+				factorChanged |= ImGui.InputFloat("cY", ref y, Settings.RegulatorSpeed, Settings.RegulatorSpeed * 5);
 
 				if (factorChanged)
 					MasterRenderer.Factor1 = new Vector2(x, y);
