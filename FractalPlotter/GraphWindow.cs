@@ -78,7 +78,8 @@ namespace FractalPlotter
 			controller.SetScale(Settings.UIScaling);
 			window = new ImGuiWindow(this, controller);
 
-			ClientRectangle = new Box2i(ClientRectangle.Min.X, ClientRectangle.Min.Y, Settings.GraphWidth, Settings.GraphHeight);
+			var minimum = ClientRectangle.Min;
+			ClientRectangle = new Box2i(minimum.X, minimum.Y, Settings.GraphWidth + minimum.X, Settings.GraphHeight + minimum.Y);
 
 			IsLoaded = true;
 		}
@@ -234,18 +235,12 @@ namespace FractalPlotter
 		/// <summary>
 		/// Scales when the mouse wheel is used.
 		/// </summary>
-		float currentOffset;
 		protected override void OnMouseWheel(MouseWheelEventArgs e)
 		{
 			if (ImGui.IsWindowHovered(ImGuiHoveredFlags.AnyWindow))
-			{
-				currentOffset = e.OffsetY;
 				return;
-			}
 
-			var diff = e.OffsetY - currentOffset;
-			currentOffset = e.OffsetY;
-			Camera.Scaling(diff * 0.1f);
+			Camera.Scaling(e.OffsetY * 0.1f);
 		}
 
 		protected override void OnTextInput(TextInputEventArgs e)
