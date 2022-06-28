@@ -202,15 +202,15 @@ namespace FractalPlotter.Graphics
 				var array3 = lastIndexBufferSize.ToArray();
 				ImGui.PlotHistogram("index", ref array3[0], array3.Length);
 
-				if (ImGui.Button("Show welcome dialog", new System.Numerics.Vector2(ImGui.GetWindowContentRegionWidth(), 20)))
+				if (ImGui.Button("Show welcome dialog", new System.Numerics.Vector2(ImGui.GetWindowContentRegionMax().X, 20)))
 					showDialog = true;
 			}
 
 			ImGui.NewLine();
-			if (ImGui.Button("Add Point at current position", new System.Numerics.Vector2(ImGui.GetWindowContentRegionWidth(), 20)))
+			if (ImGui.Button("Add Point at current position", new System.Numerics.Vector2(ImGui.GetWindowContentRegionMax().X, 20)))
 				PointManager.Add(Camera.Location, Utils.GetColor());
 
-			if (ImGui.Button("Take Screenshot", new System.Numerics.Vector2(ImGui.GetWindowContentRegionWidth(), 20)))
+			if (ImGui.Button("Take Screenshot", new System.Numerics.Vector2(ImGui.GetWindowContentRegionMax().X, 20)))
 				window.DoScreenshot();
 
 			ImGui.Checkbox("Show UI in Screenshot", ref Settings.ScreenshotUI);
@@ -233,7 +233,7 @@ namespace FractalPlotter.Graphics
 				helpButton("Parameter information!");
 				ImGui.TextWrapped("The information window can be resized by clicking and dragging the lower right corner. It can be closed by clicking on the arrow next to the title.");
 				ImGui.Text("Enjoy!");
-				if (ImGui.Button("Close this window", new System.Numerics.Vector2(ImGui.GetWindowContentRegionWidth(), 20)))
+				if (ImGui.Button("Close this window", new System.Numerics.Vector2(ImGui.GetWindowContentRegionMax().X, 20)))
 					showDialog = false;
 				ImGui.End();
 			}

@@ -3,7 +3,7 @@ FractalPlotter is a program written in c# to display and examine fractal structu
 FractalPlotter is using a GL backend and shaders for each fractal structure, such as the Mandelbrot and Julia fractals. 
 
 ## Dependencies
-### Framework: [.NET 5](https://dotnet.microsoft.com/download/dotnet/5.0)
+### Framework: [.NET 6](https://dotnet.microsoft.com/download/dotnet/6.0)
 - [OpenTK](https://github.com/opentk/opentk)
 - [ImGui.NET](https://github.com/mellinoe/ImGui.NET)
 - System.Drawing.Common
@@ -16,7 +16,7 @@ git clone https://github.com/abc013/FractalPlotter.git
 ```
 
 ## Compiling
-After installing the [.NET Core 3.1 SDK](https://dotnet.microsoft.com/download/dotnet-core/3.1), make a local copy of this repository.
+After installing the [.NET 6 SDK](https://dotnet.microsoft.com/download/dotnet/6.0), make a local copy of this repository.
 Open a command line and navigate to the corresponding directory:
 ```sh
 cd C:/example/path/to/downloaded/directory/FractalPlotter/
@@ -27,7 +27,7 @@ dotnet build
 ```
 This command should fetch the dependencies via NuGet (make sure you have an internet connection!) and build the binaries for you. Done!
 
-As text editors, Visual Studio 2019 or Visual Studio Code are recommended.
+As text editors, Visual Studio 2022 or Visual Studio Code are recommended.
 
 ## Settings
 Most options can be modified in the program. However, to get access to more settings or to have the same arguments at every startup, you can create a `settings.txt` in the same directory where the executable is. To see what can be modified, please take a look at the [Settings.cs file](https://github.com/abc013/FractalPlotter/blob/master/FractalPlotter/Settings.cs). An example of a `settings.txt` might be:
