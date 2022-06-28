@@ -92,6 +92,9 @@ namespace FractalPlotter
 		/// </summary>
 		protected override void OnRenderFrame(FrameEventArgs args)
 		{
+			if (IsExiting)
+				return;
+
 			watch.Start();
 
 			if (Camera.Changed)
@@ -123,6 +126,9 @@ namespace FractalPlotter
 		/// </summary>
 		protected override void OnUpdateFrame(FrameEventArgs args)
 		{
+			if (IsExiting)
+				return;
+
 			base.OnUpdateFrame(args);
 
 			controller.Update(this, (float)args.Time);
