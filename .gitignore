@@ -1,13 +1,13 @@
 ﻿# Generic files
 /runtimes
 /.vs
-/FractalPlotter/obj
+/FractalPlotter.Core/obj
 /obj
 /ref
-/FractalPlotter/FractalPlotter.csproj.user
-/FractalPlotter.csproj.user
+/**/*.user
 
 # Output
+/FractalPlotter
 /FractalPlotter.dll
 /FractalPlotter.exe
 /FractalPlotter.pdb
@@ -23,6 +23,9 @@
 /ImGui.NET.dll
 /SixLabors.ImageSharp.dll
 # Ignore further generated dlls
+/createdump
+/createdump.exe
+/lib*.so
 /WindowsBase.dll
 /ucrtbase.dll
 /System.dll
@@ -30,6 +33,7 @@
 /SOS_README.md
 /netstandard.dll
 /mscor*.dll
+/msquic.dll
 /Microsoft.*.dll
 /hostpolicy.dll
 /hostfxr.dll
@@ -52,6 +56,7 @@
 /Screenshots
 # Ignore packaging output
 /publish_win-x64
+/publish_linux-x64
 # Ignore imgui config/log files
 /imgui.ini
 /imgui_log.txt

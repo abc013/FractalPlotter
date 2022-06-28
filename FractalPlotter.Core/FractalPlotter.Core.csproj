@@ -6,6 +6,8 @@
     <OutDir>../</OutDir>
     <ApplicationIcon>icon.ico</ApplicationIcon>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <AssemblyName>FractalPlotter</AssemblyName>
+    <RootNamespace>FractalPlotter</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
