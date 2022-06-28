@@ -1,7 +1,7 @@
 ﻿using OpenTK.Graphics.OpenGL;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.Runtime.InteropServices;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.PixelFormats;
+using System;
 
 namespace FractalPlotter.Graphics
 {
@@ -16,15 +16,15 @@ namespace FractalPlotter.Graphics
 		public readonly int ID;
 
 		/// <summary>
-		/// Takes an input file (32bit png) and loads it into the GPU for further use in the shaders.
+		/// Takes an input file and loads it into the GPU for further use in the shaders.
 		/// </summary>
 		/// <param name="name">path to the specified file.</param>
 		public Palette(string name)
 		{
-			var bmp = new Bitmap(name);
-			var rect = new Rectangle(0, 0, bmp.Width, 1);
+			using var img = Image.Load<RgbaVector>(name);
+			var rect = new Rectangle(0, 0, img.Width, 1);
 
-			var data = loadTexture(bmp, rect);
+			var data = loadTexture(img, rect);
 
 			// Generate a texture, specifiy it only has one dimension.
 			ID = GL.GenTexture();
@@ -34,7 +34,7 @@ namespace FractalPlotter.Graphics
 			GL.TexParameter(TextureTarget.Texture1D, TextureParameterName.TextureWrapS, (int)All.ClampToBorder);
 			GL.TexParameter(TextureTarget.Texture1D, TextureParameterName.TextureWrapT, (int)All.ClampToBorder);
 			// Load in the data.
-			GL.TexImage1D(TextureTarget.Texture1D, 0, PixelInternalFormat.Rgba32f, rect.Width, 0, OpenTK.Graphics.OpenGL.PixelFormat.Rgba, PixelType.Float, data);
+			GL.TexImage1D(TextureTarget.Texture1D, 0, PixelInternalFormat.Rgba32f, rect.Width, 0, PixelFormat.Rgba, PixelType.Float, data);
 
 			GL.BindTexture(TextureTarget.Texture1D, 0);
 
@@ -43,47 +43,29 @@ namespace FractalPlotter.Graphics
 
 		/// <summary>
 		/// Load textues the fastest way possible.
-		/// Code taken from https://stackoverflow.com/questions/4747428/getting-rgb-array-from-image-in-c-sharp.
 		/// </summary>
-		float[] loadTexture(Bitmap bmp, Rectangle rect)
+		float[] loadTexture(Image<RgbaVector> img, Rectangle rect)
 		{
-			const int pixelWidth = 4;
+			var span = new Span<RgbaVector>(new RgbaVector[rect.Width * rect.Height]);
+			img.CopyPixelDataTo(span);
 
-			var data = bmp.LockBits(rect, ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
-			var byteSize = data.Height * data.Stride;
-			System.GC.AddMemoryPressure(byteSize);
+			var result = new float[rect.Width * rect.Height * 4];
 
-			var scansize = data.Width * 4;
-			var stride = data.Stride;
-			var r = new float[data.Height * stride];
-			try
+			for (int scanline = 0; scanline < rect.Height; scanline++)
 			{
-				var scan = new byte[stride];
-				for (int scanline = 0; scanline < data.Height; scanline++)
+				for (int pixel = 0; pixel < rect.Width; pixel++)
 				{
-					Marshal.Copy(data.Scan0 + scanline * stride, scan, 0, stride);
+					var offset = (scanline * rect.Width + pixel) * 4;
+					var color = span[(rect.Y + scanline) * img.Size().Width + rect.X + pixel];
 
-					for (int px = 0; px < data.Width; px++)
-					{
-						// little endian
-						// B
-						r[scanline * scansize + px * pixelWidth + 2] = scan[px * pixelWidth] / 255f;
-						// G
-						r[scanline * scansize + px * pixelWidth + 1] = scan[px * pixelWidth + 1] / 255f;
-						// R
-						r[scanline * scansize + px * pixelWidth] = scan[px * pixelWidth + 2] / 255f;
-						// A
-						r[scanline * scansize + px * pixelWidth + 3] = scan[px * pixelWidth + 3] / 255f;
-					}
+					result[offset++] = color.R;
+					result[offset++] = color.G;
+					result[offset++] = color.B;
+					result[offset++] = color.A;
 				}
 			}
-			finally
-			{
-				bmp.UnlockBits(data);
-				System.GC.RemoveMemoryPressure(byteSize);
-			}
 
-			return r;
+			return result;
 		}
 
 		/// <summary>

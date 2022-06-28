@@ -1,9 +1,10 @@
-﻿using System;
+﻿using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.PixelFormats;
+using SixLabors.ImageSharp.Processing;
+using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
 
 namespace FractalPlotter
 {
@@ -111,10 +112,9 @@ namespace FractalPlotter
 
 			var file = Screenhots + "screenshot_" + DateTime.Now.ToString("HHmmss_ddMMyyyy") + ".png";
 
-			using var img = new Bitmap(width, height, width * 3, System.Drawing.Imaging.PixelFormat.Format24bppRgb, Marshal.UnsafeAddrOfPinnedArrayElement(data, 0));
-
-			img.RotateFlip(RotateFlipType.RotateNoneFlipY);
-			img.Save(file);
+			using var img = Image.LoadPixelData<Bgr24>(data, width, height);
+			img.Mutate(x => x.Flip(FlipMode.Vertical));
+			img.SaveAsync(file);
 		}
 	}
 }

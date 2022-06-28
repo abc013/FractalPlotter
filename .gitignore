@@ -21,6 +21,7 @@
 /glfw3-x86.dll
 /glfw3-x64.dll
 /ImGui.NET.dll
+/SixLabors.ImageSharp.dll
 # Ignore further generated dlls
 /WindowsBase.dll
 /ucrtbase.dll
