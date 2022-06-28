@@ -133,25 +133,29 @@ namespace FractalPlotter
 
 			controller.Update(this, (float)args.Time);
 
+			// Time spent from last update frame to this one, multiplied to fit earlier values.
+			// This is used so that, although we are lagging, we are still using correct values for input over time.
+			var timeFactor = (float)(UpdateTime * 250);
+
 			if (ImGui.IsAnyItemActive())
 				return;
 
-			var x = checkKeyRegulator(Keys.Right, Keys.Left);
-			var y = checkKeyRegulator(Keys.Up, Keys.Down);
+			var x = checkKeyRegulator(Keys.Right, Keys.Left, timeFactor);
+			var y = checkKeyRegulator(Keys.Up, Keys.Down, timeFactor);
 
 			if (x != 0f || y != 0f)
 				Camera.Translate(x, y, 0);
 
-			var dc1 = checkKeyRegulator(Keys.Q, Keys.A);
-			var dc2 = checkKeyRegulator(Keys.W, Keys.S);
-			var di = checkKeyRegulator(Keys.E, Keys.D);
-			var dl = checkKeyRegulator(Keys.R, Keys.F);
+			var dc1 = checkKeyRegulator(Keys.Q, Keys.A, timeFactor);
+			var dc2 = checkKeyRegulator(Keys.W, Keys.S, timeFactor);
+			var di = checkKeyRegulator(Keys.E, Keys.D, timeFactor);
+			var dl = checkKeyRegulator(Keys.R, Keys.F, timeFactor);
 
 			if (dc1 != 0f || dc2 != 0f || di != 0 || dl != 0)
 			{
 				MasterRenderer.Factor1 += new Vector2(dc1 * Settings.RegulatorSpeed / Camera.Scale, dc2 * Settings.RegulatorSpeed / Camera.Scale);
 
-				MasterRenderer.IMax += di;
+				MasterRenderer.IMax += (int)di;
 				if (MasterRenderer.IMax < 0)
 					MasterRenderer.IMax = 0;
 
@@ -166,7 +170,7 @@ namespace FractalPlotter
 		/// Checks whether two keys are pressed and determines a value based on it.
 		/// </summary>
 		/// <returns>if <c>up</c> is pressed, 1. if <c>down</c> is pressed, -1. if both or none are pressed, 0.</returns>
-		int checkKeyRegulator(Keys up, Keys down)
+		float checkKeyRegulator(Keys up, Keys down, float timeFactor)
 		{
 			var delta = 0;
 
@@ -175,7 +179,7 @@ namespace FractalPlotter
 			if (KeyboardState.IsKeyDown(down))
 				delta--;
 
-			return delta;
+			return delta * timeFactor;
 		}
 
 		/// <summary>
